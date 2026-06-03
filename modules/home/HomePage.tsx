@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "PumpkinQuest",
   description:
-    "PumpkinQuest — инструменты и материалы для ролевых игр живого действия.",
+    "PumpkinQuest — инструменты и материалы для НРИ",
 };
 
 const sections = [
@@ -13,13 +13,13 @@ const sections = [
     href: "/tools",
     icon: Wrench,
     title: "Инструменты",
-    description: "Утилиты и генераторы для подготовки игр.",
+    description: "Утилиты и генераторы для игр.",
   },
   {
     href: "/lss",
     icon: BookOpen,
     title: "LSS",
-    description: "Live Scenario System — система сценариев живого действия.",
+    description: "Материалы для листа Long Story Short",
   },
 ];
 
@@ -32,7 +32,7 @@ export default function HomePage() {
           PumpkinQuest
         </h1>
         <p className="text-pumpkin-muted text-lg max-w-lg leading-relaxed">
-          Инструменты и материалы для ролевых игр живого действия.
+          Инструменты и материалы для НРИ.
         </p>
       </section>
 

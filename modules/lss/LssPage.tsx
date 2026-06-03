@@ -2,8 +2,8 @@ import { BookOpen } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "LSS",
-  description: "Live Scenario System — система сценариев живого действия.",
+  title: "Материалы для LSS",
+  description: "Материалы для листа Long Story Short",
 };
 
 export default function LssPage() {
@@ -14,7 +14,7 @@ export default function LssPage() {
         <h1 className="text-3xl font-bold tracking-tight">LSS</h1>
       </div>
       <p className="text-pumpkin-muted text-lg">
-        Live Scenario System — скоро здесь появятся материалы.
+        Скоро будет
       </p>
     </div>
   );

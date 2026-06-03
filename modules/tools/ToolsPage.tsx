@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Инструменты",
-  description: "Утилиты и генераторы для подготовки ролевых игр.",
+  description: "Утилиты и генераторы для ролевых игр.",
 };
 
 export default function ToolsPage() {
