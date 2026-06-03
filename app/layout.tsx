@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   description:
     "PumpkinQuest — инструменты и материалы для ролевых игр живого действия.",
-  metadataBase: new URL("https://pumpkinquest.github.io/pumpkin"),
+  metadataBase: new URL("https://pumpkin.quest"),
   openGraph: {
     siteName: "PumpkinQuest",
     locale: "ru_RU",
