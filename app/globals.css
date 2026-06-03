@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --bg:      #09090b;
+  --surface: #18181b;
+  --border:  #27272a;
+  --orange:  #fb923c;
+  --text:    #fafafa;
+  --muted:   #71717a;
+}
+
+html,
+body {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+* {
+  box-sizing: border-box;
+}

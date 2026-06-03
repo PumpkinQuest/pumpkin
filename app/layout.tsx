@@ -1,12 +1,28 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-inter",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "PumpkinQuest",
-  description: "PumpkinQuest — official website",
+  title: {
+    template: "%s | PumpkinQuest",
+    default: "PumpkinQuest",
+  },
+  description:
+    "PumpkinQuest — инструменты и материалы для ролевых игр живого действия.",
+  metadataBase: new URL("https://pumpkinquest.github.io/pumpkin"),
+  openGraph: {
+    siteName: "PumpkinQuest",
+    locale: "ru_RU",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -15,8 +31,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ru">
-      <body className={inter.className}>{children}</body>
+    <html lang="ru" className={inter.variable}>
+      <body className="font-[var(--font-inter)] bg-pumpkin-bg text-pumpkin-text flex flex-col min-h-screen antialiased">
+        <Header />
+        <main className="flex-1">{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }
