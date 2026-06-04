@@ -1,0 +1,1857 @@
+[
+  {
+    "name": "Вспышка мечей [Sword Burst]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<p>Вы на мгновение создаёте круг из вращающихся вокруг вас призрачных лезвий. Все остальные существа в пределах 5 футов от вас должны преуспеть в испытании Ловкости, иначе получат [[/r 1d6]] урона силой.</p>\n<p>Урон этого заклинания увеличивается на [[/r 1d6]], когда вы достигаете 5-го уровня ([[/r 2d6]]), 11-го уровня ([[/r 3d6]]) и 17-го уровня ([[/r 4d6]]).</p>\n</div>"
+      },
+      "source": {
+        "book": "TCE"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": null,
+        "units": "inst"
+      },
+      "cover": null,
+      "target": {
+        "value": 5,
+        "width": null,
+        "units": "ft",
+        "type": "sphere"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [
+          [
+            "1d6",
+            "force"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "dex",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 0,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "somatic": false,
+        "material": false,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "always",
+        "prepared": true
+      },
+      "scaling": {
+        "mode": "cantrip",
+        "formula": "1d6"
+      }
+    },
+    "classes": [
+      "wizard",
+      "warlock",
+      "sorcerer",
+      "artificer"
+    ],
+    "_id": "6657295aefd0587b8c39f160",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:50.114Z",
+    "updatedAt": "2024-05-29T13:10:50.114Z",
+    "__v": 0
+  },
+  {
+    "name": "Едкое варево Таши [Tasha's Caustic Brew]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div><p>Вы испускаете струю кислоты вдоль линии длиной 30 футов и шириной 5 футов в выбранном вами направлении. Каждое существо, находящееся на этой линии, должно преуспеть в испытании Ловкости, иначе станет покрыто кислотой на время действия заклинания или до тех пор, пока кто-то действием не соскребёт или не смоет кислоту с себя или другого существа. Существо, покрытое кислотой, получает [[/r 2d4]] урона кислотой в начале каждого своего хода.</p><p><strong>На высоких кругах</strong>. Если вы сотворяете это заклинание, используя ячейку 2-го круга или выше, урон увеличивается на [[/r 2d4]] за каждый круг выше первого.</p></div>"
+      },
+      "source": {
+        "book": "TCE"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "cover": null,
+      "target": {
+        "value": 30,
+        "width": null,
+        "units": "",
+        "type": "line"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [
+          [
+            "2d4",
+            "acid"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "dex",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 1,
+      "school": "evo",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "немного тухлой пищи",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard",
+      "sorcerer",
+      "artificer",
+      "shaman"
+    ],
+    "_id": "6657295aefd0587b8c39f1e5",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:50.855Z",
+    "updatedAt": "2024-05-29T13:10:50.855Z",
+    "__v": 0
+  },
+  {
+    "name": "Клинок зелёного пламени",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "Вы делаете взмах рукопашным оружием, используемым при произнесении заклинания, и совершаете им рукопашную атаку оружием против одного существа в пределах 5 футов от вас. При попадании, цель подвергается обычным эффектам атаки оружием, и вы можете заставить зеленый огонь перескочить с цели на другое существо по вашему выбору, которое вы видите в пределах 5 футов от нее. Второе существо получает урон огнем, равный вашему модификатору колдовской способности.\n\nУрон этого заклинания увеличивается при достижении определенных уровней. На 5-м уровне рукопашная атака наносит дополнительный урон огнем 1к8 цели при попадании, а урон, получаемый вторым существом, увеличивается до 1к8 + модификатор вашей колдовской способности. Оба этих урона увеличиваются на 11-м уровне (2к8 и 2к8) и 17-м уровне (3к8 и 3к8)."
+      },
+      "source": {
+        "book": "TCE"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "units": "inst"
+      },
+      "target": {
+        "units": "ft",
+        "type": "creature"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "self"
+      },
+      "actionType": "msak",
+      "damage": {
+        "parts": [
+          [
+            "1d8+0"
+          ]
+        ]
+      },
+      "level": 0,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "material": true
+      },
+      "materials": {
+        "value": "рукопашное оружие стоимостью не менее 1 см"
+      }
+    },
+    "classes": [
+      "wizard",
+      "sorcerer",
+      "artificer",
+      "warlock"
+    ],
+    "_id": "6657295befd0587b8c39f256",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:51.554Z",
+    "updatedAt": "2024-05-29T13:10:51.554Z",
+    "__v": 0
+  },
+  {
+    "name": "Клинок разрушения [Blade of Disaster]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<p>Вы создаёте пространственный разлом в форме клинка длиной около 3 футов в свободном пространстве, которое вы можете видеть в пределах дистанции заклинания. Клинок существует до окончания действия заклинания. Когда вы сотворяете это заклинание, то можете совершить до двух атак в ближнем бою заклинанием с помощью этого клинка, против существа, неудерживаемого предмета или постройки в пределах 5 футов от клинка. При попадании цель получает [[/r 4d12]] силового урона. Эта атака считается критическим попаданием при выпадении на [[/r d20]] значений «18–20». При критическом попадании клинок дополнительно наносит [[/r 8d12]] силового урона (в общей сложности [[/r 12d12]] силового урона).</p>\n<p>Вы можете бонусным действием в свой ход переместить клинок на расстояние до 30 футов в незанятое пространство, которое вы можете видеть, а затем снова совершить до двух атак в ближнем бою заклинанием с помощью клинка.</p>\n<p>Клинок может беспрепятственно перемещаться через любой барьер, в том числе созданный заклинанием @Compendium[laaru-dnd5-hw.spells.2rqlJgNTKzBvGGWk]{Силовая стена}.</p>\n</div>"
+      },
+      "source": {
+        "book": "TCE"
+      },
+      "activation": {
+        "type": "bonus",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "msak",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [
+          [
+            "4d12",
+            "force"
+          ],
+          [
+            "8d12",
+            "force"
+          ],
+          [
+            "12d12",
+            "force"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 9,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": false,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard",
+      "warlock",
+      "sorcerer"
+    ],
+    "_id": "6657295befd0587b8c39f25b",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:51.588Z",
+    "updatedAt": "2024-05-29T13:10:51.588Z",
+    "__v": 0
+  },
+  {
+    "name": "Крепость интеллекта [Intellect Fortress]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\"><div class=\"rd__spc-inline-post\"><p>В течение длительности заклинания вы или одно согласное существо, которое вы можете видеть в пределах дистанции, имеете @UUID[Compendium.laaru-dnd5-hw.conditions.w7WKEM8had6v4vy8]{устойчивость} к психическому урону, а также совершаете и проходите с преимуществом испытания Интеллекта, Мудрости и Харизмы.</p></div><div class=\"rd__spc-inline-post\"><p><strong>На высоких кругах</strong>. Когда вы сотворяете это заклинание, используя ячейку 4-го круга или выше, вы можете сделать целью заклинания дополнительных существ, по одному за каждый круг ячейки выше третьего. Все цели заклинания должны находиться в пределах 30 футов друг от друга во время сотворения заклинания.</p></div></div>"
+      },
+      "source": {
+        "book": "TCE"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "hour"
+      },
+      "target": {
+        "value": 0,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 30,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 3,
+      "school": "abj",
+      "components": {
+        "vocal": true,
+        "somatic": false,
+        "material": false,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "bard",
+      "wizard",
+      "warlock",
+      "sorcerer",
+      "artificer"
+    ],
+    "_id": "6657295befd0587b8c39f274",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:51.727Z",
+    "updatedAt": "2024-05-29T13:10:51.727Z",
+    "__v": 0
+  },
+  {
+    "name": "Лассо молнии [Lightning Lure]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<p>Вы создаёте хлыст из молний, поражающий одно существо по вашему выбору, которое вы можете видеть в пределах 15 футов от вас. Цель должна преуспеть в испытании Силы, иначе будет притянута на 10 футов по прямой к вам, после чего получит [[/r 1d8]] урона молнией, если окажется в пределах 5 футов от вас.</p>\n<p>Урон этого заклинания увеличивается на [[/r 1d8]], когда вы достигаете 5-го уровня ([[/r 2d8]]), 11-го уровня ([[/r 3d8]]) и 17-го уровня ([[/r 4d8]]).</p>\n</div>"
+      },
+      "source": {
+        "book": "TCE"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": null,
+        "units": "inst"
+      },
+      "target": {
+        "value": 1,
+        "width": null,
+        "units": "",
+        "type": "creature"
+      },
+      "range": {
+        "value": 0,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [
+          [
+            "1d8",
+            "lightning"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "str",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 0,
+      "school": "evo",
+      "components": {
+        "vocal": true,
+        "somatic": false,
+        "material": false,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "always",
+        "prepared": true
+      },
+      "scaling": {
+        "mode": "cantrip",
+        "formula": "1d8"
+      }
+    },
+    "classes": [
+      "wizard",
+      "warlock",
+      "sorcerer",
+      "artificer"
+    ],
+    "_id": "6657295befd0587b8c39f287",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:51.836Z",
+    "updatedAt": "2024-05-29T13:10:51.836Z",
+    "__v": 0
+  },
+  {
+    "name": "Покров духа [Spirit Shroud]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\"><div class=\"rd__spc-inline-post\"><p>Вы взываете к духам умерших, и они окружают вас на протяжении длительности заклинания. Духи неосязаемы и неуязвимы.</p></div><div class=\"rd__spc-inline-post\"><p>До окончания действия заклинания любая ваша атака наносит дополнительно [[/r 1d8]] урона, если вы атакуете существо в пределах 10 футов от вас. Вы выбираете вид урона в момент наложения этого заклинания из следующих вариантов: лучистый, некротический или холод. Любое существо, получившее этот урон, не сможет восстанавливать ПЗ до начала вашего следующего хода.</p></div><div class=\"rd__spc-inline-post\"><p>В дополнение к этому, скорость каждого видимого вами существа по вашему выбору, начинающего ход в пределах 10 футов от вас, будет уменьшена на 10 футов до начала вашего следующего хода.</p></div><div class=\"rd__spc-inline-post\"><p><strong>На высоких кругах. </strong>Когда вы сотворяете это заклинание, используя ячейку 4-го круга или выше, дополнительный урон увеличивается на [[/r 1d8]] за каждые два круга ячейки выше третьего</p></div></div>"
+      },
+      "source": {
+        "book": "TCE"
+      },
+      "activation": {
+        "type": "bonus",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": "self"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "self"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "(floor(((@item.level) - 1) / 2))d8",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 3,
+      "school": "nec",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": false,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard",
+      "cleric",
+      "warlock",
+      "paladin"
+    ],
+    "_id": "6657295defd0587b8c39f371",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:53.569Z",
+    "updatedAt": "2024-05-29T13:10:53.569Z",
+    "__v": 0
+  },
+  {
+    "name": "Потусторонний облик Таши [Tasha's Otherworldly Guise]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<p>Творя заклинание, вы обращаетесь к магии Нижних или Верхних планов (по вашему выбору), для преобразования себя. Вы получаете следующие преимущества до тех пор, пока заклинание не закончится:</p>\n<ul>\n<li>Вы имеете невосприимчивость к урону огнём и ядом (Нижние планы) или к лучистому урону и некротическому урону (Верхние планы).</li>\n<li>Вы имеете невосприимчивость к состоянию @Compendium[laaru-dnd5-hw.conditions.Tlc2LbRijKy9nxxb]{Отравление} (Нижние планы) или к состоянию @Compendium[laaru-dnd5-hw.conditions.5vKRVm8wXReUJasS]{Обворожение} (Верхние планы).</li>\n<li>За вашей спиной появляются призрачные крылья, дарующие скорость полета 40 футов. </li>\n<li>Вы получаете бонус +2 к КБ.</li>\n<li>Все ваши атаки оружием считаются магическими, и когда вы совершаете атаку оружием, вы можете использовать свой модификатор базовой характеристики вместо Силы или Ловкости для бросков атаки и урона. </li>\n<li>Действием Атака вы можете совершить две атаки вместо одной. Вы не получаете это преимущество, если у вас уже есть подобное умение (например, «Дополнительная атака»), которое позволяет атаковать более одного раза за действие Атака.</li>\n</ul>\n</div>"
+      },
+      "source": {
+        "book": "TCE"
+      },
+      "activation": {
+        "type": "bonus",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": "self"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "self"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 6,
+      "school": "trs",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "предмет с выгравированным символом Внешних планов стоимостью не менее 500 зм",
+        "consumed": false,
+        "cost": 500,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard",
+      "warlock",
+      "sorcerer"
+    ],
+    "_id": "6657295defd0587b8c39f380",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:53.693Z",
+    "updatedAt": "2024-05-29T13:10:53.693Z",
+    "__v": 0
+  },
+  {
+    "name": "Призыв духа аберрации [Summon Aberration]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\"><div class=\"rd__spc-inline-post\"><p>Вы призываете дух аберрации. Существо появляется в незанятом пространстве, которое вы можете видеть в пределах дистанции. Воплощённая форма духа использует блок статистики @Compendium[laaru-dnd5-hw.monsters.BYJq4VNLrGeJPp6k]{Духа аберрации}. Когда вы сотворяете заклинание, выберите тип духа: <strong>бехолдер</strong>, <strong>слаад </strong>или <strong>звёздное порождение</strong>. Дух принимает форму выбранной аберрации и имеет соответствующие признаки, описанные в блоке статистики. Существо исчезает, когда его ПЗ опускаются до 0 или когда заклинание заканчивается.</p></div><div class=\"rd__spc-inline-post\"><p>Это существо дружелюбно к вам и вашим товарищам. В бою оно получает вашу инициативу и ходит сразу же после вас. Оно подчиняется вашим словесным командам (никаких действий от вас не требуется). Если вы ничего не приказываете, то оно совершает действие @Compendium[laaru-dnd5-hw.actions.UMuz44p8fXeLCZn7]{Уклонение} и перемещается, избегая опасностей.</p></div><div class=\"rd__spc-inline-post\"><p><strong>На высоких кругах. </strong>Когда вы сотворяете это заклинание, используя ячейку 5-го круга или выше, характеристики призываемого существа изменяются в соответствии с описанием в блоке статистики.</p></div></div>"
+      },
+      "source": {
+        "book": "TCE"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "hour"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 4,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "заспиртованные щупальце и глазное яблоко в сосуде с платиновой инкрустацией стоимостью не менее 400 зм",
+        "consumed": false,
+        "cost": 400,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard",
+      "warlock"
+    ],
+    "_id": "6657295defd0587b8c39f394",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:53.870Z",
+    "updatedAt": "2024-05-29T13:10:53.870Z",
+    "__v": 0
+  },
+  {
+    "name": "Призыв духа зверя [Summon Beast]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "\n<div class=\"rd__b  rd__b--3\">\n<div class=\"rd__spc-inline-post\">Вы призываете дух зверя. Существо появляется в незанятом пространстве, которое вы можете видеть в пределах дистанции. Воплощённая форма духа использует блок статистики @Compendium[laaru-dnd5-hw.monsters.wUcmQ55NCb2UTIbd]{Духа Зверя}. Когда вы сотворяете заклинание, выберите среду обитания: <strong>воздух</strong>, <strong>земля </strong>или <strong>вода</strong>. Дух принимает форму животного по вашему выбору, для которого выбранная среда обитания является родной и имеет соответствующие признаки, описанные в блоке статистики. Существо исчезает, когда его ПЗ опускаются до 0 или когда заклинание заканчивается.</div>\n<div class=\"rd__spc-inline-post\">Это существо дружественно вам и вашим товарищам. В бою оно получает вашу инициативу и ходит сразу же после вас. Оно подчиняется вашим словесным командам (никаких действий от вас не требуется). Если вы ничего не приказываете, то оно совершает действие @Compendium[laaru-dnd5-hw.actions.UMuz44p8fXeLCZn7]{Уклонение} и перемещается, избегая опасностей.</div>\n<div class=\"rd__spc-inline-post\"><strong>На высоких кругах</strong>. Если вы сотворяете это заклинание, используя ячейку 3-го круга или выше, характеристики призываемого существа изменяются в соответствии с описанием в блоке статистики.</div>\n</div>"
+      },
+      "source": {
+        "book": "TCE"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "hour"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 2,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "перо, пучок меха и рыбий хвост внутри позолоченного жёлудя стоимостью не менее 200 зм",
+        "consumed": false,
+        "cost": 200,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "druid",
+      "ranger"
+    ],
+    "_id": "6657295defd0587b8c39f399",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:53.922Z",
+    "updatedAt": "2024-05-29T13:10:53.922Z",
+    "__v": 0
+  },
+  {
+    "name": "Призыв духа исчадия [Summon Fiend]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div><div><div><p>Вы призываете дух исчадия. Существо появляется в незанятом пространстве, которое вы можете видеть в пределах досягаемости. Эта телесная форма использует блок характеристик @Compendium[laaru-dnd5-hw.monsters.nJHyFxZoZq0OTG0y]{Духа исчадия}</p></div><div><p>Когда вы произносите заклинание, выберите: <strong>демона</strong>, <strong>дьявола</strong> или <strong>юголота</strong>.</p></div><div><p>Существо напоминает демона выбранного типа, что определяет определенные черты в его блоке характеристик. Существо исчезает, когда его ПЗ опускаются до 0 или когда заклинание заканчивается.</p></div><div><p> Это существо дружественно вам и вашим товарищам. В бою оно получает вашу инициативу и ходит сразу же после вас. Оно подчиняется вашим словесным командам (никаких действий от вас не требуется). Если вы ничего не приказываете, то оно совершает действие @Compendium[laaru-dnd5-hw.actions.UMuz44p8fXeLCZn7]{Уклонение} и перемещается, избегая опасностей.</p><div><p><strong>На высоких кругах. </strong>Когда вы сотворяете это заклинание, используя ячейку заклинания 7-го круга или выше, используйте более высокий круг везде, где круг заклинания появляется в блоке характеристик.</p></div></div></div></div>"
+      },
+      "source": {
+        "book": "TCE"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "hour"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 6,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "кровь гуманоида внутри рубинового флакона стоимостью не менее 600 зм",
+        "consumed": false,
+        "cost": 600,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard",
+      "warlock"
+    ],
+    "_id": "6657295defd0587b8c39f39e",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:53.966Z",
+    "updatedAt": "2024-05-29T13:10:53.966Z",
+    "__v": 0
+  },
+  {
+    "name": "Призыв духа конструкта [Summon Construct]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div>\n<div>\n<div>Вы вызываете дух конструкции. Существо появляется в незанятом пространстве, которое вы можете видеть в пределах досягаемости. Эта телесная форма использует блок характеристик @Compendium[laaru-dnd5-hw.monsters.lJXdCLAvi1odDAKh]{Духа конструкции}.</div>\n<div>Когда вы произносите это заклинание, выберите материал: <strong>глина</strong>, <strong>металл </strong>или <strong>камень</strong>.</div>\n<div>Существо напоминает голема или модрона (на ваш выбор), сделанного из выбранного материала, который определяет черты в его блоке характеристик. Существо исчезает, когда его ПЗ опускаются до 0 или когда заклинание заканчивается.</div>\n<div>Это существо дружественно вам и вашим товарищам. В бою оно получает вашу инициативу и ходит сразу же после вас. Оно подчиняется вашим словесным командам (никаких действий от вас не требуется). Если вы ничего не приказываете, то оно совершает действие @Compendium[laaru-dnd5-hw.actions.UMuz44p8fXeLCZn7]{Уклонение} и перемещается, избегая опасностей.</div><strong>На высоких кругах</strong>. Если вы сотворяете это заклинание с помощью ячейки заклинания 4-го круга или выше, используйте более высокий круг везде, где круг заклинания появляется в блоке характеристик.</div>\n</div>\n</div>\n</div>"
+      },
+      "source": {
+        "book": "TCE"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "hour"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 4,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "богато украшенный каменный и металлический сундук стоимостью не менее 400 зм",
+        "consumed": false,
+        "cost": 400,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard",
+      "artificer"
+    ],
+    "_id": "6657295eefd0587b8c39f3a3",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:54.009Z",
+    "updatedAt": "2024-05-29T13:10:54.009Z",
+    "__v": 0
+  },
+  {
+    "name": "Призыв духа небожителей [Summon Celestial]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div><div><div><p>Вы призываете дух небожителя. Существо появляется в ангельской форме в незанятом пространстве, которое вы можете видеть в пределах досягаемости. Эта телесная форма использует блок характеристик @Compendium[laaru-dnd5-hw.monsters.sTuoJrENRTWlGxyu]{Духа Небожителя}</p></div><div><p>Когда вы произносите заклинание, выберите <strong>мстителя</strong> или <strong>защитника</strong>.</p></div><div><p>Ваш выбор определяет атаку существа в его блоке характеристик. Существо исчезает, когда его ПЗ опускаются до 0 или когда заклинание заканчивается.</p></div><div><p>Существо дружественно вам и вашим спутникам. В бою оно получает вашу инициативу и ходит сразу же после вас. Оно подчиняется вашим словесным командам (никаких действий от вас не требуется). Если вы ничего не приказываете, то оно совершает действие @Compendium[laaru-dnd5-hw.actions.UMuz44p8fXeLCZn7]{Уклонение} и перемещается, избегая опасностей.</p></div><p><strong>На высоких кругах</strong>. Если вы сотворяете это заклинание, используя ячейку заклинания 6-го круга или выше, используйте более высокий круг всякий раз, когда круг заклинания появляется в блоке характеристик.</p></div></div>"
+      },
+      "source": {
+        "book": "TCE"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "hour"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 5,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "золотой реликварий стоимостью не менее 500 зм",
+        "consumed": false,
+        "cost": 500,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "cleric",
+      "paladin"
+    ],
+    "_id": "6657295eefd0587b8c39f3a8",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:54.053Z",
+    "updatedAt": "2024-05-29T13:10:54.053Z",
+    "__v": 0
+  },
+  {
+    "name": "Призыв духа нежити [Summon Undead]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div>\n<div>\n<div>Вы призываете дух нежити. Существо появляется в незанятом пространстве, которое вы можете видеть в пределах досягаемости. Эта телесная форма использует блок характеристики @Compendium[laaru-dnd5-hw.monsters.vzY1pLCfWFyclwTg]{Духа нежити}</div>\n<div>Когда вы сотворяете заклинание, выберите форму существа: <strong>призрачное</strong>, <strong>гнилостное </strong>или <strong>скелетное</strong>.</div>\n<div>Дух напоминает нежить с выбранной формой, которая определяет определенные черты в его блоке характеристик. Существо исчезает, когда его ПЗ опускаются до 0 или когда заклинание заканчивается.</div>\n<div>\n<div class=\"rd__spc-inline-post\">Это существо дружественно вам и вашим товарищам. В бою оно получает вашу инициативу и ходит сразу же после вас. Оно подчиняется вашим словесным командам (никаких действий от вас не требуется). Если вы ничего не приказываете, то оно совершает действие @Compendium[laaru-dnd5-hw.actions.UMuz44p8fXeLCZn7]{Уклонение} и перемещается, избегая опасностей.</div>\n<div><strong>На высоких кругах.</strong></div>\n<div>Когда вы сотворяете это заклинание, используя ячейку заклинания 4-го круга или выше, используйте более высокий круг везде, где круг заклинания появляется в блоке характеристик.</div>\n</div>\n</div>\n</div>"
+      },
+      "source": {
+        "book": "TCE"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "hour"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 3,
+      "school": "nec",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "позолоченный череп стоимостью не менее 300 зм",
+        "consumed": false,
+        "cost": 300,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard",
+      "warlock"
+    ],
+    "_id": "6657295eefd0587b8c39f3ad",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:54.098Z",
+    "updatedAt": "2024-05-29T13:10:54.098Z",
+    "__v": 0
+  },
+  {
+    "name": "Призыв духа порождения теней [Summon Shadowspawn]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div><div><div><p>Вы призываете дух тени. Существо появляется в незанятом пространстве, которое вы можете видеть вокруг себя. Эта телесная форма использует блок характеристик  @Compendium[laaru-dnd5-hw.monsters.PNyleGa6GBOKTNeH]{Духа тени}</p></div><div><p>Когда вы произностите заклинание, выберите эмоцию: <strong>ярость</strong>, <strong>отчаяние </strong>или <strong>страх</strong>.</p></div><div><p>Существо напоминает двуногое деформированное тело, отмеченного выбранной эмоцией, которая определяет черты в его блоке характеристик. Существо исчезает, когда его ПЗ упадут до 0 или когда заклинание закончится.</p></div><div><div class=\"rd__spc-inline-post\"><p>Это существо дружественно вам и вашим товарищам. В бою оно получает вашу инициативу и ходит сразу же после вас. Оно подчиняется вашим словесным командам (никаких действий от вас не требуется). Если вы ничего не приказываете, то оно совершает действие @Compendium[laaru-dnd5-hw.actions.UMuz44p8fXeLCZn7]{Уклонение} и перемещается, избегая опасностей.</p></div><div><p><strong>На высоких кругах. </strong>Когда вы сотворяете заклинание с помощью ячейки заклинания 4-го круга или выше, используйте более высокий круг везде, где круг заклинания появляется в блоке характеристик.</p></div></div></div></div>"
+      },
+      "source": {
+        "book": "TCE"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "hour"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 3,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "слезы внутри драгоценного камня стоимостью не менее 300 зм",
+        "consumed": false,
+        "cost": 300,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard",
+      "warlock"
+    ],
+    "_id": "6657295eefd0587b8c39f3b9",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:54.148Z",
+    "updatedAt": "2024-05-29T13:10:54.148Z",
+    "__v": 0
+  },
+  {
+    "name": "Призыв духа феи [Summon Fey]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div>\n<div>\n<div>Вы призываете дух феи. Существо появляется в незанятом пространстве, которое вы можете видеть в пределах досягаемости. Эта телесная форма использует блок характеристик @Compendium[laaru-dnd5-hw.monsters.XsP5pf6kbETG4w3J]{Духа феи}.</div>\n<div>Когда вы читаете заклинание, выберите настроение: <strong>сердитое</strong>, <strong>довольное </strong>или <strong>лукавое</strong>.</div>\n<div>Существо похоже на выбранное вами тип фей, отмеченное выбранным настроением, которое определяет одну из черт в его блоке характеристик. Существо исчезает, когда его ПЗ опускаются до 0 или когда заклинание заканчивается.</div>\n<div>Это существо дружественно вам и вашим товарищам. В бою оно получает вашу инициативу и ходит сразу же после вас. Оно подчиняется вашим словесным командам (никаких действий от вас не требуется). Если вы ничего не приказываете, то оно совершает действие @Compendium[laaru-dnd5-hw.actions.UMuz44p8fXeLCZn7]{Уклонение} и перемещается, избегая опасностей.</div>\n<div><strong>На высоких кругах</strong>. Если вы сотворяете  это заклинание с помощью ячейки заклинания 4-го круга или выше, используйте более высокий круг везде, где круг заклинания появляется в блоке характеристик.</div>\n</div>\n</div>\n</div>"
+      },
+      "source": {
+        "book": "TCE"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "hour"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 3,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "позолоченный цветок стоимостью не менее 300 зм",
+        "consumed": false,
+        "cost": 300,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard",
+      "druid",
+      "warlock",
+      "ranger"
+    ],
+    "_id": "6657295eefd0587b8c39f3be",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:54.195Z",
+    "updatedAt": "2024-05-29T13:10:54.195Z",
+    "__v": 0
+  },
+  {
+    "name": "Призыв духа элементалей [Summon Elemental]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div>\n<div>\n<div>Вы призываете духа элементаля. Существо появляется в незанятом пространстве, которое вы можете видеть в пределах досягаемости. Эта телесная форма использует блок характеристик @Compendium[laaru-dnd5-hw.monsters.LmzNg1HMX0qOjzE2]{Дух элементаля}.</div>\n<div>Когда вы произносите заклинание, выберите элемент: <strong>воздух</strong>, <strong>земля</strong>, <strong>огонь </strong>или <strong>вода</strong>.</div>\n<div>Существо напоминает двуногую форму, заключенную в выбранном элементе, который определяет определенные черты в его блоке характеристик. Существо исчезает, когда его ПЗ опускаются до 0 или когда заклинание заканчивается.</div>\n<div>Это существо дружественно вам и вашим товарищам. В бою оно получает вашу инициативу и ходит сразу же после вас. Оно подчиняется вашим словесным командам (никаких действий от вас не требуется). Если вы ничего не приказываете, то оно совершает действие @Compendium[laaru-dnd5-hw.actions.UMuz44p8fXeLCZn7]{Уклонение} и перемещается, избегая опасностей.</div>\n<div><strong>На высоких кругах</strong>. Если вы сотворяете это заклинание, используя ячейку заклинания 5-го круга или выше, используйте более высокий круг  везде, где круг заклинания появляется в блоке характеристик.</div>\n</div>\n</div>\n</div>"
+      },
+      "source": {
+        "book": "TCE"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "hour"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 4,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "воздух, галька, зола и вода в инкрустированном золотом флаконе стоимостью не менее 400 зм",
+        "consumed": false,
+        "cost": 400,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard",
+      "druid",
+      "ranger"
+    ],
+    "_id": "6657295eefd0587b8c39f3c3",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:54.254Z",
+    "updatedAt": "2024-05-29T13:10:54.254Z",
+    "__v": 0
+  },
+  {
+    "name": "Психическая плеть Таши [Tasha's Mind Whip]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div><p>Вы проводите психическую атаку на одно существо, которое видите в пределах досягаемости.</p><div><div><p>Цель должна пройти испытание Интеллекта. При провале цель получает [[/r 3d6]] психического урона и не может использовать @Compendium[laaru-dnd5-hw.actions.mMwkUE20bEfKeetq]{ответное действие} до конца своего следующего хода.</p></div><div><p>Кроме того того, в свой следующий ход цель долна выбрать только одно из следующего: перемещение, действие или бонусное действие.</p></div><div><p>При успешном испытании цель получает половину урона и не испытывает никаких других эффектов заклинания.</p><p><strong>На высоких кругах</strong>. Если вы сотворяете это заклинание, используя ячейку заклинания 3-го круга или выше, вы можете нацелиться на одно дополнительное существо за каждый круг ячейки выше 2-го, существа должны находиться в пределах 30 футов друг от друга.</p></div></div></div>"
+      },
+      "source": {
+        "book": "TCE"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "round"
+      },
+      "target": {
+        "value": 0,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 90,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [
+          [
+            "3d6",
+            "psychic"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "int",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 2,
+      "school": "enc",
+      "components": {
+        "vocal": true,
+        "somatic": false,
+        "material": false,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard",
+      "sorcerer"
+    ],
+    "_id": "6657295eefd0587b8c39f3f6",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:54.642Z",
+    "updatedAt": "2024-05-29T13:10:54.642Z",
+    "__v": 0
+  },
+  {
+    "name": "Расщепление разума [Mind Sliver]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div>\n<div>Вы вводите дезориентирующий всплеск психической энергии в разум одного существа, которого видите в пределах досягаемости.</div>\n<div>Цель должна преуспеть в испытании Интеллекта, иначе получит психический урон [[/r 1d6]] и вычтет [[/r 1d4]] из следующего испытания, который она сделает до конца вашего следующего хода.</div>\n<div>Урон этого заклинания увеличивается на [[/r 1d6]] при достижении определенных уровней: 5-го уровня ([[/r 2d6]]), 11-го уровня ([[/r 3d6]]) и 17-го уровня ([[/r 4d6]]).</div>\n</div>"
+      },
+      "source": {
+        "book": "TCE"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "round"
+      },
+      "cover": null,
+      "target": {
+        "value": 1,
+        "width": null,
+        "units": "",
+        "type": "creature"
+      },
+      "range": {
+        "value": 60,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [
+          [
+            "1d6",
+            "psychic"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "int",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 0,
+      "school": "enc",
+      "components": {
+        "vocal": true,
+        "somatic": false,
+        "material": false,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "always",
+        "prepared": true
+      },
+      "scaling": {
+        "mode": "cantrip",
+        "formula": "1d6"
+      }
+    },
+    "classes": [
+      "wizard",
+      "warlock",
+      "sorcerer"
+    ],
+    "_id": "6657295fefd0587b8c39f428",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:55.066Z",
+    "updatedAt": "2024-05-29T13:10:55.066Z",
+    "__v": 0
+  },
+  {
+    "name": "Сон синей вуали [Dream of the Blue Veil]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div><div><p>Вы и до восьми желающих существ в пределах досягаемости заклинания @Compendium[laaru-dnd5-hw.conditions.EqNxVPxL66DdILMq]{теряете сознание} на время действия заклинаний и испытываете видения из другого мира на Материальном плане, такого как Орт, Торил, Кринн или Эберрон.</p></div><div><p>Если заклинание достигает своей полной продолжительности (6 часов), видения завершаются тем, что каждый кто попал под действие заклинание находит и отодвигает таинственный синий занавес. После этого заклинание заканчивается, а нашедший занавес мысленно и физически переноситесь в мир, который был в видениях.</p></div><div><p>Чтобы сотворить это заклинание, у вас должен быть магический предмет, который создан или принадлежит миру, в который вы хотите попасть, и вы должны знать о существовании этого мира, даже если вы не знаете его названия. Ваш пункт назначения в другом мире - безопасное место в пределах 1 мили от того места, где был создан магический предмет. В качестве альтернативы вы можете сотворить заклинание, если одно из затронутых заклинанием существ родилось в целевом мире, в результате чего вашим пунктом назначения будет безопасное место в пределах 1 мили от того места, где родилось это существо.</p></div><div><p>Заклинание заканчивается раньше на существе, если это существо получает какой-либо урон, и существо не переносится. Если заклинатель получает какой-либо урон, заклинание заканчивается для заклинателя и всех других существ, и никто из вас не перемещается.</p></div></div>"
+      },
+      "source": {
+        "book": "TCE"
+      },
+      "activation": {
+        "type": "minute",
+        "cost": 10,
+        "condition": ""
+      },
+      "duration": {
+        "value": "6",
+        "units": "hour"
+      },
+      "target": {
+        "value": 0,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 20,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 7,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "магический предмет или желающее существо из целевого мира",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "bard",
+      "wizard",
+      "warlock",
+      "sorcerer"
+    ],
+    "_id": "66572960efd0587b8c39f494",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:56.010Z",
+    "updatedAt": "2024-05-29T13:10:56.010Z",
+    "__v": 0
+  }
+]

@@ -1,0 +1,105 @@
+[
+  {
+    "name": "Зашифровать мысли [Encode Thoughts]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\"><p>Прикладывая палец к своей голове, вы извлекаете воспоминание, идею или сообщение из своего разума и трансформируете её в осязаемую ленту светящейся энергии — ленту мысли. Она существует в течении всей длительности заклинания или пока вы не сотворите это заклинание снова. Лента мысли появляется в свободном пространстве в пределах 5 футов от вас как @Compendium[laaru-dnd5-hw.conditions.sDPntYBdmN7jMZc6]{маленький} невесомый полутвёрдый предмет, который можно держать и нести как ленту. В остальном она неподвижна.</p><p>Если вы творите это заклинание, пока концентрируетесь на заклинании или особенности, позволяющем читать мысли других существ или манипулировать ими (например, @Compendium[laaru-dnd5-hw.spells.MSM1XtWei12DFoLN]{Обнаружение мыслей} или @Compendium[laaru-dnd5-hw.spells.ujIJlxgzYuog6Nkk]{Манипуляция памятью}), вы можете трансформировать в ленту мысли читаемые вами мысли или воспоминания.</p><p>Если вы сотворяете это заклинание, пока держите ленту мысли, вы мгновенно получаете ту информацию, что содержит лента (сотворение заклинания @Compendium[laaru-dnd5-hw.spells.MSM1XtWei12DFoLN]{Обнаружение мыслей} на ленту имеет тот же эффект).</p></div>"
+      },
+      "source": {
+        "book": "GGR"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "8",
+        "units": "hour"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": "self"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "self"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 0,
+      "school": "enc",
+      "components": {
+        "vocal": false,
+        "somatic": true,
+        "material": false,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "artificer",
+      "bard",
+      "barbarian",
+      "cleric",
+      "druid",
+      "fighter",
+      "monk",
+      "paladin",
+      "ranger",
+      "rogue",
+      "sorcerer",
+      "warlock",
+      "wizard"
+    ],
+    "_id": "6657295aefd0587b8c39f1f9",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:50.986Z",
+    "updatedAt": "2024-05-29T13:10:50.986Z",
+    "__v": 0
+  }
+]

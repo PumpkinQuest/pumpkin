@@ -1,0 +1,189 @@
+[
+  {
+    "name": "Ледяные пальцы [Frost Fingers]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div>\n<p>Леденящий холод вырывается из ваших пальцев <strong>15</strong>-футовым конусом. Каждое существо в этой области должно пройти испытание Выносливости, получая [[/r 2d8]] урона холодом в случае провала и половину этого урона в случае успеха. Холод замораживает немагические жидкости в области воздействия, которые не несут и не носят.</p>\n<p><strong>На высоких кругах</strong>. Если  вы сотворяете это заклинание, используя ячейку 2-го круга или выше, урон увеличивается на [[/r 1d8]] за каждый круг ячейки выше первого.</p>\n</div>"
+      },
+      "source": {
+        "book": "IDRotF"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": null,
+        "units": "inst"
+      },
+      "cover": null,
+      "target": {
+        "value": 15,
+        "width": null,
+        "units": "ft",
+        "type": "cone"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [
+          [
+            "2d8",
+            "cold"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "con",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 1,
+      "school": "evo",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": false,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "level",
+        "formula": "1d8"
+      }
+    },
+    "classes": [
+      "wizard"
+    ],
+    "_id": "6657295befd0587b8c39f291",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:51.906Z",
+    "updatedAt": "2024-05-29T13:10:51.906Z",
+    "__v": 0
+  },
+  {
+    "name": "Создание магена [Create Magen]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<p>Сотворяя заклинание, вы помещаете флакон ртути в грудь человеческой куклы в натуральную величину, наполненной пеплом или песком. Затем вы зашиваете куклу и капаете на неё своей кровью. В конце сотворения заклинания вы постукиваете по кукле хрустальным жезлом, превращая её в магена, одетого в то, что было на кукле. Тип магена выбирается вами во время сотворения заклинания.</p>\n<ul>\n<li>@Compendium[laaru-dnd5-hw.monsters.hlVE0YMiGzBisKEw]{Демос маген}</li>\n<li>@Compendium[laaru-dnd5-hw.monsters.UkvY6GYtG2kLcH6m]{Гальван маген}</li>\n<li>@Compendium[laaru-dnd5-hw.monsters.RI9gPiMTV33NL2Y3]{Гипнос маген}</li>\n</ul>\n<p>Когда появляется маген, ваш максимум ПЗ уменьшается на величину, равную показателю опасности магена (минимальное снижение равно 1). Только заклинание @Compendium[laaru-dnd5-hw.spells.3DmrqW87SyWdaa8T]{Желание} может отменить это уменьшение вашего максимума ПЗ.</p>\n<p>Любой маген, которого вы создаёте с помощью этого заклинания, беспрекословно подчиняется вашим командам.</p>\n</div>\n<div id=\"gtx-trans\" style=\"position:absolute;left:15px;top:136px\">\n<div class=\"gtx-trans-icon\"> </div>\n</div>"
+      },
+      "source": {
+        "book": "IDRotF"
+      },
+      "activation": {
+        "type": "hour",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": null,
+        "units": "inst"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "touch"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 7,
+      "school": "trs",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "флакон ртути стоимостью 500 зм и человеческая кукла в натуральную величину, расходуемые заклинанием, и замысловатый хрустальный жезл стоимостью не менее 1500 зм, который не расходуется",
+        "consumed": true,
+        "cost": 500,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard"
+    ],
+    "_id": "6657295fefd0587b8c39f48f",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:55.961Z",
+    "updatedAt": "2024-05-29T13:10:55.961Z",
+    "__v": 0
+  }
+]

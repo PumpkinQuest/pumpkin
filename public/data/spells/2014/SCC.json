@@ -1,0 +1,477 @@
+[
+  {
+    "name": "Вихрь искривления [Vortex Warp]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div> </div>\n<div>\n<div>\n<p>Вы магическим образом сворачиваете пространство вокруг другого существа, которое видите в пределах дистанции. Цель должна преуспеть в испытании Выносливости (цель может добровольно провалить), иначе будет телепортирована в незанятое пространство по вашему выбору, которое вы можете видеть в пределах дистанции заклинания.</p>\n<p>Выбранное пространство должно находиться на поверхности или в жидкости, в котором цель может находиться без необходимости протискиваться.</p>\n<p><strong>На высоких кругах</strong>: Если вы сотворяете это заклинание, используя ячейку 3-го круга или выше, дистанция заклинания увеличивается на 30 футов, за каждый круг ячейки выше второго.</p>\n</div>\n</div>"
+      },
+      "source": {
+        "book": "SCC"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": null,
+        "units": "inst"
+      },
+      "target": {
+        "value": 0,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 90,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "con",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 2,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": false,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard",
+      "sorcerer",
+      "artificer"
+    ],
+    "_id": "66572959efd0587b8c39f12a",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:49.838Z",
+    "updatedAt": "2024-05-29T13:10:49.838Z",
+    "__v": 0
+  },
+  {
+    "name": "Заимствованные знания [Borrowed Knowledge]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<p>Вы черпаете знания у духов прошлого.</p>\n<p>Выберите один навык, в котором вы не умелы. На время действия заклинания вы получаете умение в выбранном навыке. Заклинание заканчивается раньше, если вы сотворяете его снова.</p>\n</div>"
+      },
+      "source": {
+        "book": "SCC"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "hour"
+      },
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": "self"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "self"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 2,
+      "school": "div",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "книга стоимостью не менее 25 зм",
+        "consumed": false,
+        "cost": 25,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "bard",
+      "wizard",
+      "cleric",
+      "warlock"
+    ],
+    "_id": "6657295aefd0587b8c39f1f4",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:50.955Z",
+    "updatedAt": "2024-05-29T13:10:50.955Z",
+    "__v": 0
+  },
+  {
+    "name": "Искусная острóта [Silvery barbs]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div>\n<p>Вы магическим образом отвлекаете спровоцировавшее вас существо и превращаете его секундное замешательство в ободрение другого существа. Спровоцировавшее вас существо должно повторно совершить бросок [[/r d20]] и использовать меньшее значение.</p>\n<p>После чего вы можете выбрать другое существо, которое вы видите в пределах досягаемости (это можете быть и вы). Выбранное существо получает преимущество на следующий бросок атаки, проверку характеристики или испытания, который оно совершает в течение 1 минуты. Существо может иметь на себе лишь одно усиление от этого заклинания.</p>\n</div>"
+      },
+      "source": {
+        "book": "SCC"
+      },
+      "activation": {
+        "type": "reaction",
+        "cost": 1,
+        "condition": "1 реакция, совершаемая вами когда видимое вами в пределах 60 футов от вас существо преуспевает в броске атаки, проверке характеристики или испытания"
+      },
+      "duration": {
+        "value": null,
+        "units": "inst"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 60,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "d20",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 1,
+      "school": "enc",
+      "components": {
+        "vocal": true,
+        "somatic": false,
+        "material": false,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "bard",
+      "wizard",
+      "sorcerer"
+    ],
+    "_id": "6657295befd0587b8c39f238",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:51.355Z",
+    "updatedAt": "2024-05-29T13:10:51.355Z",
+    "__v": 0
+  },
+  {
+    "name": "Увлекательная прогулка [Kinetic Jaunt]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<p>Вы магическим образом усиливаете свои движение танцевальными шагами, даруя себе следующие преимущества:</p>\n<ul>\n<li>Ваша скорость ходьбы увеличивается на 10 футов.</li>\n<li>Вы не провоцируете @Compendium[laaru-dnd5-hw.actions.VYUx2EEt4eJxOamp]{внеочередные атаки}.</li>\n<li>Вы можете перемещаться сквозь других существ, как если бы они были @Compendium[laaru-dnd5-hw.conditions.WrXQxa4m8MPq1p9i]{пересечённой местностью}. Если вы заканчиваете свой ход в пространстве другого существа, то вас выталкивает в последнее занимаемое вами незанятое пространство и вы получаете [[/r 1d8]] урона силой.</li>\n</ul>"
+      },
+      "source": {
+        "book": "SCC"
+      },
+      "activation": {
+        "type": "bonus",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": "self"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "self"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [
+          [
+            "1d8",
+            "force"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 2,
+      "school": "trs",
+      "components": {
+        "vocal": false,
+        "somatic": true,
+        "material": false,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "bard",
+      "wizard",
+      "sorcerer",
+      "artificer"
+    ],
+    "_id": "66572960efd0587b8c39f4e1",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:56.682Z",
+    "updatedAt": "2024-05-29T13:10:56.682Z",
+    "__v": 0
+  },
+  {
+    "name": "Увядание и цветение [Wither and Bloom]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div> </div>\n<div>\n<div>\n<p>Вы пробуждаете жизнь и смерть в сфере радиусом 10 футов, в указанной точке в пределах дистанции заклинания. Каждое существо по вашему выбору в этой области должно пройти испытание Выносливости, получая [[/r 2d6]] некротического урона в случае провала или половину этого урона в случае успеха. Немагическая растительность в этой области увядает.</p>\n<p>Кроме того, одно существо по вашему выбору в этой области может потратить и бросить одну из своих неизрасходованных Костей Здоровья, восстанавливая себе количество ПЗ, равное результату броска + модификатор вашей базовой характеристики.</p>\n<p><strong>На высоких кругах</strong>: Если вы сотворяете это заклинание, используя ячейку 3-го круга или выше, урон увеличивается на [[/r 1d6]] за каждый круг ячейки выше второго, а количество Костей Здоровья, которые существо может потратить и добавить к броску восстановления ПЗ увеличивается на 1 каждый круг ячейки выше второго.</p>\n</div>\n</div>"
+      },
+      "source": {
+        "book": "SCC"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": null,
+        "units": "inst"
+      },
+      "target": {
+        "value": 10,
+        "width": null,
+        "units": "ft",
+        "type": "radius"
+      },
+      "range": {
+        "value": 60,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [
+          [
+            "2d6",
+            "necrotic"
+          ],
+          [
+            "",
+            "healing"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "con",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 2,
+      "school": "nec",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "увядшая виноградная лоза, свернутая петлёй",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "level",
+        "formula": "1d6"
+      }
+    },
+    "classes": [
+      "wizard",
+      "druid",
+      "sorcerer"
+    ],
+    "_id": "66572960efd0587b8c39f4e6",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:56.733Z",
+    "updatedAt": "2024-05-29T13:10:56.733Z",
+    "__v": 0
+  }
+]

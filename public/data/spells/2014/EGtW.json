@@ -1,0 +1,1362 @@
+[
+  {
+    "name": "Благословение удачи [Fortune's Favor]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div> </div>\n<div>\n<div>\n<div>\n<p>Вы наделяете скрытой удачей себя или одно согласное существо, которое вы можете видеть в пределах дистанции. Когда выбранное существо совершает бросок атаки, проверку характеристики или испытание до окончания заклинания, оно может окончить заклинание на себе и бросить дополнительный [[/r d20]] и решить, какой из бросков использовать. В качестве альтернативы, когда по выбранному существу совершается бросок атаки, оно может окончить заклинание на себе и бросить дополнительный [[/r d20]] и решить, какой из бросков использовать: цели или противника.</p>\n<p>Если оригинальный бросок [[/r d20]] совершался с преимуществом или помехой, существо совершает дополнительный бросок [[/r d20]] после того, как оригинальный бросок был совершён с преимуществом или помехой.</p>\n<p><strong>На высоких кругах</strong>. Если вы сотворяете это заклинание, используя ячейку 3-го круга или выше, вы можете сделать целью одно дополнительное существо за каждую ячейку выше второго.</p>\n</div>\n</div>\n</div>"
+      },
+      "source": {
+        "book": "EGtW"
+      },
+      "activation": {
+        "type": "minute",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "hour"
+      },
+      "target": {
+        "value": 0,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 60,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "d20",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 2,
+      "school": "div",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "жемчужина, стоящая как минимум 100 зм, расходуемая заклинанием",
+        "consumed": true,
+        "cost": 100,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard"
+    ],
+    "_id": "66572959efd0587b8c39f107",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:49.659Z",
+    "updatedAt": "2024-05-29T13:10:49.659Z",
+    "__v": 0
+  },
+  {
+    "name": "Брешь в реальности",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "Вы разрушаете барьеры между реальностями и временными рамками, толкая существо в смятение и безумие.\n\nЦель должна преуспеть в спасброске Мудрости, иначе попадет под действие эффекта. Попавшая под эффект цель не может совершать реакции и должна бросать к10 в начале каждого своего хода, чтобы определить что происходит с целью согласно таблице:\n\nк10\tЭффект\n1-2\tВзгляд с Дальнего Планы. Цель получает 6к12 психического урона и становится ошеломлённым до конца хода.\n\n3-5\tБросок через разрыв. Цель должно преуспеть в спасброске Ловкости, иначе оно получит 8к12 урона силовым полем в случаи провала и половину этого урона в случае успеха.\n\n6-8\tЧервоточина. Цель телепортируется на расстояние до 30 футов в незанятое пространство по вашему выбору, которое вы можете увидеть. Цель также должна получить 10к12 урона силовым полем и стать сбитой с ног.\n\n9-10\tХолод Темной Пустоты. Цель получает 10к12 урона холодом и ослепляется до конца хода.\n\nВ конце каждого своего хода цель может совершать спасбросок Мудрости. В случае успеха на этой цели эффект заканчивается."
+      },
+      "source": {
+        "book": "EGtW"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "target": {
+        "units": "ft",
+        "type": "creature"
+      },
+      "range": {
+        "value": 60,
+        "long": null,
+        "units": "ft"
+      },
+      "actionType": "save",
+      "damage": {
+        "parts": [
+          [
+            "6к12/8к12/10к12"
+          ]
+        ]
+      },
+      "save": {
+        "ability": "wis"
+      },
+      "level": 8,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "concentration": true
+      },
+      "materials": {
+        "value": "хрустальная призма"
+      }
+    },
+    "classes": [
+      "wizard"
+    ],
+    "_id": "66572959efd0587b8c39f111",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:49.709Z",
+    "updatedAt": "2024-05-29T13:10:49.709Z",
+    "__v": 0
+  },
+  {
+    "name": "Временной сдвиг [Temporal Shunt]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div>Вы указываете на существо, совершающее атаку или творящее заклинание, и оно должно преуспеть в испытании Мудрости, иначе оно исчезает, оказываясь в ином временном промежутке, в котором его атака промахивается, а заклинание не оказывает никакого эффекта. В начале своего следующего хода цель появляется в том же месте или ближайшем к нему незанятом пространстве. Цель не помнит как вы творили заклинание и как она была подвержена эффекту этого заклинания. </div>\n<div>\n<p><strong>На высоких кругах</strong>. Если вы сотворяете это заклинание, используя ячейку 6-го круга или выше, вы можете выбрать в качестве цели одно дополнительное существо за каждый круг выше пятого. Все цели должны быть в пределах 30 футов друг от друга.</p>\n</div>"
+      },
+      "source": {
+        "book": "EGtW"
+      },
+      "activation": {
+        "type": "reaction",
+        "cost": 1,
+        "condition": "когда существо, которое вы видите, делает бросок атаки или начинает творить заклинание"
+      },
+      "duration": {
+        "value": "1",
+        "units": "round"
+      },
+      "target": {
+        "value": 0,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 120,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "wis",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 5,
+      "school": "trs",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": false,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard"
+    ],
+    "_id": "6657295aefd0587b8c39f15b",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:50.086Z",
+    "updatedAt": "2024-05-29T13:10:50.086Z",
+    "__v": 0
+  },
+  {
+    "name": "Гравитационная воронка [Gravity Sinkhole]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div> </div>\n<div>\n<div>\n<div>\n<p>Сфера разрушительной силы радиусом 20 футов появляется в видимой вами точке пространства, резко притягивая существ к своему центру. Каждое существо в области сферы должно пройти испытание Выносливости. При провале существо получает [[/r 5d10]] урона силой, и притягивается к центру сферы по прямой, заканчивая передвижение в незанятом пространстве как можно ближе к центру (даже если он находится в воздухе). При успехе существо получает половину урона и не притягивается.</p>\n<p><strong>На высоких кругах</strong>. Если вы сотворяете это заклинание, используя ячейку 5-го круга или выше, урон увеличивается на [[/r 1d10]] за каждый круг выше четвертого.</p>\n</div>\n</div>\n</div>"
+      },
+      "source": {
+        "book": "EGtW"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": null,
+        "units": "inst"
+      },
+      "target": {
+        "value": 0,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 120,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [
+          [
+            "5d10",
+            "force"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "con",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 4,
+      "school": "evo",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "шарик из черного мрамора",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "level",
+        "formula": "1d10"
+      }
+    },
+    "classes": [
+      "wizard"
+    ],
+    "_id": "6657295aefd0587b8c39f18c",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:50.349Z",
+    "updatedAt": "2024-05-29T13:10:50.349Z",
+    "__v": 0
+  },
+  {
+    "name": "Гравитационный разлом [Gravity Fissure]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div> </div>\n<div>\n<div>\n<div>\n<p>Вы создаёте червоточину в пространстве, обладающую огромным притяжением. Червоточина исходит от вас на 100 футов в длину и 5 футов в ширину. Все существа, попавшие в эту линию, должны пройти испытание Выносливости, получая [[/r 8d8]] урона силой при провале и половину этого урона при успехе. Все существа в пределах 10 футов от линии, не находящиеся в ней, должны преуспеть в испытании Выносливости, иначе получит [[/r 8d8]] урона силой и притянутся по прямой к линии, пока не окажутся в её пространстве.</p>\n<p><strong>На высоких кругах</strong>. Если вы сотворяете это заклинание, используя ячейку 7-го круга или выше, урон увеличивается на [[/r 1d8]] за каждый круг выше шестого.</p>\n</div>\n</div>\n</div>"
+      },
+      "source": {
+        "book": "EGtW"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": null,
+        "units": "inst"
+      },
+      "target": {
+        "value": 100,
+        "width": null,
+        "units": "ft",
+        "type": "line"
+      },
+      "range": {
+        "value": 0,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [
+          [
+            "8d8",
+            "force"
+          ],
+          [
+            "8d8",
+            "force"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "con",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 6,
+      "school": "evo",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "горсть железных опилок",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "level",
+        "formula": "1d8"
+      }
+    },
+    "classes": [
+      "wizard"
+    ],
+    "_id": "6657295aefd0587b8c39f191",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:50.377Z",
+    "updatedAt": "2024-05-29T13:10:50.377Z",
+    "__v": 0
+  },
+  {
+    "name": "Дар готовности [Gift of Alacrity]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<p>Вы касаетесь согласного существа. На время действия заклинания цель может прибавлять [[/r 1d8]] к своим броскам инициативы.</p>\n</div>"
+      },
+      "source": {
+        "book": "EGtW"
+      },
+      "activation": {
+        "type": "minute",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "8",
+        "units": "hour"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "touch"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "1d8",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 1,
+      "school": "div",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": false,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard"
+    ],
+    "_id": "6657295aefd0587b8c39f1b4",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:50.581Z",
+    "updatedAt": "2024-05-29T13:10:50.581Z",
+    "__v": 0
+  },
+  {
+    "name": "Карман на запястье [Wristpocket]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<div>\n<p>Вы делаете движение кистью, заставляя один предмет в вашей руке исчезнуть. Предмет, который вы способны держать и весом не более 5 фунтов, перемещается в карманное измерение, где остается на время действия заклинания.</p>\n<p>До окончания заклинания, вы можете использовать действие чтобы вернуть предмет в вашу свободную руку, и вы можете использовать действие чтобы спрятать его обратно в карманное измерение. После окончания заклинания, предмет, оставшийся в карманном измерении, падает у ваших ног.</p>\n</div>\n</div>"
+      },
+      "source": {
+        "book": "EGtW"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "hour"
+      },
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": "self"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "self"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 2,
+      "school": "con",
+      "components": {
+        "vocal": false,
+        "somatic": true,
+        "material": false,
+        "ritual": true,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard"
+    ],
+    "_id": "6657295befd0587b8c39f247",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:51.453Z",
+    "updatedAt": "2024-05-29T13:10:51.453Z",
+    "__v": 0
+  },
+  {
+    "name": "Неподвижный объект [Immovable Objec]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div> </div>\n<div>\n<div>\n<div>\n<p>Вы касаетесь предмета, вес которого не превышает 10 фунтов и магическим образом фиксируете его в пространстве. Вы и указанные вами существа могут перемещать объект как обычно. Также вы можете указать пароль, который при его произнесении в 5 футов от объекта подавляет действие заклинания на 1 минуту.</p>\n<p>Если предмет находится в воздухе, он может выдержать нагрузку до 4000 фунтов (1800 кг), при превышении которой заклинание заканчивается. Существо может действием совершить проверку Силы против СЛ ваших заклинаний. При успехе оно может сдвинуть объект на расстояние до 10 футов.</p>\n<p><strong>На высоких кругах</strong>. Если вы сотворяете заклинание, используя ячейку 4-го или 5-го круга, то максимальная нагрузка увеличивается до 8000 фунтов (3600 кг), СЛ сдвига увеличивается на 5, а длительность заклинания увеличивается до 24 часов. Если вы сотворяете заклинание, используя ячейку 6-го круга или выше, то максимальная нагрузка увеличивается до 20000 фунтов (8000 кг), СЛ сдвига увеличивается на 10, а заклинание длится, пока не рассеется.</p>\n</div>\n</div>\n</div>"
+      },
+      "source": {
+        "book": "EGtW"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "hour"
+      },
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "touch",
+        "type": ""
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "touch"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 2,
+      "school": "trs",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "золотая пыль стоимостью не менее 25 зм, расходуемая заклинанием",
+        "consumed": true,
+        "cost": 25,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard"
+    ],
+    "_id": "6657295cefd0587b8c39f2d2",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:52.397Z",
+    "updatedAt": "2024-05-29T13:10:52.397Z",
+    "__v": 0
+  },
+  {
+    "name": "Обессиливающий укол [Sapping Sting]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div>\n<p>Вы истощаете жизненные силы одного существа, которое можете видеть в пределах дистанции. Цель должна преуспеть в испытании Выносливости или получить [[/r 1d4]] некротического урона и @Compendium[laaru-dnd5-hw.conditions.eMFvAErGzA4N1CNW]{распластаться}.</p>\n<p>Урон от этого заклинания увеличивается на [[/r 1d4]] при достижении 5-го уровня ([[/r 2d4]]), 11-го уровня ([[/r 3d4]]) и 17-го уровня ([[/r 4d4]]).</p>\n</div>"
+      },
+      "source": {
+        "book": "EGtW"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": null,
+        "units": "inst"
+      },
+      "target": {
+        "value": 1,
+        "width": null,
+        "units": "",
+        "type": "creature"
+      },
+      "range": {
+        "value": 30,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [
+          [
+            "1d4",
+            "necrotic"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "con",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 0,
+      "school": "nec",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": false,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "cantrip",
+        "formula": "1d4"
+      }
+    },
+    "classes": [
+      "wizard"
+    ],
+    "_id": "6657295cefd0587b8c39f2e1",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:52.512Z",
+    "updatedAt": "2024-05-29T13:10:52.512Z",
+    "__v": 0
+  },
+  {
+    "name": "Притяжение [Magnify Gravity]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "\n<div class=\"rd__b  rd__b--3\">\n<div>\n<div>\n<p>Сила притяжения увеличивается на некоторое время в сфере с радиусом 10 футов, центром которой является видимая точка пространства в пределах дальности. В момент появления сферы, все существа в её пределах должны пройти испытание Выносливости. При провале существо получает [[/r 2d8]] урона силой, и его скорость уменьшается вдвое до конца его следующего хода. В случае успеха существо получает половину урона и его скорость не уменьшается.</p>\n<p>До конца вашего следующего хода, чтобы в сфере поднять или сдвинуть предмет, который никто не несёт и не носит, необходимо преуспеть в проверке Силы СЛ вашего испытания заклинаний.</p>\n<p><strong>На высоких кругах</strong>. Если вы сотворяете это заклинание, используя ячейку 2-го круга или выше, урон увеличивается на [[/r 1d8]] за каждый круг ячейки выше первого.</p>\n</div>\n</div>\n</div>"
+      },
+      "source": {
+        "book": "EGtW"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "round"
+      },
+      "target": {
+        "value": 0,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 60,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [
+          [
+            "2d8",
+            "force"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "con",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 1,
+      "school": "trs",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": false,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "level",
+        "formula": "1d8"
+      }
+    },
+    "classes": [
+      "wizard"
+    ],
+    "_id": "6657295eefd0587b8c39f3d9",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:54.440Z",
+    "updatedAt": "2024-05-29T13:10:54.440Z",
+    "__v": 0
+  },
+  {
+    "name": "Ревущая бездна [Ravenous Void]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div><div><p>Вы создаёте сферу разрушительной гравитации радиусом 20 футов с центром в видимой точке в пределах дистанции. На время действия заклинания пространство сферы и область радиусом 100 футов вокруг неё является @Compendium[laaru-dnd5-hw.conditions.WrXQxa4m8MPq1p9i]{пересечённой местностью}. Все немагические предметы, которые никто не носит и не несёт, полностью находящиеся в сфере, уничтожаются.</p><p>Сразу после появления, а также в начале каждого вашего хода до окончания заклинания, все незакрепленные предметы в пределах 100 футов от сферы притягиваются к центру, оканчивая движение как можно ближе к центру. Существа должны пройти испытание Силы, при провале подвергаясь этому эффекту.</p><p>Существо, начинающее ход внутри или впервые за ход входящее в пространство сферы получает [[/r 5d10]] урона силой и становится @Compendium[laaru-dnd5-hw.conditions.8LBZMAHPd6dQ8CTN]{обездвиженной} до тех пор, пока не покинет пространство сферы. Если сфера находится в воздухе, обездвиженное существо парит в её пространстве. Существо внутри сферы может действием совершить проверку Силы против СЛ ваших заклинаний, заканчивая на себе состояние обездвиженный или другом существе в пределах досягаемости. Если ПЗ существа уменьшаются до 0, оно бесследно уничтожается со всеми немагическими предметами, которое оно несёт или носит.</p></div></div>"
+      },
+      "source": {
+        "book": "EGtW"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "target": {
+        "value": 0,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 1000,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [
+          [
+            "5d10",
+            "force"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "str",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 9,
+      "school": "evo",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "маленькая железная девятиконечная звезда",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard"
+    ],
+    "_id": "6657295fefd0587b8c39f42d",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:55.112Z",
+    "updatedAt": "2024-05-29T13:10:55.112Z",
+    "__v": 0
+  },
+  {
+    "name": "Связь сущностей [Tether Essence]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<div>\n<div>\n<p>Два существа, видимых в пределах дистанции, должны пройти испытание Выносливости. Бросок совершается с помехой, если существа находятся не дальше 30 футов друг от друга. Оба существа могут по желанию провалить этот бросок. Если хотя бы одно существо преуспевает в испытании, заклинание не имеет эффекта. Если оба существа проваливают испытание, существа магически соединяются друг с другом на время действия заклинания, вне зависимости от расстояния между ними. Если одно существо получает урон, второе существо получает тот же урон. Если одно существо восстанавливает ПЗ, другое существо восстанавливает то же самое количество ПЗ. Когда ПЗ одного из существ опускается до 0, заклинание заканчивается на обоих. Если заклинание заканчивается на одном существе, оно заканчивается на другом.</p>\n</div>\n</div>\n</div>"
+      },
+      "source": {
+        "book": "EGtW"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "hour"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 60,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "con",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 7,
+      "school": "nec",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "катушка с платиновым шнуром стоимостью не менее 250 зм, расходуемая заклинанием",
+        "consumed": true,
+        "cost": 250,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard"
+    ],
+    "_id": "6657295fefd0587b8c39f446",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:55.348Z",
+    "updatedAt": "2024-05-29T13:10:55.348Z",
+    "__v": 0
+  },
+  {
+    "name": "Силовая волна [Pulse Wave]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div> </div>\n<div>\n<div>\n<div>\n<p>Вы создаёте сильное давление, выпускаемое в форме 30-футового конуса, и определяете направление волны. Каждое существо в пределах конуса должно пройти испытание Выносливости, получая [[/r 6d6]] урона силой при провале или половину этого урона при успехе. Все существа, провалившие испытание, в зависимости от вашего решения либо притягиваются к вам, либо отталкиваются от вас на 15 футов. Кроме того, все незакреплённые предметы в области соответствующе перемещаются на 15 футов.</p>\n<p><strong>На высоких кругах</strong>. Если вы сотворяете это заклинание, используя ячейку 4-го круга или выше, урон увеличивается на [[/r 1d6]], а расстояние толчка — на 5 футов за каждый круг ячейки выше третьего.</p>\n</div>\n</div>\n</div>"
+      },
+      "source": {
+        "book": "EGtW"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": null,
+        "units": "inst"
+      },
+      "target": {
+        "value": 30,
+        "width": null,
+        "units": "ft",
+        "type": "cone"
+      },
+      "range": {
+        "value": 0,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [
+          [
+            "6d6",
+            "force"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "con",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 3,
+      "school": "evo",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": false,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "level",
+        "formula": "1d6"
+      }
+    },
+    "classes": [
+      "wizard"
+    ],
+    "_id": "6657295fefd0587b8c39f459",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:55.493Z",
+    "updatedAt": "2024-05-29T13:10:55.493Z",
+    "__v": 0
+  },
+  {
+    "name": "Тёмная звезда [Dark Star]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div>\n<p>Вы создаёте сферу с радиусом до 40 фт. в указанной точке в пределах дистанции заклинания. Область внутри этой сферы заполнена магической тьмой и сокрушительной гравитационной силой.</p>\n<p>На время действия заклинания область сферы является @Compendium[laaru-dnd5-hw.conditions.WrXQxa4m8MPq1p9i]{пересечённой местностью}. Существо с @Compendium[laaru-dnd5-hw.conditions.ISAzCKx8W9pk8GB1]{ночным} зрением не может видеть сквозь магическую тьму, и немагический свет не может осветить её. Никакой звук не может быть создан внутри сферы или проходить через её область.</p>\n<p>Любое существо или объект, полностью находящийся внутри сферы, невосприимчиво для урона громом, и существа являются @Compendium[laaru-dnd5-hw.conditions.JBEii8TGJiUu9cn2]{глухими}. Сотворять заклинание, включающее словесный компонент, так же невозможно. Любое существо, которое впервые за ход входит в область сферы или начинает там ход должно пройти испытание Выносливости. При провале существо получает [[/r 8d10]] урона силой, или половину урона при успехе. Если этот урон опускает ПЗ существа до 0, оно распадается. Распавшееся существо, а также всё, что оно несло и носило, кроме магических предметов, превращается в кучку мелкого серого порошка.</p>\n</div>"
+      },
+      "source": {
+        "book": "EGtW"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "target": {
+        "value": 0,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 150,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [
+          [
+            "8d10",
+            "force"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "con",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 8,
+      "school": "evo",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "осколок оникса и капля крови заклинателя, расходуемые заклинанием",
+        "consumed": true,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard"
+    ],
+    "_id": "66572960efd0587b8c39f4cd",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:56.455Z",
+    "updatedAt": "2024-05-29T13:10:56.455Z",
+    "__v": 0
+  },
+  {
+    "name": "Утрата времени [Time Ravage]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<div>\n<div>\n<p>Вы нацеливаетесь на существо, видимое в пределах дистанции, и подвергаете её процессу опустошающего старения. Существо должно пройти испытание Выносливости. При провале, существо получает [[/r 10d12]] некротического урона, и половину этого урона при успехе. При провале, существо стареет до той степени, при которой оно умрёт от старости через 30 суток. В таком состоянии, цель совершает броски атаки, проверки характеристик и испытаний с помехой, и её скорость уменьшена вдвое. Только заклинания @Compendium[laaru-dnd5-hw.spells.3DmrqW87SyWdaa8T]{Желание} и @Compendium[laaru-dnd5-hw.spells.lFqzcFBz3F0u96i1]{Высшее восстановление}, сотворённое как заклинание 9-го круга, могут обратить вспять действие этого заклинания.</p>\n</div>\n</div>\n</div>"
+      },
+      "source": {
+        "book": "EGtW"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": null,
+        "units": "inst"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 90,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [
+          [
+            "10d12",
+            "necrotic"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "con",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 9,
+      "school": "nec",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "песочные часы, наполненные алмазной пылью стоимостью не менее 5000 зм, поглощаемые заклинанием",
+        "consumed": true,
+        "cost": 5000,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard"
+    ],
+    "_id": "66572961efd0587b8c39f504",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:57.038Z",
+    "updatedAt": "2024-05-29T13:10:57.038Z",
+    "__v": 0
+  }
+]

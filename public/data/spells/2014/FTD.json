@@ -1,0 +1,673 @@
+[
+  {
+    "name": "Драконоподобное превращение [Draconic Transformation]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<p>Издав громкий рык, вы прибегаете к магии драконов, чтобы преобразить себя, приобретая черты дракона. Пока заклинание активно, вы получаете следующие преимущества:</p>\n<ul>\n<li><strong>Слепое зрение</strong>. Вы получаете @Compendium[laaru-dnd5-hw.conditions.x7Ty7ddxZGFudOeO]{слепозрение} в пределах 30 футов. В пределах этой дистанции вы можете видеть всё, что не находится за полным @Compendium[laaru-dnd5-hw.conditions.xNd8TVxm9NpiJsw1]{укрытием}, даже если вы @Compendium[laaru-dnd5-hw.conditions.apswG1jicwhlWT5R]{ослеплены} или находитесь в @Compendium[laaru-dnd5-hw.conditions.QaHqDYEkBSnpDwhB]{темноте}. Более того, вы можете увидеть @Compendium[laaru-dnd5-hw.conditions.z03U5lNQtd71dWJT]{невидимое} существо в пределах этой дистанции, если только оно не преуспело в попытке спрятаться от вас.</li>\n<li><strong>Оружие дыхания</strong>. Когда вы сотворяете это заклинание, а также в последующие ходы, бонусным действием, вы можете выдыхать переливающуюся энергию 60-футовом конусом. Каждое существо в этой области должно пройти испытание Ловкости, получая [[/r 6d8]] урона силой в случае провала и половину этого урона в случае успеха.</li>\n<li><strong> Крылья</strong>. Бесплотные крылья расправляются за вашей спиной, даруя вам скорость полёта 60 футов.</li>\n</ul>"
+      },
+      "source": {
+        "book": "FTD"
+      },
+      "activation": {
+        "type": "bonus",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": "self"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "self"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [
+          [
+            "6d8",
+            "force"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "dex",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 7,
+      "school": "trs",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "статуэтка дракона, стоимостью не менее 500 зм",
+        "consumed": false,
+        "cost": 500,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard",
+      "druid",
+      "sorcerer"
+    ],
+    "_id": "6657295aefd0587b8c39f1c3",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:50.671Z",
+    "updatedAt": "2024-05-29T13:10:50.671Z",
+    "__v": 0
+  },
+  {
+    "name": "Озорство Натайра [Nathair's Mischief]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<p>Вы заполняете 20-футовый куб, который видите в пределах дистанции, магией Фей и Драконов. Совершите бросок по таблице «Озорной порыв» для определения создаваемого магического эффекта, и совершайте новый бросок в начале каждого вашего хода, пока заклинание не закончится. Вы можете переместить куб на 10 футов, прежде чем совершить бросок.</p>\n<table class=\"w-100 rd__table  stripe-odd-table\"><caption>Озорной порыв</caption>\n<thead>\n<tr>\n<th class=\"col-2 text-center\" system-rd-isroller=\"true\">[[/r d4]]</th>\n<th class=\"col-10\" system-rd-isroller=\"false\">Эффект</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td class=\"col-2 text-center\" system-roll-min=\"1\" system-roll-max=\"1\">1</td>\n<td class=\"col-10\">Запах яблочного пирога наполняет воздух и каждое существо в кубе должно преуспеть в испытании Мудрости, иначе станет @Compendium[laaru-dnd5-hw.conditions.5vKRVm8wXReUJasS]{обворожённым} вами до начала вашего следующего хода.</td>\n</tr>\n<tr>\n<td class=\"col-2 text-center\" system-roll-min=\"2\" system-roll-max=\"2\">2</td>\n<td class=\"col-10\">Букеты цветов появляются повсюду и каждое существо в кубе должно преуспеть в испытании Ловкости, иначе станет @Compendium[laaru-dnd5-hw.conditions.apswG1jicwhlWT5R]{ослеплённым} до начала вашего следующего хода, так как цветы брызгают водой им в лица.</td>\n</tr>\n<tr>\n<td class=\"col-2 text-center\" system-roll-min=\"3\" system-roll-max=\"3\">3</td>\n<td class=\"col-10\">Каждое существо в кубе должно преуспеть в испытании Мудрости, иначе оно будет смеяться до начала вашего следующего хода. Смеющееся существо @Compendium[laaru-dnd5-hw.conditions.3yQzUJzdrHg1OlIL]{выведено из строя} и использует всё своё передвижение, чтобы переместиться в случайном направлении.</td>\n</tr>\n<tr>\n<td class=\"col-2 text-center\" system-roll-min=\"4\" system-roll-max=\"4\">4</td>\n<td class=\"col-10\">Капли патоки начинают парить в кубе, превращая его в @Compendium[laaru-dnd5-hw.conditions.WrXQxa4m8MPq1p9i]{пересечённую местность} до начала вашего следующего хода.</td>\n</tr>\n</tbody>\n</table>\n</div>\n<div id=\"gtx-trans\" style=\"position:absolute;left:289px;top:453.5px\">\n<div class=\"gtx-trans-icon\"> </div>\n</div>"
+      },
+      "source": {
+        "book": "FTD"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 60,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 2,
+      "school": "ill",
+      "components": {
+        "vocal": false,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "кусочек корочки яблочного пирога",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "bard",
+      "wizard",
+      "sorcerer"
+    ],
+    "_id": "6657295cefd0587b8c39f315",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:52.916Z",
+    "updatedAt": "2024-05-29T13:10:52.916Z",
+    "__v": 0
+  },
+  {
+    "name": "Платиновый щит Фицбана [Fizban's Platinum Shield]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<p>Вы создаёте поле серебристого света, окружающее существо по вашему выбору в пределах дистанции (включая себя). Поле испускает @Compendium[laaru-dnd5-hw.conditions.BbWvc4m610EHv070]{тусклый свет} в радиусе 5 футов. Находясь в поле, существо получает следующие преимущества:</p>\n<ul>\n<li><strong>Укрытие</strong>. Существо получает @Compendium[laaru-dnd5-hw.conditions.xNd8TVxm9NpiJsw1]{укрытие} наполовину.</li>\n<li><strong>Устойчивость к урону</strong>. Существо получает @UUID[Compendium.laaru-dnd5-hw.conditions.w7WKEM8had6v4vy8]{устойчивость} к урону <em>кислотой, огнём, холодом, молнии </em>и <em>ядом</em>.</li>\n<li><strong>Увёртливость</strong>. Если существо попадает под действие эффекта, который позволяет ему совершить испытание Ловкости, чтобы получить только половину урона, вместо этого существо не получает никакого урона вовсе, если испытание было успешно, и только половину урона, если оно было провалено.</li>\n</ul>\n<p>Бонусным действием в последующие ходы вы можете переместить поле к другому существу находящемуся в 60 футах от поля.</p>"
+      },
+      "source": {
+        "book": "FTD"
+      },
+      "activation": {
+        "type": "bonus",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 60,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 6,
+      "school": "abj",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "покрытая платиной чешуя дракона, стоимостью не менее 500 зм",
+        "consumed": false,
+        "cost": 500,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard",
+      "sorcerer"
+    ],
+    "_id": "6657295defd0587b8c39f354",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:53.365Z",
+    "updatedAt": "2024-05-29T13:10:53.365Z",
+    "__v": 0
+  },
+  {
+    "name": "Поступь Ашардалона [Ashardalon's Stride]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<p>Из-под ваших ног вырывается бушующее драконье пламя, дарующее вам взрывное ускорение. Пока заклинание активно, ваша скорость ходьбы увеличивается на 20 футов, и ваше движение не вызывает @Compendium[laaru-dnd5-hw.actions.VYUx2EEt4eJxOamp]{внеочередных} атак.</p><p>Когда вы перемещаетесь в пределах 5 футов от существа или предмета, который не несут и не носят, оно получает [[/r 1d6]] урона огнём от вашего пылающего следа. Существо или предмет может получить этот урон только один раз за ход.</p><p><strong>На высоких кругах</strong>. Если вы сотворяете это заклинание, используя ячейку 4-го круга или выше, скорость увеличивается на 5 футов за каждый круг ячейки выше третьего. Урон огнём увеличивается на [[/r 1d6]] за каждый круг ячейки выше третьего.</p>"
+      },
+      "source": {
+        "book": "FTD"
+      },
+      "activation": {
+        "type": "bonus",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": "self"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "self"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [
+          [
+            "1d6",
+            "fire"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 3,
+      "school": "trs",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": false,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "level",
+        "formula": "1d6"
+      }
+    },
+    "classes": [
+      "wizard",
+      "ranger",
+      "sorcerer",
+      "artificer"
+    ],
+    "_id": "6657295defd0587b8c39f376",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:53.611Z",
+    "updatedAt": "2024-05-29T13:10:53.611Z",
+    "__v": 0
+  },
+  {
+    "name": "Призыв Духа Дракона [Summon Draconic Spirit]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "\n<p>Вы призываете @Compendium[laaru-dnd5-hw.monsters.E3jWvR4z9IMR3VzF]{Духа дракона}. Он проявляется в незанятом пространстве, которое вы можете видеть в пределах дистанции.</p>\n<p>Воплощённая форма духа использует блок статистики @Compendium[laaru-dnd5-hw.monsters.E3jWvR4z9IMR3VzF]{Дух дракона}. Когда вы сотворяете заклинание, выберите род дракона: цветной, самоцветный или металлический. Существо напоминает дракона выбранного рода, что определяет особенности духа, описанные в блоке статистики. Существо исчезает, когда его ПЗ опускаются до 0 или когда заклинание заканчивается. Это существо дружелюбно к вам и вашим товарищам. В бою существо получает вашу инициативу и ходит сразу же после вас. Оно подчиняется вашим словесным командам (никаких действий от вас не требуется). Если вы ничего не приказываете, то оно применяет действие @Compendium[laaru-dnd5-hw.actions.UMuz44p8fXeLCZn7]{Уклонение} и перемещается, избегая опасностей.</p>\n<p><strong>На высоких кругах</strong>. Если вы творите это заклинание, используя ячейку 6-го круга или выше, характеристики призываемого существа изменяются в соответствии с описанием в блоке статистики.</p>"
+      },
+      "source": {
+        "book": "FTD"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "hour"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 60,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "dex",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 5,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "предмет с выгравированным на нём изображением дракона, стоимостью не менее 500 зм",
+        "consumed": false,
+        "cost": 500,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard",
+      "druid",
+      "sorcerer"
+    ],
+    "_id": "6657295defd0587b8c39f38a",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:53.778Z",
+    "updatedAt": "2024-05-29T13:10:53.778Z",
+    "__v": 0
+  },
+  {
+    "name": "Психическое копье Раулотима [Raulothim's Psychic Lance]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<p>Вы выпускаете мерцающую пику психической силы из своего лба в существо, которое вы можете видеть в пределах дистанции. В качестве альтернативы вы можете произнести имя существа. Если названная цель находится в пределах дистанции, она становится целью заклинания, даже если вы её не видите. Если названная цель не находится в пределах дистанции, пика исчезает без эффекта.</p><p>Цель должна пройти испытание Интеллекта. В случае провала цель получает [[/r 7d6]] психического <span style=\"font-family:var(--font-primary)\">урона и @Compendium[laaru-dnd5-hw.conditions.3yQzUJzdrHg1OlIL]{выведена из строя} до начала вашего следующего хода. В случае успеха существо получает половину этого урона и не выведена из строя.</span></p><p><strong>На высоких кругах</strong>. Если вы сотворяете это заклинание, используя ячейку 5-го круга или выше, урон увеличивается на [[/r 1d6]] за каждый круг ячейки выше 4-го.</p>"
+      },
+      "source": {
+        "book": "FTD"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": null,
+        "units": "inst"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 120,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [
+          [
+            "7d6",
+            "psychic"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "int",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 4,
+      "school": "enc",
+      "components": {
+        "vocal": true,
+        "somatic": false,
+        "material": false,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "level",
+        "formula": "1d6"
+      }
+    },
+    "classes": [
+      "bard",
+      "wizard",
+      "warlock",
+      "sorcerer"
+    ],
+    "_id": "6657295eefd0587b8c39f402",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:54.736Z",
+    "updatedAt": "2024-05-29T13:10:54.736Z",
+    "__v": 0
+  },
+  {
+    "name": "Сковывающий лед Райма [Rime's Binding Ice]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<p>Порыв ледяной энергии исходит от вас 30-футовым конусом. Каждое существо в этой области должно пройти испытание Выносливости. При провале существо получает [[/r 3d8]] урона холодом и его удерживают ледяные образования в течение 1 минуты или до тех пор, пока оно или другое существо в пределах дистанции действием не разобьёт лёд. У существа, которое удерживается льдом, скорость уменьшается до 0. При успехе существо получает вдвое меньше урона, и оно не удерживается льдом.</p><p><strong>На высоких кругах</strong>. Если вы сотворяете это заклинание, используя ячейку 3-го круга или выше, урон увеличивается на [[/r 1d8]] за каждый круг ячейки выше второго.</p>"
+      },
+      "source": {
+        "book": "FTD"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": null,
+        "units": "inst"
+      },
+      "cover": null,
+      "target": {
+        "value": 30,
+        "width": null,
+        "units": "ft",
+        "type": "cone"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": null,
+        "max": "",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [
+          [
+            "3d8",
+            "cold"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "con",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 2,
+      "school": "evo",
+      "components": {
+        "vocal": false,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "флакон с талой водой",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "level",
+        "formula": "1d8"
+      }
+    },
+    "classes": [
+      "wizard",
+      "sorcerer"
+    ],
+    "_id": "6657295fefd0587b8c39f46c",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:55.629Z",
+    "updatedAt": "2024-05-29T13:10:55.629Z",
+    "__v": 0
+  }
+]

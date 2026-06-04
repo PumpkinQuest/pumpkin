@@ -1,5 +1,6 @@
 import { UserRound } from "lucide-react";
 import type { Metadata } from "next";
+import Breadcrumbs from "@/shared/components/Breadcrumbs";
 import NpcGenerator from "./components/NpcGenerator";
 
 export const metadata: Metadata = {
@@ -12,6 +13,7 @@ export default function NpcPage() {
     <div className="max-w-4xl mx-auto px-6 py-24 flex flex-col gap-8">
       {/* Заголовок */}
       <div className="flex flex-col gap-3">
+        <Breadcrumbs items={[{ label: "Главная", href: "/" }, { label: "Инструменты", href: "/tools" }, { label: "Генератор NPC" }]} />
         <div className="flex items-center gap-3">
           <UserRound size={24} className="text-pumpkin-orange" />
           <h1 className="text-3xl font-bold tracking-tight">Генератор NPC</h1>

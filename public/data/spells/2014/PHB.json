@@ -1,0 +1,4033 @@
+[
+  {
+    "name": "Аура живучести [Aura of Vitality]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<p>Исцеляющая энергия исходит от вас в ауре радиусом 30 футов. Пока длится заклинание, аура перемещается вместе с вами — вы остаётесь в её центре. Вы можете использовать бонусное действие, чтобы восстановить одному любому существу, находящемуся в ауре (включая вас), [[/r 2d6]] ПЗ.</p>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "target": {
+        "value": 30,
+        "width": null,
+        "units": "ft",
+        "type": "radius"
+      },
+      "range": {
+        "value": 0,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "heal",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [
+          [
+            "2d6",
+            "healing"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 3,
+      "school": "evo",
+      "components": {
+        "vocal": true,
+        "somatic": false,
+        "material": false,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "druid",
+      "cleric",
+      "paladin"
+    ],
+    "_id": "66572959efd0587b8c39f0f3",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:49.554Z",
+    "updatedAt": "2024-05-29T13:10:49.554Z",
+    "__v": 0
+  },
+  {
+    "name": "Аура жизни [Aura of Life]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<p>Энергия жизни исходит от вас в ауре радиусом 30 футов. Пока длится заклинание, аура перемещается вместе с вами — вы остаётесь в её центре. Каждое невраждебное существо в ауре (включая вас) получает @UUID[Compendium.laaru-dnd5-hw.conditions.w7WKEM8had6v4vy8]{устойчивость} к некротическому урону, а его максимум ПЗ нельзя уменьшить. Кроме того, каждое невраждебное живое существо внутри ауры восстанавливает 1 ПЗ, когда начинает свой ход в ауре с 0 ПЗ.</p>\n</div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "10",
+        "units": "minute"
+      },
+      "target": {
+        "value": 30,
+        "width": null,
+        "units": "ft",
+        "type": "radius"
+      },
+      "range": {
+        "value": 0,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "heal",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [
+          [
+            "",
+            "healing"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 4,
+      "school": "abj",
+      "components": {
+        "vocal": true,
+        "somatic": false,
+        "material": false,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "cleric",
+      "paladin"
+    ],
+    "_id": "66572959efd0587b8c39f0f8",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:49.580Z",
+    "updatedAt": "2024-05-29T13:10:49.580Z",
+    "__v": 0
+  },
+  {
+    "name": "Аура очищения [Aura of Purity]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<div class=\"rd__spc-inline-post\">Энергия чистоты исходит от вас в ауре радиусом 30 футов. Пока длится заклинание, аура перемещается вместе с вами — вы остаётесь в её центре. Каждое невраждебное существо в ауре (включая вас) не может заболеть, получает @UUID[Compendium.laaru-dnd5-hw.conditions.w7WKEM8had6v4vy8]{устойчивость} к урону ядом и преимущество к испытаниям против эффектов, вызывающих любые из перечисленных состояний:</div>\n<ul>\n<li class=\"rd__spc-inline-post\">@Compendium[laaru-dnd5-hw.conditions.JBEii8TGJiUu9cn2]{Глухота}</li>\n<li class=\"rd__spc-inline-post\">@Compendium[laaru-dnd5-hw.conditions.bM6mDYvBFw64wDMp]{Испуг}</li>\n<li class=\"rd__spc-inline-post\">@Compendium[laaru-dnd5-hw.conditions.5vKRVm8wXReUJasS]{Обворожение}</li>\n<li class=\"rd__spc-inline-post\">@Compendium[laaru-dnd5-hw.conditions.Tlc2LbRijKy9nxxb]{Отравление}</li>\n<li class=\"rd__spc-inline-post\">@Compendium[laaru-dnd5-hw.conditions.ER9Ol8MCW89tNbye]{Паралич}</li>\n<li class=\"rd__spc-inline-post\">@Compendium[laaru-dnd5-hw.conditions.apswG1jicwhlWT5R]{Слепота}</li>\n<li class=\"rd__spc-inline-post\">@Compendium[laaru-dnd5-hw.conditions.OviWCQAGcXISdTbj]{Шок}.</li>\n</ul>\n</div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "10",
+        "units": "minute"
+      },
+      "target": {
+        "value": 30,
+        "width": null,
+        "units": "ft",
+        "type": "radius"
+      },
+      "range": {
+        "value": 0,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 4,
+      "school": "abj",
+      "components": {
+        "vocal": true,
+        "somatic": false,
+        "material": false,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "cleric",
+      "paladin"
+    ],
+    "_id": "66572959efd0587b8c39f0fd",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:49.604Z",
+    "updatedAt": "2024-05-29T13:10:49.604Z",
+    "__v": 0
+  },
+  {
+    "name": "Быстрый колчан [Swift Quiver]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<p>Теперь ваш колчан содержит бесконечный запас немагических боеприпасов, которые будто сами прыгают вам в руку, стоит за ними потянуться.</p>\n<p>В каждый ваш ход, пока длится заклинание, вы можете использовать бонусное действие, чтобы совершить две атаки оружием, тратящим боеприпасы из қолчана. Каждый раз, когда вы совершаете такую дистанционную атаку, ваш колчан магически заменяет использованный вами боеприпас аналогичным немагическим боеприпасом. Все боеприпасы, созданные этим заклинанием, исчезают, когда заклинание прекращает действовать. Если колчан более не в вашем распоряжении, заклинание прекращает действовать.</p>\n</div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "bonus",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "touch",
+        "type": ""
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "touch"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 5,
+      "school": "trs",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "колчан, в котором есть хоть один боеприпас",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "ranger"
+    ],
+    "_id": "66572959efd0587b8c39f11b",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:49.762Z",
+    "updatedAt": "2024-05-29T13:10:49.762Z",
+    "__v": 0
+  },
+  {
+    "name": "Ведьмин снаряд [Witch Bolt]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\"><div class=\"rd__spc-inline-post\"><p>Трескучий разряд синей энергии обрушивается на существо в пределах дистанции, создавая между вами и целью постоянную дугу-молнию. Совершите дистанционную атаку заклинанием по этому существу. При попадании цель получает [[/r 1d12]] урона молнией, а в каждый ваш последующий ход, пока длится заклинание, вы можете использовать действие, чтобы автоматически нанести цели ещё  [[/r 1d12]] урона молнией. Заклинание прекращает действовать, если вы потратите действие на что-либо еще.  Заклинание также прекращается, если цель окажется за пределами дистанции заклинания или будет полностью укрыта от вас.</p></div><div class=\"rd__spc-inline-post\"><p><strong>На высоких кругах</strong>. Если вы сотворяете это заклинание, используя ячейку 2-го круга или выше, начальный урон увеличивается на  [[/r 1d12]] за каждый круг ячейки выше 1-го</p></div></div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 30,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "rsak",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [
+          [
+            "1d12",
+            "lightning"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 1,
+      "school": "evo",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "ветка дерева, в которое ударила молния",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "level",
+        "formula": "1d12"
+      }
+    },
+    "classes": [
+      "wizard",
+      "warlock",
+      "sorcerer",
+      "shaman",
+      "magus"
+    ],
+    "_id": "66572959efd0587b8c39f125",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:49.813Z",
+    "updatedAt": "2024-05-29T13:10:49.813Z",
+    "__v": 0
+  },
+  {
+    "name": "Воображаемая сила [Phantasmal Force]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\"><p>Вы создаёте иллюзию, и она укореняется в разуме существа, которое вы видите в пределах дистанции. Цель должна пройти испытание Интеллекта. При провале вы создаёте фантазм объекта, существа или иного видимого явления на ваш выбор размером не более 10-футового куба. Его наблюдает только цель и только пока длится заклинание. Заклинание не действует на нежить и конструкции.</p><p>Фантазм также воспроизводит звуки, температуру и прочие признаки, которые воспринимает только цель</p><p>Цель может использовать действие, чтобы изучить образ, пройдя проверку Интеллекта (Расследование). СЛ проверки равна СЛ испытаний против ваших заклинаний. При успехе существо распознаёт иллюзию, и заклинание прекращает действовать.</p><p>Пока заклинание влияет на цель, та воспринимает фантазм как реальность. Цель находит объяснения странным результатам взаимодействия с образом. К примеру, если цель пытается пройти по иллюзорному мосту через провал, она упадёт, провалившись сквозь него. Если цель переживёт падение, она будет считать, что мост всё же реален, а упала она по другой причине — ее толкнули, она поскользнулась, сильный ветер сдул ее, и тому подобное.</p><p>Цель настолько убеждена в реальности фантазма, что может даже получать от него урон. Фантазм, созданный в виде существа, может атаковать цель. Аналогично, если фантазм выглядит как пламя, кислота или лава, он может обжечь цель. Каждый раунд в ваш ход фантазм может нанести цели [[/r 1d6]] психического урона, если она в области фантазма или в пределах 5 футов от него и если иллюзия выглядит как существо или опасность, которые наносят урон. Цель считает, что получила урон того типа, который соответствует иллюзии.</p></div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "cover": null,
+      "target": {
+        "value": 10,
+        "width": null,
+        "units": "ft",
+        "type": "cube"
+      },
+      "range": {
+        "value": 60,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [
+          [
+            "1d6",
+            "psychic"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "int",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 2,
+      "school": "ill",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "клочок овечьей шерсти",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "bard",
+      "wizard",
+      "sorcerer"
+    ],
+    "_id": "6657295aefd0587b8c39f156",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:50.059Z",
+    "updatedAt": "2024-05-29T13:10:50.059Z",
+    "__v": 0
+  },
+  {
+    "name": "Вызов заграждения [Conjure Barrage]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<div class=\"rd__spc-inline-post\">Вы метаете немагическое оружие или стреляете немагическим боеприпасом в воздух, сотворяя множество его копий, которые обрушиваются на врага, а затем исчезают. Каждое существо в 60-футовом конусе должно пройти испытание Ловкости. Существо получает [[/r 3d8]] урона при провале или половину этого урона при успехе. Тип урона тот же, что у оружия или боеприпаса, использованного как реагент.</div>\n</div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": null,
+        "units": "inst"
+      },
+      "target": {
+        "value": 60,
+        "width": null,
+        "units": "ft",
+        "type": "cone"
+      },
+      "range": {
+        "value": 0,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "dex",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 3,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "один боеприпас или метательное оружие",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "ranger"
+    ],
+    "_id": "6657295aefd0587b8c39f169",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:50.144Z",
+    "updatedAt": "2024-05-29T13:10:50.144Z",
+    "__v": 0
+  },
+  {
+    "name": "Вызов залпа [Conjure Volley]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<p>Вы метаете немагическое оружие или стреляете немагическим боеприпасом в воздух и выбираете точку в пределах дистанции. Сотни копий использованного вами боеприпаса или оружия обрушиваются залпом с небес, а затем исчезают. Каждое существо в цилиндре радиусом 40 футов и высотой 20 футов с центром в выбранной точке должно пройти испытание Ловкости. Существо получает [[/r 8d8]] урона при провале или половину этого урона при успехе. Тип урона тот же, что у использованного оружия или боеприпаса.</p>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": null,
+        "units": "inst"
+      },
+      "target": {
+        "value": 40,
+        "width": null,
+        "units": "ft",
+        "type": "cylinder"
+      },
+      "range": {
+        "value": 150,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "dex",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 5,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "один боеприпас или метательное оружие",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "ranger"
+    ],
+    "_id": "6657295aefd0587b8c39f16e",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:50.177Z",
+    "updatedAt": "2024-05-29T13:10:50.177Z",
+    "__v": 0
+  },
+  {
+    "name": "Вызов на дуэль [Compelled Duel]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\"><p>Вы пытаетесь заставить существо принять ваш вызов на дуэль. Одно существо, которое вы видите в пределах дистанции, должно пройти испытание Мудрости. При провале божественная воля направляет это существо к вам. Пока длится заклинание, у него помеха к броскам атаки по всем существам, кроме вас, и всякий раз, когда оно пытается переместиться в пространство за пределами 30 футов от вас, оно должно проходить испытание Мудрости; при успехе этого испытания заклинание не ограничивает перемещение существа в этот ход.</p><p>Заклинание прекращает действовать, если вы атакуете любое другое существо, сотворяете заклинание, нацеленное на другое враждебное существо, или если существо, дружественное вам, нанесёт цели урон или сотворит на неё вредоносное заклинание, или если вы закончите ход более чем в 30 футах от цели.</p></div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "bonus",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 30,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "wis",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 1,
+      "school": "enc",
+      "components": {
+        "vocal": true,
+        "somatic": false,
+        "material": false,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "paladin"
+    ],
+    "_id": "6657295aefd0587b8c39f173",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:50.206Z",
+    "updatedAt": "2024-05-29T13:10:50.206Z",
+    "__v": 0
+  },
+  {
+    "name": "Гневная кара [Wrathful Smite]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<div class=\"rd__spc-inline-post\">В следующий раз, когда вы попадаете по существу атакой оружием в ближнем бою, пока длится заклинание, ваша атака дополнительно наносит [[/r 1d6]] психического урона. Кроме того, если цель — существо, оно должно пройти испытание Мудрости. При провале оно будет @Compendium[laaru-dnd5-hw.conditions.bM6mDYvBFw64wDMp]{испугано} вами, пока длится заклинание. Существо может в качестве действия пройти проверку Мудрости, чтобы собраться с духом и прекратить заклинание. СЛ равна СЛ испытаний против ваших заклинаний.</div>\n</div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "bonus",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": "creature"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [
+          [
+            "1d6",
+            "psychic"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "wis",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 1,
+      "school": "evo",
+      "components": {
+        "vocal": true,
+        "somatic": false,
+        "material": false,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "paladin"
+    ],
+    "_id": "6657295aefd0587b8c39f182",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:50.291Z",
+    "updatedAt": "2024-05-29T13:10:50.291Z",
+    "__v": 0
+  },
+  {
+    "name": "Голод Хадара [Hunger of Hadar]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\"><p>Вы открываете врата в межзвёздную пустоту, полную неведомых ужасов. Сфера черноты и мороза радиусом 20 футов появляется из точки в пределах дистанции и существует, пока длится заклинание. Пустота наполнена какофонией шёпота и чавканья, которую слышно на 30 футов вокруг. Никакой свет, ни магический, ни обычный, не может осветить эту область, и существа, полностью находящиеся в ее пределах, @Compendium[laaru-dnd5-hw.conditions.apswG1jicwhlWT5R]{слепы }.</p><p>Пустота создаёт искажение ткани пространства, её область — @Compendium[laaru-dnd5-hw.conditions.WrXQxa4m8MPq1p9i]{пересечённая местность}. Любое существо, начавшее свой ход в этой области, получает [[/r 2d6]] урона холодом. Любое существо, закончившее свой ход в области, должно пройти испытание Ловкости, при провале оно получает [[/r 2d6]] урона кислотой, когда его хватают скользкие потусторонние щупальца.</p></div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "cover": null,
+      "target": {
+        "value": 20,
+        "width": null,
+        "units": "ft",
+        "type": "sphere"
+      },
+      "range": {
+        "value": 150,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [
+          [
+            "2d6",
+            "cold"
+          ],
+          [
+            "2d6",
+            "acid"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "dex",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 3,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "солёное щупальце осьминога",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "warlock"
+    ],
+    "_id": "6657295aefd0587b8c39f187",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:50.320Z",
+    "updatedAt": "2024-05-29T13:10:50.320Z",
+    "__v": 0
+  },
+  {
+    "name": "Град шипов [Hail of Thorns]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<div class=\"rd__spc-inline-post\">Пока длится заклинание, в следующий раз, когда вы попадаете по существу дистанционной атакой оружием, возникает град шипов, который вырывается из вашего дистанционного оружия или боеприпаса. В дополнение к обычному эффекту атаки, её цель и каждое существо в пределах 5 футов от неё должны пройти испытание Ловкости. Каждое существо получает [[/r 1d10]] колющего урона при провале или половину этого урона при успехе.</div>\n<div class=\"rd__spc-inline-post\"><strong>На высоких кругах</strong>.  Если вы сотворяете это заклинание, используя ячейку 2-го круга или выше, урон увеличивается на [[/r 1d10]] за каждый круг ячейки выше 1-го (максимум до [[/r 6d10]]).</div>\n</div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "bonus",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": "self"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "self"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [
+          [
+            "1d10",
+            "piercing"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "dex",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 1,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "somatic": false,
+        "material": false,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "level",
+        "formula": "1d10"
+      }
+    },
+    "classes": [
+      "ranger"
+    ],
+    "_id": "6657295aefd0587b8c39f196",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:50.406Z",
+    "updatedAt": "2024-05-29T13:10:50.406Z",
+    "__v": 0
+  },
+  {
+    "name": "Громовая кара [Thunderous Smite]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<div class=\"rd__spc-inline-post\">Первый раз, когда вы попадаете атакой оружием в ближнем бою, пока длится заклинание, ваше оружие издает гром, который слышно в пределах 300 футов от вас, атака дополнительно наносит [[/r 2d6]] урона громом. Кроме того, если цель — существо, оно должно пройти испытание силы, при провале оно отталкивается на 10 футов и @Compendium[laaru-dnd5-hw.conditions.eMFvAErGzA4N1CNW]{распластывается}.</div>\n</div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "bonus",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": "self"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "self"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [
+          [
+            "2d6",
+            "thunder"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "str",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 1,
+      "school": "evo",
+      "components": {
+        "vocal": true,
+        "somatic": false,
+        "material": false,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "paladin"
+    ],
+    "_id": "6657295aefd0587b8c39f19b",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:50.435Z",
+    "updatedAt": "2024-05-29T13:10:50.435Z",
+    "__v": 0
+  },
+  {
+    "name": "Диссонирующий шёпот [Dissonant Whispers]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\"><div class=\"rd__spc-inline-post\"><p>Вы нашептываете нестройную мелодию, которую может слышать только одно выбранное вами существо в пределах дистанции, и причиняете ему невыносимую боль. Цель должна пройти испытание Мудрости. При провале она получает [[/r 3d6]] психического урона и должна немедленно использовать ответное действие, если оно ей доступно, чтобы переместиться так далеко от вас, как только позволяет её скорость. Цель не станет перемещаться в очевидно опасные места вроде огня или ям. При успехе цель получает половину этого урона и не должна убегать. @Compendium[laaru-dnd5-hw.conditions.JBEii8TGJiUu9cn2]{Глухое}существо автоматически проходит испытание успешно.</p></div><div class=\"rd__spc-inline-post\"><p><strong>На высоких кругах</strong>. Если вы сотворяете это заклинание, используя ячейку 2-го круга или выше, урон увеличивается на [[/r 1d6]] за каждый круг ячейки выше 1-го.</p></div></div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": null,
+        "units": "inst"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 60,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [
+          [
+            "3d6",
+            "psychic"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "wis",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 1,
+      "school": "enc",
+      "components": {
+        "vocal": true,
+        "somatic": false,
+        "material": false,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "level",
+        "formula": "1d6"
+      }
+    },
+    "classes": [
+      "bard"
+    ],
+    "_id": "6657295aefd0587b8c39f1b9",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:50.610Z",
+    "updatedAt": "2024-05-29T13:10:50.610Z",
+    "__v": 0
+  },
+  {
+    "name": "Доспех Агатиса [Armor of Agathys]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\"><p>Вас окружает защитное магическое поле, которое проявляется как призрачная изморозь, покрывающая вас и ваше снаряжение. Вы получаете 5 временных ПЗ, пока длится заклинание. Если существо попадает по вам атакой ближнего боя, пока у вас есть эти временные ПЗ, оно получает 5 урона холодом.</p><p><strong>На высоких кругах</strong>. Если вы сотворяете это заклинание, используя ячейку 2-го круга или выше, временные ПЗ и урон холодом увеличиваются на 5 за каждый круг ячейки выше 1-го.</p></div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "hour"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": "self"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "self"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 1,
+      "school": "abj",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "чашка воды",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "warlock",
+      "shaman",
+      "magus"
+    ],
+    "_id": "6657295aefd0587b8c39f1be",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:50.640Z",
+    "updatedAt": "2024-05-29T13:10:50.640Z",
+    "__v": 0
+  },
+  {
+    "name": "Дружба [Friends]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\"><div class=\"rd__spc-inline-post\"><p>Пока длится заклинание, у вас преимущество ко всем проверкам Харизмы против одного существа на ваш выбор, если оно к вам не враждебно. Когда заклинание прекращает действовать, существо осознаёт, что вы с помощью магии манипулировали его настроением, и становится враждебно вам. Склонное к насилию существо может даже атаковать вас, но может отомстить вам и по-другому (по решению мастера), в зависимости от того, как вы с ним взаимодействовали.</p></div></div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": "self"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "self"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 0,
+      "school": "enc",
+      "components": {
+        "vocal": false,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "немного грима, нанесенного на лицо при сотворении заклинания",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "always",
+        "prepared": true
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "bard",
+      "wizard",
+      "warlock",
+      "sorcerer"
+    ],
+    "_id": "6657295aefd0587b8c39f1cd",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:50.731Z",
+    "updatedAt": "2024-05-29T13:10:50.731Z",
+    "__v": 0
+  },
+  {
+    "name": "Животные чувства [Beast Sense]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\"><div class=\"rd__spc-inline-post\"><p>Прикоснитесь к согласному животному. Пока длится заклинание, вы можете использовать действие, чтобы увидеть то, что видит животное, и услышать то, что оно слышит. Так будет продолжаться, пока вы не используете действие, чтобы вернуться к своему обычному восприятию. Пока вы воспринимаете мир с помощью животного, вы получаете все его особые способы восприятия, но @Compendium[laaru-dnd5-hw.conditions.apswG1jicwhlWT5R]{слепы} и @Compendium[laaru-dnd5-hw.conditions.JBEii8TGJiUu9cn2]{глухи} к тому, что происходит вокруг вашего тела.</p></div></div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "hour"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "touch"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 2,
+      "school": "div",
+      "components": {
+        "vocal": false,
+        "somatic": true,
+        "material": false,
+        "ritual": true,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "druid",
+      "ranger"
+    ],
+    "_id": "6657295aefd0587b8c39f1ea",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:50.890Z",
+    "updatedAt": "2024-05-29T13:10:50.890Z",
+    "__v": 0
+  },
+  {
+    "name": "Завеса стрел [Cordon of Arrows]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<div class=\"rd__spc-inline-post\">Вы втыкаете четыре немагических боеприпаса (стрелы или арбалетных болта) в землю в пределах дистанции и сотворяете на них магию, чтобы защищать эту область. Пока длится заклинание, всякий раз, когда любое существо, кроме вас, впервые за ход проходит в пределах 30 футов от боеприпаса или заканчивает там свой ход, один из боеприпасов взлетает и атакует его. Существо должно пройти испытание Ловкости, при провале оно получает [[/r 1d6]] колющего урона. Боеприпас при этом уничтожается. Заклинание прекращает действовать, когда не остаётся боеприпасов.</div>\n<div class=\"rd__spc-inline-post\">Когда вы творите заклинание, вы можете указать любых существ, против которых заклинание не будет срабатывать.</div>\n<div class=\"rd__spc-inline-post\"><strong>На высоких кругах</strong>.  Если вы сотворяете это заклинание, используя ячейку 3-го круга или выше, количество используемых боеприпасов увеличивается на два за каждый круг ячейки выше 2-го.</div>\n</div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "8",
+        "units": "hour"
+      },
+      "target": {
+        "value": 30,
+        "width": null,
+        "units": "ft",
+        "type": "sphere"
+      },
+      "range": {
+        "value": 5,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [
+          [
+            "1d6",
+            "piercing"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "dex",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 2,
+      "school": "trs",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "четыре или более стрелы или болта",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "ranger"
+    ],
+    "_id": "6657295aefd0587b8c39f1ef",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:50.923Z",
+    "updatedAt": "2024-05-29T13:10:50.923Z",
+    "__v": 0
+  },
+  {
+    "name": "Защита от оружия [Blade Ward]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\"><div class=\"rd__spc-inline-post\"><p>Вы протягиваете руку и чертите защитный знак в воздухе. До конца вашего следующего хода у вас @UUID[Compendium.laaru-dnd5-hw.conditions.w7WKEM8had6v4vy8]{устойчивость} к дробящему, колющему и режущему урону от атак оружием.</p></div></div><div id=\"gtx-trans\" style=\"position:absolute;left:-18px;top:-19px\"><div class=\"gtx-trans-icon\"><p> </p></div></div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "round"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": "self"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "self"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 0,
+      "school": "abj",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": false,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "always",
+        "prepared": true
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "bard",
+      "wizard",
+      "warlock",
+      "sorcerer",
+      "shaman"
+    ],
+    "_id": "6657295befd0587b8c39f202",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:51.019Z",
+    "updatedAt": "2024-05-29T13:10:51.019Z",
+    "__v": 0
+  },
+  {
+    "name": "Изгоняющая кара [Banishing Smite]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<div class=\"rd__spc-inline-post\">В следующий раз, когда вы попадаете по существу атакой оружием, пока длится заклинание, ваше оружие наделяется силой и атака дополнительно наносит цели [[/r 5d10]] урона силой. Кроме того, если атака снижает ПЗ цели до 50 и менее, вы изгоняете её. Если цель родом с иного плана бытия, она исчезает и возвращается на родной план. Если цель родом с того же плана, где вы находитесь, она изгнана в безвредный демиплан. Цель @Compendium[laaru-dnd5-hw.conditions.3yQzUJzdrHg1OlIL]{выведена из строя}, пока там находится. Она остаётся там, пока длится заклинание, после чего снова появляется на месте, где раньше находилась, или в ближайшем незанятом пространстве, если прежнее место занято,</div>\n</div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "bonus",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": "self"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "self"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [
+          [
+            "5d10",
+            "force"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 5,
+      "school": "abj",
+      "components": {
+        "vocal": true,
+        "somatic": false,
+        "material": false,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "paladin"
+    ],
+    "_id": "6657295befd0587b8c39f21b",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:51.179Z",
+    "updatedAt": "2024-05-29T13:10:51.179Z",
+    "__v": 0
+  },
+  {
+    "name": "Корона безумия [Crown of Madness]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\"><p>Один гуманоид по вашему выбору, которого вы видите в пределах дистанции, должен пройти испытание Мудрости. При провале он @Compendium[laaru-dnd5-hw.conditions.5vKRVm8wXReUJasS]{обворожён} вами, пока длится заклинание. Пока цель обворожена этим заклинанием, над её головой видна кривая корона из ломаного железа, а в глазах горит безумие.</p><p>Обворожённая цель в каждый свой ход перед перемещением должна использовать действие, чтобы совершить атаку ближнего боя по существу, кроме себя, которое вы мысленно выбираете. Если вы не выбираете существо или если в зоне досягаемости цели нет существ, цель может действовать в свой ход как обычно.</p><p>В ваши последующие ходы вы должны тратить действие, чтобы сохранять контроль над целью, иначе заклинание прекращает действовать. Кроме того, цель может проходить испытание Мудрости в конце каждого своего хода. При успехе заклинание прекращает действовать.</p></div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 120,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "wis",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 2,
+      "school": "enc",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": false,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "bard",
+      "wizard",
+      "warlock",
+      "sorcerer"
+    ],
+    "_id": "6657295befd0587b8c39f260",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:51.624Z",
+    "updatedAt": "2024-05-29T13:10:51.624Z",
+    "__v": 0
+  },
+  {
+    "name": "Круг силы [Circle of Power]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<div class=\"rd__spc-inline-post\">От вас исходят лучи божественной силы, искажая и поглощая магическую энергию в пределах 30 футов от вас. Пока длится заклинание, сфера перемещается вместе с вами — вы остаётесь в её центре. Пока длится заклинание, каждое дружественное вам существо в сфере (включая вас) получает преимущество к испытаниям против заклинаний и прочих магических эффектов. Кроме того, когда существо под влиянием этого заклинания успешно проходит испытание против заклинания или магического эффекта, которое позволяет получить только половину урона, оно вместо этого не получает урона совсем.</div>\n</div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "10",
+        "units": "minute"
+      },
+      "target": {
+        "value": 30,
+        "width": null,
+        "units": "ft",
+        "type": "radius"
+      },
+      "range": {
+        "value": 0,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 5,
+      "school": "abj",
+      "components": {
+        "vocal": true,
+        "somatic": false,
+        "material": false,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "paladin"
+    ],
+    "_id": "6657295befd0587b8c39f282",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:51.799Z",
+    "updatedAt": "2024-05-29T13:10:51.799Z",
+    "__v": 0
+  },
+  {
+    "name": "Луч болезни [Ray of Sickness]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\"><div class=\"rd__spc-inline-post\"><p>Зелёный луч болезнетворной энергии бьет в существо в пределах дистанции. Совершите дистанционную атаку заклинанием по цели. При попадании цель получает [[/r 2d8]] урона ядом и должна пройти испытание Выносливости. При провале цель @Compendium[laaru-dnd5-hw.conditions.Tlc2LbRijKy9nxxb]{отравлена} до конца вашего следующего хода.</p></div><div class=\"rd__spc-inline-post\"><p><strong>На высоких кругах</strong>. Если вы сотворяете это заклинание, используя ячейку 2-го круга или выше, урон увеличивается на [[/r 1d8]] за каждый круг ячейки выше 1-го.</p></div></div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": null,
+        "units": "inst"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 60,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "rsak",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [
+          [
+            "2d8",
+            "poison"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "con",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 1,
+      "school": "nec",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": false,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "level",
+        "formula": "1d8"
+      }
+    },
+    "classes": [
+      "wizard",
+      "sorcerer",
+      "magus"
+    ],
+    "_id": "6657295befd0587b8c39f29b",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:51.976Z",
+    "updatedAt": "2024-05-29T13:10:51.976Z",
+    "__v": 0
+  },
+  {
+    "name": "Магические врата [Arcane Gate]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<p>Вы создаёте взаимосвязанные телепортационные порталы, которые остаются открытыми, пока длится заклинание. Выберите две точки на земле, которые видите, одну в пределах 10 футов от вас, а другук в пределах 500 футов от вас. Над каждой из них открывается круглый портал 10 футов диаметром. Если портал должен открыться в точке, занимаемой существом, заклинание не срабатывает и потрачено зря.</p>\n<p>Порталы — двухмерные светящиеся кольца, в которых клубится туман. Они висят в нескольких дюймах от земли, перпендикулярно к ней, в выбранных вами точках. Кольцо видно только с одной стороны (на ваш выбор), с которой оно работает как портал.</p>\n<p>Любое существо или объект, попав в один портал, выходит из другого, как если бы они находились рядом. Если пройти в портал с обратной стороны, никакого эффекта не будет. Туман, клубящийся в порталах, не позволяет видеть через них. В ваш ход вы можете в качестве бонусного действия повернуть кольца, чтобы портал оказался с другой стороны.</p>\n</div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "10",
+        "units": "minute"
+      },
+      "target": {
+        "value": 10,
+        "width": null,
+        "units": "ft",
+        "type": "wall"
+      },
+      "range": {
+        "value": 500,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 6,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": false,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard",
+      "warlock",
+      "sorcerer"
+    ],
+    "_id": "6657295cefd0587b8c39f2a0",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:52.012Z",
+    "updatedAt": "2024-05-29T13:10:52.012Z",
+    "__v": 0
+  },
+  {
+    "name": "Мантия крестоносца [Crusader's Mantle]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\"><div class=\"rd__spc-inline-post\"><p>Священная мощь исходит из вас в виде ауры с радиусом 30 футов и пробуждает отвагу в дружественных вам существах. Пока длится заклинание, аура перемещается вместе с вами — вы остаетесь в её центре. Находясь в ауре, каждое невраждебное вам существо (включая вас) дополнительно наносит [[/r 1d4]] лучистого урона, когда попадает атакой оружием.</p></div></div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "cover": null,
+      "target": {
+        "value": 30,
+        "width": null,
+        "units": "ft",
+        "type": "radius"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [
+          [
+            "1d4",
+            "radiant"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 3,
+      "school": "evo",
+      "components": {
+        "vocal": true,
+        "somatic": false,
+        "material": false,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "paladin"
+    ],
+    "_id": "6657295cefd0587b8c39f2a5",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:52.070Z",
+    "updatedAt": "2024-05-29T13:10:52.070Z",
+    "__v": 0
+  },
+  {
+    "name": "Молниевая стрела",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "В следующий раз, когда вы совершите дальнобойную атаку оружием, пока активно это заклинание, ваш боеприпас или само оружие, если это метательное оружие, превращается в разряд молнии.\n\nСовершите бросок атаки как обычно. Вместо обычного урона от оружия цель при попадании получает урон электричеством 4к8, или половину урона при промахе.\n\nВне зависимости от попадания или промаха, все существа в пределах 10 футов от цели должны совершить спасбросок Ловкости. При провале эти существа получают урон электричеством 2к8, или половину урона при успехе.\n\nПосле этого боеприпас или оружие возвращается в обычную форму.\n\nНа более высоких уровнях: Если вы накладываете это заклинание, используя ячейку 4 уровня или выше, урон от обоих эффектов увеличивается на 1к8 за каждый уровень ячейки выше третьего."
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "bonus",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "target": {
+        "units": "ft",
+        "type": "creature"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "self"
+      },
+      "actionType": "rsak",
+      "damage": {
+        "parts": [
+          [
+            "4к8",
+            "lightning"
+          ]
+        ]
+      },
+      "level": 3,
+      "school": "trs",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "concentration": true
+      }
+    },
+    "classes": [
+      "ranger"
+    ],
+    "_id": "6657295cefd0587b8c39f2be",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:52.248Z",
+    "updatedAt": "2024-05-29T13:10:52.248Z",
+    "__v": 0
+  },
+  {
+    "name": "Облако кинжалов [Cloud of Daggers]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\"><div class=\"rd__spc-inline-post\"><p>Вы наполняете воздух вращающимися кинжалами в 5-футовом кубе с центром в выбранной вами точке в пределах дистанции. Существо получает [[/r 4d4]] режущего урона, когда впервые за ход входит в область действия заклинания или начинает в ней свой ход.</p></div><div class=\"rd__spc-inline-post\"><p><strong>На высоких кругах</strong>. Если вы сотворяете это заклинание, используя ячейку 3-го круга или выше, урон увеличивается на [[/r 2d4]] за каждый круг ячейки выше 2-го.</p></div></div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "cover": null,
+      "target": {
+        "value": 5,
+        "width": null,
+        "units": "ft",
+        "type": "cube"
+      },
+      "range": {
+        "value": 60,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [
+          [
+            "4d4",
+            "slashing"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 2,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "осколок стекла",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "level",
+        "formula": "2d4"
+      }
+    },
+    "classes": [
+      "bard",
+      "wizard",
+      "warlock",
+      "sorcerer",
+      "magus"
+    ],
+    "_id": "6657295cefd0587b8c39f2e6",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:52.551Z",
+    "updatedAt": "2024-05-29T13:10:52.551Z",
+    "__v": 0
+  },
+  {
+    "name": "Оглушающая кара [Staggering Smite]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<div class=\"rd__spc-inline-post\">В следующий раз, когда вы попадаете по существу атакой оружием в ближнем бою, пока длится заклинание, ваше оружие пронзает и тело врага, и его разум, а атака дополнительно наносит цели [[/r 4d6]] психического урона. Цель должна пройти испытание Мудрости. При провале она получает помеху к броскам атаки и проверкам характеристики не может совершать ответные действия до конца своего следующего хода.</div>\n</div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "bonus",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": "self"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "self"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [
+          [
+            "4d6",
+            "psychic"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "wis",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 4,
+      "school": "evo",
+      "components": {
+        "vocal": true,
+        "somatic": false,
+        "material": false,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "paladin"
+    ],
+    "_id": "6657295cefd0587b8c39f309",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:52.839Z",
+    "updatedAt": "2024-05-29T13:10:52.839Z",
+    "__v": 0
+  },
+  {
+    "name": "Опутывающий удар [Ensnaring Strike]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\"><div class=\"rd__spc-inline-post\"><p>В следующий раз, когда вы попадаете по существу атакой оружием, пока длится заклинание, в точке попадания вырастает масса извивающихся шипастых лиан. Цель должна пройти испытание Силы, при провале она @Compendium[laaru-dnd5-hw.conditions.8LBZMAHPd6dQ8CTN]{обездвижена} магическими лианами, пока длится заклинание. Существо крупного размера и более получает преимущество к испытанию. При успехе цели лианы увядают.</p></div><div class=\"rd__spc-inline-post\"><p>Пока цель обездвижена лианами, она получает [[/r 1d6]] колющего урона в начале каждого своего хода. Существо, обездвиженное лианами, или другое существо, способное его коснуться, может использовать действие, чтобы пройти проверку Силы. СЛ равна СЛ испытаний против ваших заклинаний. При успехе цель освобождается.</p></div><div class=\"rd__spc-inline-post\"><p><strong>На высоких кругах</strong>. Если вы сотворяете это заклинание, используя ячейку 2-го круга или выше, урон увеличивается на [[/r 1d6]] за каждый круг ячейки выше 1-го.</p></div></div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "bonus",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": "self"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "self"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [
+          [
+            "1d6",
+            "piercing"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "str",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 1,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "somatic": false,
+        "material": false,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "level",
+        "formula": "1d6"
+      }
+    },
+    "classes": [
+      "ranger"
+    ],
+    "_id": "6657295cefd0587b8c39f31f",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:52.958Z",
+    "updatedAt": "2024-05-29T13:10:52.958Z",
+    "__v": 0
+  },
+  {
+    "name": "Ослепляющая кара [Blinding Smite]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\"><p>В следующий раз, когда вы попадаете по существу атакой оружием в ближнем бою, пока длится заклинание, ваше оружие загорается ярким светом и атака дополнительно наносит цели [[/r 3d8]] лучистого урона. Кроме того, цель должна пройти испытание Выносливости, при провале она @Compendium[laaru-dnd5-hw.conditions.apswG1jicwhlWT5R]{ослеплена}, пока длится заклинание.</p><p>Существо, ослеплённое этим заклинанием, может проходить испытание Выносливости в конце каждого своего хода. При успехе оно перестаёт быть ослеплённым.</p></div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "bonus",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": "self"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "self"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [
+          [
+            "3d8",
+            "radiant"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "con",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 3,
+      "school": "evo",
+      "components": {
+        "vocal": true,
+        "somatic": false,
+        "material": false,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "paladin"
+    ],
+    "_id": "6657295cefd0587b8c39f327",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:52.999Z",
+    "updatedAt": "2024-05-29T13:10:52.999Z",
+    "__v": 0
+  },
+  {
+    "name": "Палящая кара [Searing Smite]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<div class=\"rd__spc-inline-post\">В следующий раз, когда вы попадаете по существу атакой оружием в ближнем бою, пока длится заклинание, ваше оружие раскаляется добела и атака дополнительно наносит цели [[/r 1d6]] урона огнём. Цель загорается и в начале каждого своего хода, пока длится заклинание, должна проходить испытание Выносливости. При провале она получает ещё [[/r 1d6]] урона огнём. При успехе заклинание прекращается. Если цель или существо в пределах 5 футов от неё использует действие, чтобы погасить пламя, или какой-то ещё эффект погасит его (например, цель окажется под водой), заклинание прекращается.</div>\n<div class=\"rd__spc-inline-post\"><strong>На высоких кругах</strong>. Если сотворяете это заклинание, используя ячейку 2-го круга или выше, начальный дополнительный урон, наносимый атакой, увеличивается на [[/r 1d6]] за каждый круг ячейки выше 1-го.</div>\n</div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "bonus",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": "self"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "self"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [
+          [
+            "1d6",
+            "fire"
+          ],
+          [
+            "1d6",
+            "fire"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "con",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 1,
+      "school": "evo",
+      "components": {
+        "vocal": true,
+        "somatic": false,
+        "material": false,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "level",
+        "formula": "1d6"
+      }
+    },
+    "classes": [
+      "paladin",
+      "ranger"
+    ],
+    "_id": "6657295defd0587b8c39f331",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:53.080Z",
+    "updatedAt": "2024-05-29T13:10:53.080Z",
+    "__v": 0
+  },
+  {
+    "name": "Притворная смерть [Feign Death]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<p>Прикоснитесь к согласному существу и погрузите его в состояние каталепсии, неотличимое от смерти.</p>\n<p>Пока длится заклинание или пока вы не используете действие, чтобы коснуться цели, и не прекратите заклинание, цель кажется мёртвой для стороннего наблюдателя и даже для заклинаний, определяющих её состояние. Цель @Compendium[laaru-dnd5-hw.conditions.apswG1jicwhlWT5R]{слепа} и @Compendium[laaru-dnd5-hw.conditions.3yQzUJzdrHg1OlIL]{выведена из строя}, а её скорость снижается до 0. У цели @UUID[Compendium.laaru-dnd5-hw.conditions.w7WKEM8had6v4vy8]{устойчивость} к любому урону, кроме психического. Если цель была больна или отравлена в момент сотворения заклинания или становится больна или @Compendium[laaru-dnd5-hw.conditions.Tlc2LbRijKy9nxxb]{отравлена}, пока оно действует, то болезнь или яд не оказывают на неё влияния, пока длится заклинание.</p>\n</div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "hour"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "touch"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 3,
+      "school": "nec",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": true,
+        "concentration": false
+      },
+      "materials": {
+        "value": "щепотка могильной земли",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "bard",
+      "wizard",
+      "druid",
+      "cleric",
+      "shaman"
+    ],
+    "_id": "6657295eefd0587b8c39f3d4",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:54.394Z",
+    "updatedAt": "2024-05-29T13:10:54.394Z",
+    "__v": 0
+  },
+  {
+    "name": "Разрушительная волна [Destructive Wave]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<div class=\"rd__spc-inline-post\">Вы наносите удар по земле и создаёте взрыв божественной энергии, исходящей кругами от вас. Каждое выбранное вами существо в пределах 30 футов от вас должно пройти испытание Выносливости. При провале оно получает [[/r 5d6]] урона громом, а также [[/r 5d6]] лучистого или некротического урона (на ваш выбор) и @Compendium[laaru-dnd5-hw.conditions.eMFvAErGzA4N1CNW]{распластывается }. При успехе существо получает половину этого урона и не распластывается.</div>\n</div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": null,
+        "units": "inst"
+      },
+      "target": {
+        "value": 30,
+        "width": null,
+        "units": "ft",
+        "type": "radius"
+      },
+      "range": {
+        "value": 0,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [
+          [
+            "5d6",
+            "thunder"
+          ],
+          [
+            "5d6",
+            "radiant"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "con",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 5,
+      "school": "evo",
+      "components": {
+        "vocal": true,
+        "somatic": false,
+        "material": false,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "paladin"
+    ],
+    "_id": "6657295eefd0587b8c39f414",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:54.879Z",
+    "updatedAt": "2024-05-29T13:10:54.879Z",
+    "__v": 0
+  },
+  {
+    "name": "Рост растений [Plant Growth]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "\n<p>Заклинание наполняет жизненной силой растения в пределах определённой области. Есть два способа использовать это заклинание, которые дают либо немедленную, либо долгосрочную пользу.</p>\n<p>Если вы творите это заклинание, используя 1 действие, выберите точку в пределах дистанции. Все обычные растения в радиусе 100 футов вокруг этой точки становятся высокими и толстыми. Существо, проходящее через эту область, вынуждено тратить по 4 фута скорости за каждый 1 фут перемещения</p>\n<p>Вы можете исключить из эффекта одну или несколько областей любого размера в пределах области заклинания.</p>\n<p>Если вы творите это заклинание 8 часов, вы насыщаете землю. Все растения в радиусе полумили вокруг точки в пределах дистанции становятся насыщены на 1 год. Такие растения дают вдвое больше пищи при сборе урожая.</p>\n\n\n \n"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": null,
+        "units": "inst"
+      },
+      "target": {
+        "value": 100,
+        "width": null,
+        "units": "ft",
+        "type": "radius"
+      },
+      "range": {
+        "value": 150,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 3,
+      "school": "trs",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": false,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "bard",
+      "druid",
+      "ranger",
+      "shaman"
+    ],
+    "_id": "6657295fefd0587b8c39f432",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:55.159Z",
+    "updatedAt": "2024-05-29T13:10:55.159Z",
+    "__v": 0
+  },
+  {
+    "name": "Руки Хадара [Arms of Hadar]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\"><div class=\"rd__spc-inline-post\"><p>Вы призываете мощь Хадара, Тёмного Голода. Языки тёмной энергии вырываются из вас и обрушиваются на всех существ в пределах 10 футов от вас. Каждое существо в этой области должно пройти испытание Силы. При провале цель получает [[/r 2d6]] некротического урона и не может совершать ответные действия до своего следующего хода. При успехе существо получает половину этого урона без иных эффектов.</p></div><div class=\"rd__spc-inline-post\"><p><strong>На высоких кругах</strong>. Если вы сотворяете это заклинание, используя ячейку 2-го круга или выше, урон увеличивается на [[/r 1d6]] за каждый круг ячейки выше 1-го.</p></div></div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": null,
+        "units": "inst"
+      },
+      "cover": null,
+      "target": {
+        "value": 10,
+        "width": null,
+        "units": "ft",
+        "type": "radius"
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": ""
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [
+          [
+            "2d6",
+            "necrotic"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "str",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 1,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": false,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "level",
+        "formula": "1d6"
+      }
+    },
+    "classes": [
+      "warlock"
+    ],
+    "_id": "6657295fefd0587b8c39f43c",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:55.255Z",
+    "updatedAt": "2024-05-29T13:10:55.255Z",
+    "__v": 0
+  },
+  {
+    "name": "Сглаз [Hex]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\"><div class=\"rd__spc-inline-post\"><p>Вы проклинаете существо, которое видите в пределах дистанции. Пока длится заклинание, вы наносите цели дополнительно [[/r 1d6]] некротического урона каждый раз, когда попадаете по ней атакой. Также выберите одну характеристику при сотворении заклинания, цель будет проходить проверки этой характеристики с помехой.</p></div><div class=\"rd__spc-inline-post\"><p>Если ПЗ цели снижаются до 0, прежде чем заклинание прекращает действовать, вы можете использовать бонусное действие в один из следующих ходов, чтобы проклясть новое существо</p></div><div class=\"rd__spc-inline-post\"><p>Заклинание @Compendium[laaru-dnd5-hw.spells.Y5EfiRqmCWKJ7Qhk]{Снятие проклятия}, сотворённое на цель, досрочно прекращает это заклинание.</p></div><div class=\"rd__spc-inline-post\"><p><strong>На высоких кругах. </strong>Если вы сотворяете это заклинание, используя ячейку 3-го или 4-го круга, то можете сохранять свою концентрацию на заклинании до 8 часов. Если использовать ячейку 5-го круга или выше, вы можете сохранять свою концентрацию на заклинании до 24 часов.</p></div></div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "bonus",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "hour"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 90,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [
+          [
+            "1d6",
+            "necrotic"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 1,
+      "school": "enc",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "окаменевший глаз тритона",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "warlock",
+      "shaman"
+    ],
+    "_id": "6657295fefd0587b8c39f454",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:55.447Z",
+    "updatedAt": "2024-05-29T13:10:55.447Z",
+    "__v": 0
+  },
+  {
+    "name": "Слово силы: Исцеление [Power Word Heal]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<div class=\"rd__spc-inline-post\">Волна исцеляющей энергии омывает существо, которого вы коснулись. Цель восстанавливает все свои ПЗ. Если существо @Compendium[laaru-dnd5-hw.conditions.5vKRVm8wXReUJasS]{обворожено}, @Compendium[laaru-dnd5-hw.conditions.bM6mDYvBFw64wDMp]{испугано}, @Compendium[laaru-dnd5-hw.conditions.ER9Ol8MCW89tNbye]{парализовано} или в @Compendium[laaru-dnd5-hw.conditions.OviWCQAGcXISdTbj]{шоке}, это состояние прекращается. Если существо @Compendium[laaru-dnd5-hw.conditions.eMFvAErGzA4N1CNW]{распластано}, оно может использовать @Compendium[laaru-dnd5-hw.actions.mMwkUE20bEfKeetq]{ответное действие}, чтобы встать. Заклинание не действует на нежить и конструкции.</div>\n</div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": null,
+        "units": "inst"
+      },
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "touch",
+        "type": ""
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "touch"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "heal",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [
+          [
+            "",
+            "healing"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 9,
+      "school": "evo",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": false,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "bard",
+      "cleric"
+    ],
+    "_id": "6657295fefd0587b8c39f47b",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:55.768Z",
+    "updatedAt": "2024-05-29T13:10:55.768Z",
+    "__v": 0
+  },
+  {
+    "name": "Стихийное оружие [Elemental Weapon]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<div class=\"rd__spc-inline-post\">Немагическое оружие, которого вы коснулись, становится магическим. Выберите один тип урона: гром, кислота, молния, огонь или холод. Пока длится заклинание, оружие получает бонус +1 к броскам атаки и дополнительно наносит при попадании [[/r 1d4]] урона выбранного типа.</div>\n<div class=\"rd__spc-inline-post\"><strong>На высоких кругах</strong>. Если вы сотворяете это заклинание, используя ячейку 5-го или 6-го круга, бонус к броскам атаки увеличивается до +2, а дополнительный урон — до [[/r 2d4]]. Если использовать ячейку 7-го круга или выше, бонус увеличивается до +3, а дополнительный урон до  [[/r 3d4]].</div>\n</div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "hour"
+      },
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "touch",
+        "type": ""
+      },
+      "range": {
+        "value": null,
+        "long": null,
+        "units": "touch"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 3,
+      "school": "trs",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": false,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "level",
+        "formula": "2d4"
+      }
+    },
+    "classes": [
+      "druid",
+      "paladin",
+      "ranger",
+      "artificer",
+      "shaman",
+      "magus"
+    ],
+    "_id": "66572960efd0587b8c39f4b5",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:56.252Z",
+    "updatedAt": "2024-05-29T13:10:56.252Z",
+    "__v": 0
+  },
+  {
+    "name": "Телепатия [Telepathy]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<p>Вы создаёте телепатическую связь между собой и согласным существом, с которым вы знакомы. Существо может быть в любом месте того же плана бытия, что и вы. Заклинание прекращает действовать, если вы с целью больше не на одном плане.</p>\n<p>Пока длится заклинание, вы с целью можете мгновенно обмениваться словами, образами, звуками и прочими сенсорными посланиями, и цель знает, что они исходят от вас. Заклинание позволяет существу с Интеллектом не менее 1 понимать смысл ваших слов и воспринимать ваши сенсорные послания.</p>\n</div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "24",
+        "units": "hour"
+      },
+      "target": {
+        "value": 0,
+        "width": null,
+        "units": "spec",
+        "type": ""
+      },
+      "range": {
+        "value": 0,
+        "long": null,
+        "units": "spec"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "util",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 8,
+      "school": "evo",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "пара сцепленных серебряных колец",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "wizard"
+    ],
+    "_id": "66572960efd0587b8c39f4c8",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:56.399Z",
+    "updatedAt": "2024-05-29T13:10:56.399Z",
+    "__v": 0
+  },
+  {
+    "name": "Терновый кнут [Thorn Whip]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\"><p>Вы создаёте длинный хлыст, похожий на лиану, усеянную шипами. По вашему приказу он хлещет существо в пределах дистанции. Совершите атаку заклинанием в ближнем бою по цели. При попадании существо получает [[/r 1d6]] колющего урона. Если это существо крупного размера или меньше, вы притягиваете это существо к себе на 10 футов или менее.</p><p>Урон заклинания увеличивается на  [[/r 1d6]], когда вы достигаете 5-го ([[/r 2d6]]), 11-го ([[/r 3d6]]) и 17-го уровня ([[/r 4d6]]).</p></div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": null,
+        "units": "inst"
+      },
+      "cover": null,
+      "target": {
+        "value": 1,
+        "width": null,
+        "units": "",
+        "type": "creature"
+      },
+      "range": {
+        "value": 30,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "msak",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [
+          [
+            "1d6",
+            "piercing"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 0,
+      "school": "trs",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "стебель колючего растения",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "always",
+        "prepared": true
+      },
+      "scaling": {
+        "mode": "cantrip",
+        "formula": "1d6"
+      }
+    },
+    "classes": [
+      "druid",
+      "artificer"
+    ],
+    "_id": "66572960efd0587b8c39f4d7",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:56.556Z",
+    "updatedAt": "2024-05-29T13:10:56.556Z",
+    "__v": 0
+  },
+  {
+    "name": "Цветной шарик [Chromatic Orb]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\"><div class=\"rd__spc-inline-post\"><p>Вы бросаете сферу энергии диаметром 4 дюйма в существо, которое видите в пределах дистанции. Выберите тип урона: гром, кислота, молния, огонь, холод или яд, а затем совершите дистанционную атаку заклинанием по цели. При попадании существо получает [[/r 3d8]] урона выбранного типа.</p></div><div class=\"rd__spc-inline-post\"><p><strong>На высоких кругах</strong>. Если вы сотворяете это заклинание, используя ячейку 2-го круга или выше, урон увеличивается на [[/r 1d8]] за каждый круг ячейки выше 1-го.</p></div></div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "action",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": null,
+        "units": "inst"
+      },
+      "cover": null,
+      "target": {
+        "value": null,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 90,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "rsak",
+      "critical": {
+        "threshold": null,
+        "damage": ""
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "3d8",
+      "save": {
+        "ability": "",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 1,
+      "school": "evo",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": true,
+        "ritual": false,
+        "concentration": false
+      },
+      "materials": {
+        "value": "алмаз стоимостью не менее 50 зм",
+        "consumed": false,
+        "cost": 50,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "level",
+        "formula": "1d8"
+      }
+    },
+    "classes": [
+      "wizard",
+      "sorcerer",
+      "magus"
+    ],
+    "_id": "66572961efd0587b8c39f513",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:57.191Z",
+    "updatedAt": "2024-05-29T13:10:57.191Z",
+    "__v": 0
+  },
+  {
+    "name": "Цепкая лоза [Grasping Vine]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\"><p>Вы призываете лиану, которая вырастает из-под земли в незанятом пространстве на ваш выбор, которое вы видите в пределах дистанции. Когда вы творите это заклинание, можете приказать лиане, чтобы она притянула существо в пределах 30 футов от неё, которое вы видите. Существо должно пройти испытание Ловкости, при провале оно будет притянуто на 20 футов по прямой в сторону лианы.</p><p>Пока длится заклинание, вы можете в качестве бонусного действия в ваш ход приказать лиане притянуть это же существо или другое.</p></div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "bonus",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "1",
+        "units": "minute"
+      },
+      "cover": null,
+      "target": {
+        "value": 0,
+        "width": null,
+        "units": "",
+        "type": ""
+      },
+      "range": {
+        "value": 30,
+        "long": null,
+        "units": "ft"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": "",
+        "recovery": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "dex",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 4,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": false,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "druid",
+      "ranger",
+      "shaman"
+    ],
+    "_id": "66572961efd0587b8c39f518",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:57.246Z",
+    "updatedAt": "2024-05-29T13:10:57.246Z",
+    "__v": 0
+  },
+  {
+    "name": "Цунами [Tsunami]",
+    "type": "spell",
+    "system": {
+      "description": {
+        "value": "<div class=\"rd__b  rd__b--3\">\n<p>Стена воды появляется в выбранной вами точке в пределах дистанции. Вы можете создать стену длиной до 300 футов, высотой до 300 футов и толщиной до 50 футов. Стена существует, пока длится заклинание.</p>\n<p>Когда стена появляется, каждое существо в пределах её области должно пройти испытание Силы. При провале существо получает [[/r 6d10]] дробящего урона, при успехе — половину этого урона. </p>\n<p>В начале каждого вашего хода после появления стены она перемещается на 50 футов от вас вместе со всеми существами, оказавшимися в ней. Любое существо огромного размера или меньше, которое оказалось внутри стены или попало в нее, оказавшись на пути ее перемещения, должно пройти испытание Силы. При провале оно получает [[/r 5d10]] дробящего урона. Существо может получить этот урон только раз в раунд. В конце хода высота стены уменьшается на 50 футов, а урон, который существа получат от этого заклинания в последующие раунды, уменьшается на [[/r 1d10]]. Когда высота стены дойдёт до 0, заклинание прекращает действовать.</p>\n<p>Существо, попавшее в стену, может перемещаться вплавь. Однако из-за мощи волны существо должно пройти проверку Силы (Атлетика). СЛ равна СЛ испытаний против ваших заклинаний. При провале оно не может перемещаться. Покинув область волны, существо падает наземь,</p>\n</div>"
+      },
+      "source": {
+        "book": "PHB"
+      },
+      "activation": {
+        "type": "minute",
+        "cost": 1,
+        "condition": ""
+      },
+      "duration": {
+        "value": "6",
+        "units": "round"
+      },
+      "target": {
+        "value": 0,
+        "width": null,
+        "units": "spec",
+        "type": ""
+      },
+      "range": {
+        "value": 0,
+        "long": null,
+        "units": "spec"
+      },
+      "uses": {
+        "value": 0,
+        "max": "0",
+        "per": ""
+      },
+      "consume": {
+        "type": "",
+        "target": "",
+        "amount": null
+      },
+      "ability": "",
+      "actionType": "save",
+      "critical": {
+        "threshold": null,
+        "damage": null
+      },
+      "damage": {
+        "parts": [
+          [
+            "6d10",
+            "bludgeoning"
+          ],
+          [
+            "5d10",
+            "bludgeoning"
+          ]
+        ],
+        "versatile": ""
+      },
+      "formula": "",
+      "save": {
+        "ability": "str",
+        "dc": null,
+        "scaling": "spell"
+      },
+      "level": 8,
+      "school": "con",
+      "components": {
+        "vocal": true,
+        "somatic": true,
+        "material": false,
+        "ritual": false,
+        "concentration": true
+      },
+      "materials": {
+        "value": "",
+        "consumed": false,
+        "cost": 0,
+        "supply": 0
+      },
+      "preparation": {
+        "mode": "prepared",
+        "prepared": false
+      },
+      "scaling": {
+        "mode": "none",
+        "formula": ""
+      }
+    },
+    "classes": [
+      "druid"
+    ],
+    "_id": "66572961efd0587b8c39f522",
+    "playerId": "6397078d712ee5105b3487f3",
+    "createdAt": "2024-05-29T13:10:57.354Z",
+    "updatedAt": "2024-05-29T13:10:57.354Z",
+    "__v": 0
+  }
+]
