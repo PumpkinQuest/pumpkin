@@ -1,0 +1,25 @@
+{
+  "id": "npc-race",
+  "title": "Раса",
+  "template": "{0}",
+  "columns": [
+    {
+      "role": "plain",
+      "die": 12,
+      "rows": [
+        { "text": "Человек",      "raceId": "human" },
+        { "text": "Человек",      "raceId": "human" },
+        { "text": "Человек",      "raceId": "human" },
+        { "text": "Эльф",         "raceId": "elf" },
+        { "text": "Эльф",         "raceId": "elf" },
+        { "text": "Дварф",        "raceId": "dwarf" },
+        { "text": "Дварф",        "raceId": "dwarf" },
+        { "text": "Полуэльф",     "raceId": "half-elf" },
+        { "text": "Полурослик",   "raceId": "halfling" },
+        { "text": "Орк",          "raceId": "orc" },
+        { "text": "Тифлинг",      "raceId": "tiefling" },
+        { "text": "Гном",         "raceId": "gnome" }
+      ]
+    }
+  ]
+}

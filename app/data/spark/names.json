@@ -1,0 +1,214 @@
+{
+  "human": {
+    "prefix": [
+      { "text": "Аль",  "endsWith": "c" },
+      { "text": "Бри",  "endsWith": "v" },
+      { "text": "Кор",  "endsWith": "c" },
+      { "text": "Мар",  "endsWith": "c" },
+      { "text": "Ро",   "endsWith": "v" },
+      { "text": "Эд",   "endsWith": "c" },
+      { "text": "Вил",  "endsWith": "c" },
+      { "text": "Да",   "endsWith": "v" },
+      { "text": "Лен",  "endsWith": "c" },
+      { "text": "Ра",   "endsWith": "v" }
+    ],
+    "middle": [
+      { "text": "ди",  "startsWith": "c", "endsWith": "v" },
+      { "text": "вен", "startsWith": "v", "endsWith": "c" },
+      { "text": "ла",  "startsWith": "c", "endsWith": "v" },
+      { "text": "ар",  "startsWith": "v", "endsWith": "c" },
+      { "text": "то",  "startsWith": "c", "endsWith": "v" },
+      { "text": "ин",  "startsWith": "v", "endsWith": "c" }
+    ],
+    "suffix": [
+      { "text": "ик",  "startsWith": "v" },
+      { "text": "рик", "startsWith": "c" },
+      { "text": "он",  "startsWith": "v" },
+      { "text": "дор", "startsWith": "c" },
+      { "text": "ан",  "startsWith": "v" },
+      { "text": "мар", "startsWith": "c" },
+      { "text": "ус",  "startsWith": "v" },
+      { "text": "тон", "startsWith": "c" }
+    ]
+  },
+  "elf": {
+    "prefix": [
+      { "text": "Гвен", "endsWith": "c" },
+      { "text": "Аэ",   "endsWith": "v" },
+      { "text": "Тал",  "endsWith": "c" },
+      { "text": "Фэ",   "endsWith": "v" },
+      { "text": "Кэл",  "endsWith": "c" },
+      { "text": "Си",   "endsWith": "v" },
+      { "text": "Эль",  "endsWith": "c" },
+      { "text": "Ло",   "endsWith": "v" }
+    ],
+    "middle": [
+      { "text": "до",  "startsWith": "c", "endsWith": "v" },
+      { "text": "эль", "startsWith": "v", "endsWith": "c" },
+      { "text": "ва",  "startsWith": "c", "endsWith": "v" },
+      { "text": "ин",  "startsWith": "v", "endsWith": "c" },
+      { "text": "ри",  "startsWith": "c", "endsWith": "v" },
+      { "text": "ал",  "startsWith": "v", "endsWith": "c" }
+    ],
+    "suffix": [
+      { "text": "лин",  "startsWith": "c" },
+      { "text": "иэль", "startsWith": "v" },
+      { "text": "рэль", "startsWith": "c" },
+      { "text": "ан",   "startsWith": "v" },
+      { "text": "мир",  "startsWith": "c" },
+      { "text": "эн",   "startsWith": "v" },
+      { "text": "вэн",  "startsWith": "c" },
+      { "text": "ариэль", "startsWith": "v" }
+    ]
+  },
+  "dwarf": {
+    "prefix": [
+      { "text": "Дур", "endsWith": "c" },
+      { "text": "Бор", "endsWith": "c" },
+      { "text": "Тор", "endsWith": "c" },
+      { "text": "Грим","endsWith": "c" },
+      { "text": "Нор", "endsWith": "c" },
+      { "text": "Хар", "endsWith": "c" },
+      { "text": "Вол", "endsWith": "c" },
+      { "text": "Брен","endsWith": "c" }
+    ],
+    "middle": [
+      { "text": "га",  "startsWith": "c", "endsWith": "v" },
+      { "text": "ин",  "startsWith": "v", "endsWith": "c" },
+      { "text": "дан", "startsWith": "c", "endsWith": "c" },
+      { "text": "ок",  "startsWith": "v", "endsWith": "c" },
+      { "text": "ба",  "startsWith": "c", "endsWith": "v" },
+      { "text": "ур",  "startsWith": "v", "endsWith": "c" }
+    ],
+    "suffix": [
+      { "text": "дин", "startsWith": "c" },
+      { "text": "ин",  "startsWith": "v" },
+      { "text": "мунд","startsWith": "c" },
+      { "text": "ок",  "startsWith": "v" },
+      { "text": "рик", "startsWith": "c" },
+      { "text": "ур",  "startsWith": "v" },
+      { "text": "бек", "startsWith": "c" },
+      { "text": "ар",  "startsWith": "v" }
+    ]
+  },
+  "half-elf": {
+    "prefix": [
+      { "text": "Арн", "endsWith": "c" },
+      { "text": "Лиа", "endsWith": "v" },
+      { "text": "Кэр", "endsWith": "c" },
+      { "text": "Эйо", "endsWith": "v" },
+      { "text": "Вир", "endsWith": "c" },
+      { "text": "Тэ",  "endsWith": "v" }
+    ],
+    "middle": [
+      { "text": "ван", "startsWith": "c", "endsWith": "c" },
+      { "text": "эл",  "startsWith": "v", "endsWith": "c" },
+      { "text": "ри",  "startsWith": "c", "endsWith": "v" },
+      { "text": "ан",  "startsWith": "v", "endsWith": "c" }
+    ],
+    "suffix": [
+      { "text": "дэл", "startsWith": "c" },
+      { "text": "ис",  "startsWith": "v" },
+      { "text": "рон", "startsWith": "c" },
+      { "text": "эн",  "startsWith": "v" },
+      { "text": "вер", "startsWith": "c" },
+      { "text": "ор",  "startsWith": "v" }
+    ]
+  },
+  "halfling": {
+    "prefix": [
+      { "text": "Пип",  "endsWith": "c" },
+      { "text": "Тоби", "endsWith": "v" },
+      { "text": "Рос",  "endsWith": "c" },
+      { "text": "Мэри", "endsWith": "v" },
+      { "text": "Фин",  "endsWith": "c" },
+      { "text": "Дэ",   "endsWith": "v" }
+    ],
+    "middle": [
+      { "text": "би",  "startsWith": "c", "endsWith": "v" },
+      { "text": "ин",  "startsWith": "v", "endsWith": "c" },
+      { "text": "ло",  "startsWith": "c", "endsWith": "v" },
+      { "text": "эл",  "startsWith": "v", "endsWith": "c" }
+    ],
+    "suffix": [
+      { "text": "кин",  "startsWith": "c" },
+      { "text": "инс",  "startsWith": "v" },
+      { "text": "фут",  "startsWith": "c" },
+      { "text": "ок",   "startsWith": "v" },
+      { "text": "бурн", "startsWith": "c" },
+      { "text": "эли",  "startsWith": "v" }
+    ]
+  },
+  "orc": {
+    "prefix": [
+      { "text": "Гар", "endsWith": "c" },
+      { "text": "Угр", "endsWith": "c" },
+      { "text": "Кро", "endsWith": "v" },
+      { "text": "Вор", "endsWith": "c" },
+      { "text": "Зар", "endsWith": "c" },
+      { "text": "Ру",  "endsWith": "v" }
+    ],
+    "middle": [
+      { "text": "га",  "startsWith": "c", "endsWith": "v" },
+      { "text": "аш",  "startsWith": "v", "endsWith": "c" },
+      { "text": "мор", "startsWith": "c", "endsWith": "c" },
+      { "text": "ок",  "startsWith": "v", "endsWith": "c" }
+    ],
+    "suffix": [
+      { "text": "грим", "startsWith": "c" },
+      { "text": "ар",   "startsWith": "v" },
+      { "text": "рак",  "startsWith": "c" },
+      { "text": "ош",   "startsWith": "v" },
+      { "text": "бул",  "startsWith": "c" },
+      { "text": "уг",   "startsWith": "v" }
+    ]
+  },
+  "tiefling": {
+    "prefix": [
+      { "text": "Зар",  "endsWith": "c" },
+      { "text": "Эри",  "endsWith": "v" },
+      { "text": "Вэл",  "endsWith": "c" },
+      { "text": "Асмо", "endsWith": "v" },
+      { "text": "Мор",  "endsWith": "c" },
+      { "text": "Ли",   "endsWith": "v" }
+    ],
+    "middle": [
+      { "text": "фи",  "startsWith": "c", "endsWith": "v" },
+      { "text": "эль", "startsWith": "v", "endsWith": "c" },
+      { "text": "ха",  "startsWith": "c", "endsWith": "v" },
+      { "text": "ар",  "startsWith": "v", "endsWith": "c" }
+    ],
+    "suffix": [
+      { "text": "рэкс", "startsWith": "c" },
+      { "text": "ис",   "startsWith": "v" },
+      { "text": "дрэй", "startsWith": "c" },
+      { "text": "эйр",  "startsWith": "v" },
+      { "text": "фель", "startsWith": "c" },
+      { "text": "он",   "startsWith": "v" }
+    ]
+  },
+  "gnome": {
+    "prefix": [
+      { "text": "Тик",  "endsWith": "c" },
+      { "text": "Зипп", "endsWith": "c" },
+      { "text": "Фи",   "endsWith": "v" },
+      { "text": "Вик",  "endsWith": "c" },
+      { "text": "Нэ",   "endsWith": "v" },
+      { "text": "Брик", "endsWith": "c" }
+    ],
+    "middle": [
+      { "text": "ло",  "startsWith": "c", "endsWith": "v" },
+      { "text": "ик",  "startsWith": "v", "endsWith": "c" },
+      { "text": "чи",  "startsWith": "c", "endsWith": "v" },
+      { "text": "эн",  "startsWith": "v", "endsWith": "c" }
+    ],
+    "suffix": [
+      { "text": "ник",  "startsWith": "c" },
+      { "text": "инг",  "startsWith": "v" },
+      { "text": "бол",  "startsWith": "c" },
+      { "text": "экс",  "startsWith": "v" },
+      { "text": "дик",  "startsWith": "c" },
+      { "text": "ик",   "startsWith": "v" }
+    ]
+  }
+}

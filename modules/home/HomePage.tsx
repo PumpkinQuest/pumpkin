@@ -13,7 +13,7 @@ const sections = [
     href: "/tools",
     icon: Wrench,
     title: "Инструменты",
-    description: "Утилиты и генераторы для игр.",
+    description: "Утилиты, генераторы и таблички для НРИ",
   },
   {
     href: "/lss",
