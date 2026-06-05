@@ -5,6 +5,7 @@ import { FileJson, Download } from "lucide-react";
 import Breadcrumbs from "@/shared/components/Breadcrumbs";
 import SpellCredits from "./SpellCredits";
 import { SPELL_FILES, type Edition } from "./constants";
+import { track } from "@/shared/utils/analytics";
 
 const EDITIONS: Edition[] = ["2014", "2024"];
 
@@ -50,6 +51,7 @@ export default function SpellsPage() {
             <a
               href={file.path}
               download
+              onClick={() => track("spell_download", { book: file.slug, edition })}
               className="group flex flex-col gap-3 p-6 rounded-xl border border-pumpkin-border bg-pumpkin-surface hover:border-pumpkin-orange/40 hover:bg-pumpkin-surface/80 transition-all duration-200"
             >
               <div className="flex items-center justify-between">
