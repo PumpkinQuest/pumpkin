@@ -21,6 +21,7 @@ import connectionTable from "@/app/data/spark/tables/npc-connection.json";
 import nameData        from "@/app/data/spark/names.json";
 
 import type { SparkTable, NameData } from "../lib/types";
+import { track } from "@/shared/utils/analytics";
 
 const tables: Record<string, SparkTable> = {
   "npc-race":        raceTable       as SparkTable,
@@ -47,11 +48,13 @@ export default function NpcGenerator() {
     const npc = generateNpc(tables, nameData as NameData);
     const next = saveNpc(npc);
     setHistory(next);
+    track("npc_generate");
   }, []);
 
   const handleClear = useCallback(() => {
     const remaining = clearHistory();
     setHistory(remaining);
+    track("npc_clear_history");
   }, []);
 
   const handleToggleLock = useCallback((npcId: string) => {
@@ -61,6 +64,7 @@ export default function NpcGenerator() {
       const updated = { ...npc, locked: !npc.locked };
       const next = prev.map((n) => (n.id === npcId ? updated : n));
       updateNpc(updated);
+      if (updated.locked) track("npc_lock");
       return next;
     });
   }, []);
@@ -72,6 +76,7 @@ export default function NpcGenerator() {
       const updated = rerollField(npc, label, tables, nameData as NameData);
       const next = prev.map((n) => (n.id === npcId ? updated : n));
       updateNpc(updated);
+      track("npc_reroll_field", { field: label });
       return next;
     });
   }, []);
