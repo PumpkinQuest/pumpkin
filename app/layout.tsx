@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import Header from "@/shared/components/Header";
 import Footer from "@/shared/components/Footer";
@@ -37,6 +38,11 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
         <Footer />
       </body>
+      <Script
+        src="https://umami.pumpkin.quest/script.js"
+        data-website-id="73b4a0ba-ae7f-420d-99d2-6fe15b952015"
+        strategy="afterInteractive"
+      />
     </html>
   );
 }
