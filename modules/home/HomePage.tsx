@@ -15,12 +15,12 @@ const sections = [
     title: "Инструменты",
     description: "Утилиты, генераторы и таблички для НРИ",
   },
-  {
-    href: "/lss",
-    icon: BookOpen,
-    title: "LSS",
-    description: "Материалы для листа Long Story Short",
-  },
+//   {
+//     href: "/lss",
+//     icon: BookOpen,
+//     title: "LSS",
+//     description: "Материалы для листа Long Story Short",
+//   },
 ];
 
 export default function HomePage() {
