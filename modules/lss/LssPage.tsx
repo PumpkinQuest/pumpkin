@@ -10,17 +10,17 @@ export const metadata: Metadata = {
 
 const sections = [
   {
+    href: "/lss/dimension-door",
+    icon: DoorOpen,
+    title: "Dimension Door",
+    description: "Сохранение заклинаний из компендиумов в LSS",
+  },
+  {
     href: "/lss/spells",
     icon: FileJson,
     title: "Файлы JSON",
     description: "Файлы заклинаний для LSS",
   },
-//   {
-//     href: "/lss/dimension-door",
-//     icon: DoorOpen,
-//     title: "Dimension Door",
-//     description: "В разработке",
-//   },
 ];
 
 export default function LssPage() {

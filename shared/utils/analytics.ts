@@ -4,6 +4,7 @@ type AnalyticsEvents = {
   npc_lock: undefined;
   npc_reroll_field: { field: string };
   spell_download: { book: string; edition: string };
+  dimension_door_download: { version: string };
 };
 
 export function track<E extends keyof AnalyticsEvents>(
