@@ -1,0 +1,579 @@
+"use client";
+
+import { useState, useCallback } from "react";
+import { Trash2 } from "lucide-react";
+import type { Grant, StatKey, ArmorProfKey, WeaponProfKey, CasterProgression, FeatCategory } from "../../lib/types";
+import { listBonusTargetsByGroup, STAT_KEYS, SKILL_KEYS, ARMOR_PROF_KEYS, WEAPON_PROF_KEYS, COMMON_LANGUAGES } from "../../lib/registry/bonusTargets";
+import GrantList from "./GrantList";
+
+type Props = {
+    grant: Grant;
+    entityPath: string;
+    onSave: (grant: Grant) => void;
+    onCancel: () => void;
+    onDelete: () => void;
+};
+
+export default function GrantEditor({ grant, onSave, onCancel, onDelete }: Props) {
+    const [data, setData] = useState<Record<string, unknown>>(
+        structuredClone(grant) as unknown as Record<string, unknown>,
+    );
+
+    const set = useCallback((key: string, value: unknown) => {
+        setData((prev) => ({ ...prev, [key]: value }));
+    }, []);
+
+    const handleSave = () => onSave(data as unknown as Grant);
+
+    return (
+        <div className="rounded-lg border border-pumpkin-orange/40 bg-pumpkin-orange/5 overflow-hidden">
+            <div className="flex items-center justify-between px-3 py-2 border-b border-pumpkin-orange/20">
+                <span className="text-xs font-medium text-pumpkin-orange">
+                    {data.type as string}
+                </span>
+                <div className="flex items-center gap-1">
+                    <button
+                        onClick={handleSave}
+                        className="px-2 py-0.5 rounded text-xs bg-pumpkin-orange text-pumpkin-bg font-medium"
+                    >
+                        OK
+                    </button>
+                    <button onClick={onCancel} className="px-2 py-0.5 rounded text-xs text-pumpkin-muted hover:text-pumpkin-text">
+                        Отмена
+                    </button>
+                    <button onClick={onDelete} className="p-0.5 text-pumpkin-muted hover:text-red-400">
+                        <Trash2 size={12} />
+                    </button>
+                </div>
+            </div>
+
+            <div className="p-3 flex flex-col gap-2">
+                <GrantForm data={data} set={set} />
+            </div>
+        </div>
+    );
+}
+
+// ── Grant form dispatcher ─────────────────────────────────────────────────
+
+function GrantForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    const type = data.type as string;
+    switch (type) {
+        case 'asi-fixed': return <AsiFixedForm data={data} set={set} />;
+        case 'asi-flexible': return <AsiFlexibleForm data={data} set={set} />;
+        case 'asi-pool': return <AsiPoolForm data={data} set={set} />;
+        case 'bonus': return <BonusForm data={data} set={set} />;
+        case 'feat': return <FeatGrantForm data={data} set={set} />;
+        case 'skill-fixed': return <SkillFixedForm data={data} set={set} />;
+        case 'skill-choice': return <SkillChoiceForm data={data} set={set} />;
+        case 'tool-fixed': return <ToolFixedForm data={data} set={set} />;
+        case 'tool-choice': return <ToolChoiceForm data={data} set={set} />;
+        case 'language-fixed': return <LanguageFixedForm data={data} set={set} />;
+        case 'language-choice': return <LanguageChoiceForm data={data} set={set} />;
+        case 'speed': return <SpeedForm data={data} set={set} />;
+        case 'saving-throw': return <SavingThrowForm data={data} set={set} />;
+        case 'trait': return <TraitForm data={data} set={set} />;
+        case 'armor-prof': return <ArmorProfForm data={data} set={set} />;
+        case 'weapon-prof': return <WeaponProfForm data={data} set={set} />;
+        case 'spellcasting': return <SpellcastingForm data={data} set={set} />;
+        case 'hp-die': return <HpDieForm data={data} set={set} />;
+        case 'resource': return <ResourceForm data={data} set={set} />;
+        case 'equipment-fixed': return <EquipmentFixedForm data={data} set={set} />;
+        case 'equipment-choice': return <EquipmentChoiceForm data={data} set={set} />;
+        case 'gold': return <GoldForm data={data} set={set} />;
+        case 'gold-dice': return <GoldDiceForm data={data} set={set} />;
+        case 'pick-one': return <PickOneForm data={data} set={set} />;
+        default:     return <div className="text-xs text-red-400">Неизвестный тип гранта: {type}</div>;
+    }
+}
+
+// ── Shared mini-components ────────────────────────────────────────────────
+
+function F({ label, children }: { label: string; children: React.ReactNode }) {
+    return (
+        <div className="flex flex-col gap-1">
+            <label className="text-[11px] text-pumpkin-muted">{label}</label>
+            {children}
+        </div>
+    );
+}
+
+const inputClass = "w-full rounded-md border border-pumpkin-border bg-pumpkin-bg px-2 py-1.5 text-xs text-pumpkin-text placeholder:text-pumpkin-muted/50 focus:outline-none focus:border-pumpkin-orange/50";
+
+function TF({ label, value, onChange, placeholder }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string }) {
+    return (
+        <F label={label}>
+            <input value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} className={inputClass} />
+        </F>
+    );
+}
+
+function NF({ label, value, onChange, placeholder }: { label: string; value: number | undefined; onChange: (v: number | undefined) => void; placeholder?: string }) {
+    return (
+        <F label={label}>
+            <input
+                type="number"
+                value={value ?? ''}
+                onChange={(e) => onChange(e.target.value === '' ? undefined : Number(e.target.value))}
+                placeholder={placeholder}
+                className={inputClass}
+            />
+        </F>
+    );
+}
+
+function MultiSelect({ label, options, selected, onChange }: {
+    label: string;
+    options: string[];
+    selected: string[];
+    onChange: (v: string[]) => void;
+}) {
+    return (
+        <F label={label}>
+            <div className="flex flex-wrap gap-1">
+                {options.map((opt) => {
+                    const on = selected.includes(opt);
+                    return (
+                        <button
+                            key={opt}
+                            onClick={() => onChange(on ? selected.filter((s) => s !== opt) : [...selected, opt])}
+                            className={`px-1.5 py-0.5 rounded text-[11px] border transition-colors ${
+                                on
+                                    ? 'border-pumpkin-orange/40 bg-pumpkin-orange/10 text-pumpkin-orange'
+                                    : 'border-pumpkin-border bg-pumpkin-bg text-pumpkin-muted hover:border-pumpkin-orange/20'
+                            }`}
+                        >
+                            {opt}
+                        </button>
+                    );
+                })}
+            </div>
+        </F>
+    );
+}
+
+// ── Grant type forms ──────────────────────────────────────────────────────
+
+function AsiFixedForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    const values = (data.values as Record<string, number>) ?? {};
+    return (
+        <div className="flex flex-col gap-2">
+            <span className="text-[11px] text-pumpkin-muted">Характеристики</span>
+            {STAT_KEYS.map((stat) => (
+                <div key={stat} className="flex items-center gap-2">
+                    <span className="text-xs text-pumpkin-muted w-8">{stat.toUpperCase()}</span>
+                    <input
+                        type="number"
+                        value={values[stat] ?? ''}
+                        onChange={(e) => {
+                            const v = e.target.value === '' ? undefined : Number(e.target.value);
+                            const next = { ...values };
+                            if (v === undefined || v === 0) delete next[stat];
+                            else next[stat] = v;
+                            set('values', next);
+                        }}
+                        className="w-16 rounded-md border border-pumpkin-border bg-pumpkin-bg px-2 py-1 text-xs text-pumpkin-text focus:outline-none focus:border-pumpkin-orange/50"
+                        placeholder="0"
+                    />
+                </div>
+            ))}
+        </div>
+    );
+}
+
+function AsiFlexibleForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    const sets = (data.sets as Array<{ count: number; amount: number; options?: string[] }>) ?? [];
+    return (
+        <div className="flex flex-col gap-2">
+            {sets.map((s, i) => (
+                <div key={i} className="flex items-center gap-2 border border-pumpkin-border rounded-md p-2">
+                    <NF label="" value={s.count} onChange={(v) => {
+                        const next = [...sets];
+                        next[i] = { ...next[i], count: v ?? 0 };
+                        set('sets', next);
+                    }} />
+                    <span className="text-xs text-pumpkin-muted">×</span>
+                    <NF label="" value={s.amount} onChange={(v) => {
+                        const next = [...sets];
+                        next[i] = { ...next[i], amount: v ?? 0 };
+                        set('sets', next);
+                    }} />
+                    <button onClick={() => set('sets', sets.filter((_, j) => j !== i))} className="text-xs text-red-400 ml-auto">
+                        ×
+                    </button>
+                </div>
+            ))}
+            <button onClick={() => set('sets', [...sets, { count: 1, amount: 2 }])} className="text-xs text-pumpkin-muted hover:text-pumpkin-text">
+                + Набор
+            </button>
+        </div>
+    );
+}
+
+function AsiPoolForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    const options = (data.options as string[]) ?? [];
+    return (
+        <div className="flex flex-col gap-2">
+            <div className="grid grid-cols-2 gap-2">
+                <NF label="Всего" value={data.total as number} onChange={(v) => set('total', v)} />
+                <NF label="Макс на хар-ку" value={data.max as number} onChange={(v) => set('max', v)} />
+            </div>
+            <MultiSelect label="Варианты" options={[...STAT_KEYS]} selected={options} onChange={(v) => set('options', v)} />
+        </div>
+    );
+}
+
+function BonusForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    const groups = listBonusTargetsByGroup();
+    const target = (data.target as string) ?? '';
+    return (
+        <div className="flex flex-col gap-2">
+            <F label="Цель">
+                <select value={target} onChange={(e) => set('target', e.target.value)} className={inputClass}>
+                    <option value="">— цель —</option>
+                    {Object.entries(groups).map(([group, targets]) => (
+                        <optgroup key={group} label={group}>
+                            {targets.map((t) => (
+                                <option key={t} value={t}>{t}</option>
+                            ))}
+                        </optgroup>
+                    ))}
+                </select>
+            </F>
+            <TF label="Метка" value={(data.label as string) ?? ''} onChange={(v) => set('label', v)} />
+            <div className="grid grid-cols-2 gap-2">
+                <NF label="Значение" value={data.value as number | undefined} onChange={(v) => { set('value', v); if (v !== undefined) set('expr', undefined); }} />
+                <TF label="Выражение" value={(data.expr as string) ?? ''} onChange={(v) => { set('expr', v || undefined); if (v) set('value', undefined); }} placeholder="[LVL]" />
+            </div>
+            <F label="Режим">
+                <select value={(data.mode as string) ?? 'add'} onChange={(e) => set('mode', e.target.value || undefined)} className={inputClass}>
+                    <option value="add">добавить</option>
+                    <option value="set">установить</option>
+                    <option value="upgrade">улучшить</option>
+                    <option value="downgrade">ухудшить</option>
+                    <option value="multiply">умножить</option>
+                </select>
+            </F>
+        </div>
+    );
+}
+
+function FeatGrantForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    return (
+        <div className="grid grid-cols-2 gap-2">
+            <TF label="Черта (ID)" value={(data.featId as string) ?? ''} onChange={(v) => set('featId', v)} placeholder="any" />
+            <F label="Категория">
+                <select value={(data.category as string) ?? ''} onChange={(e) => set('category', e.target.value || undefined)} className={inputClass}>
+                    <option value="">—</option>
+                    {(['origin', 'general', 'fighting-style', 'epic-boon', 'invocation'] as FeatCategory[]).map((c) => (
+                        <option key={c} value={c}>{c}</option>
+                    ))}
+                </select>
+            </F>
+        </div>
+    );
+}
+
+function SkillFixedForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    const skills = (data.skills as string[]) ?? [];
+    return <MultiSelect label="Навыки" options={[...SKILL_KEYS]} selected={skills} onChange={(v) => set('skills', v)} />;
+}
+
+function SkillChoiceForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    const opts = data.options as string[] | 'any' | undefined;
+    return (
+        <div className="flex flex-col gap-2">
+            <NF label="Количество" value={data.count as number} onChange={(v) => set('count', v)} />
+            <F label="Варианты">
+                <select
+                    value={Array.isArray(opts) ? '_custom' : (opts === 'any' ? 'any' : '_custom')}
+                    onChange={(e) => {
+                        if (e.target.value === 'any') set('options', 'any');
+                        else set('options', []);
+                    }}
+                    className={inputClass}
+                >
+                    <option value="any">любые</option>
+                    <option value="_custom">свои...</option>
+                </select>
+            </F>
+            {Array.isArray(opts) && (
+                <MultiSelect label="Навыки" options={[...SKILL_KEYS]} selected={opts} onChange={(v) => set('options', v)} />
+            )}
+        </div>
+    );
+}
+
+function ToolFixedForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    const tools = (data.tools as string[]) ?? [];
+    return (
+        <div className="flex flex-col gap-2">
+            <F label="Инструменты (через запятую)">
+                <input
+                    value={tools.join(', ')}
+                    onChange={(e) => set('tools', e.target.value.split(',').map((s) => s.trim()).filter(Boolean))}
+                    className={inputClass}
+                    placeholder="thieves' tools, herbalism kit"
+                />
+            </F>
+        </div>
+    );
+}
+
+function ToolChoiceForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    const options = (data.options as string[]) ?? [];
+    return (
+        <div className="flex flex-col gap-2">
+            <NF label="Количество" value={data.count as number} onChange={(v) => set('count', v)} />
+            <F label="Варианты (через запятую)">
+                <input
+                    value={options.join(', ')}
+                    onChange={(e) => set('options', e.target.value.split(',').map((s) => s.trim()).filter(Boolean))}
+                    className={inputClass}
+                    placeholder="thieves' tools, herbalism kit"
+                />
+            </F>
+        </div>
+    );
+}
+
+function LanguageFixedForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    const langs = (data.languages as string[]) ?? [];
+    return <MultiSelect label="Языки" options={[...COMMON_LANGUAGES]} selected={langs} onChange={(v) => set('languages', v)} />;
+}
+
+function LanguageChoiceForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    const options = data.options as string[] | undefined;
+    return (
+        <div className="flex flex-col gap-2">
+            <NF label="Количество" value={data.count as number} onChange={(v) => set('count', v)} />
+            {options && (
+                <MultiSelect label="Варианты" options={[...COMMON_LANGUAGES]} selected={options} onChange={(v) => set('options', v)} />
+            )}
+        </div>
+    );
+}
+
+function SpeedForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    return <NF label="Скорость (фт)" value={data.value as number} onChange={(v) => set('value', v)} />;
+}
+
+function SavingThrowForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    const stats = (data.stats as string[]) ?? [];
+    return <MultiSelect label="Спасброски" options={[...STAT_KEYS]} selected={stats} onChange={(v) => set('stats', v)} />;
+}
+
+function TraitForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    return (
+        <div className="flex flex-col gap-2">
+            <div className="grid grid-cols-2 gap-2">
+                <TF label="Идентификатор" value={(data.id as string) ?? ''} onChange={(v) => set('id', v)} placeholder="darkvision" />
+                <TF label="Название" value={(data.name as string) ?? ''} onChange={(v) => set('name', v)} />
+            </div>
+            <TF label="Формула броска" value={(data.roll as string) ?? ''} onChange={(v) => set('roll', v || undefined)} placeholder="[LVL]d8" />
+        </div>
+    );
+}
+
+function ArmorProfForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    const armors = (data.armors as string[]) ?? [];
+    return <MultiSelect label="Владение бронёй" options={[...ARMOR_PROF_KEYS]} selected={armors} onChange={(v) => set('armors', v)} />;
+}
+
+function WeaponProfForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    const weapons = (data.weapons as string[]) ?? [];
+    const specific = (data.specific as string[]) ?? [];
+    return (
+        <div className="flex flex-col gap-2">
+            <MultiSelect label="Категории оружия" options={[...WEAPON_PROF_KEYS]} selected={weapons} onChange={(v) => set('weapons', v)} />
+            <F label="Особое оружие (через запятую)">
+                <input
+                    value={specific.join(', ')}
+                    onChange={(e) => set('specific', e.target.value.split(',').map((s) => s.trim()).filter(Boolean))}
+                    className={inputClass}
+                    placeholder="longsword, shortbow"
+                />
+            </F>
+        </div>
+    );
+}
+
+function SpellcastingForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    return (
+        <div className="grid grid-cols-2 gap-2">
+            <F label="Характеристика">
+                <select value={(data.ability as string) ?? 'int'} onChange={(e) => set('ability', e.target.value)} className={inputClass}>
+                    <option value="int">ИНТ</option>
+                    <option value="wis">МДР</option>
+                    <option value="cha">ХАР</option>
+                </select>
+            </F>
+            <F label="Тип заклинателя">
+                <select value={(data.casterType as string) ?? 'list'} onChange={(e) => set('casterType', e.target.value)} className={inputClass}>
+                    <option value="memory">память</option>
+                    <option value="list">список</option>
+                    <option value="book">книга</option>
+                </select>
+            </F>
+            <F label="Прогрессия">
+                <select value={(data.progression as string) ?? ''} onChange={(e) => set('progression', e.target.value || undefined)} className={inputClass}>
+                    <option value="">—</option>
+                    {(['full', 'half', 'third', 'pact'] as CasterProgression[]).map((p) => (
+                        <option key={p} value={p}>{p}</option>
+                    ))}
+                </select>
+            </F>
+        </div>
+    );
+}
+
+function HpDieForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    return <NF label="Кость хитов" value={data.die as number} onChange={(v) => set('die', v)} />;
+}
+
+function ResourceForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    return (
+        <div className="flex flex-col gap-2">
+            <div className="grid grid-cols-2 gap-2">
+                <TF label="Идентификатор" value={(data.id as string) ?? ''} onChange={(v) => set('id', v)} />
+                <TF label="Название" value={(data.name as string) ?? ''} onChange={(v) => set('name', v)} />
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+                <NF label="Макс" value={data.max as number | undefined} onChange={(v) => set('max', v)} />
+                <TF label="Макс (выражение)" value={(data.maxExpr as string) ?? ''} onChange={(v) => set('maxExpr', v || undefined)} placeholder="[LVL]" />
+            </div>
+            <div className="flex items-center gap-4">
+                <label className="flex items-center gap-1.5 text-xs text-pumpkin-muted">
+                    <input
+                        type="checkbox"
+                        checked={!!data.isShortRest}
+                        onChange={(e) => set('isShortRest', e.target.checked || undefined)}
+                        className="accent-pumpkin-orange size-3"
+                    />
+                    Короткий отдых
+                </label>
+                <label className="flex items-center gap-1.5 text-xs text-pumpkin-muted">
+                    <input
+                        type="checkbox"
+                        checked={!!data.isLongRest}
+                        onChange={(e) => set('isLongRest', e.target.checked || undefined)}
+                        className="accent-pumpkin-orange size-3"
+                    />
+                    Длинный отдых
+                </label>
+            </div>
+        </div>
+    );
+}
+
+function EquipmentFixedForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    const items = (data.items as string[]) ?? [];
+    return (
+        <F label="Предметы (через запятую)">
+            <input
+                value={items.join(', ')}
+                onChange={(e) => set('items', e.target.value.split(',').map((s) => s.trim()).filter(Boolean))}
+                className={inputClass}
+                placeholder="longsword, shield, explorer's pack"
+            />
+        </F>
+    );
+}
+
+function EquipmentChoiceForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    const options = (data.options as string[][]) ?? [];
+    return (
+        <div className="flex flex-col gap-2">
+            {options.map((opt, i) => (
+                <div key={i} className="flex items-center gap-2">
+                    <span className="text-[11px] text-pumpkin-muted w-5">{i + 1}.</span>
+                    <input
+                        value={opt.join(', ')}
+                        onChange={(e) => {
+                            const next = [...options];
+                            next[i] = e.target.value.split(',').map((s) => s.trim()).filter(Boolean);
+                            set('options', next);
+                        }}
+                        className={inputClass}
+                        placeholder="longsword, shield"
+                    />
+                    <button onClick={() => set('options', options.filter((_, j) => j !== i))} className="text-xs text-red-400">
+                        ×
+                    </button>
+                </div>
+            ))}
+            <button onClick={() => set('options', [...options, []])} className="text-xs text-pumpkin-muted hover:text-pumpkin-text">
+                + Вариант
+            </button>
+        </div>
+    );
+}
+
+function GoldForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    return <NF label="Золото (зм)" value={data.amount as number} onChange={(v) => set('amount', v)} />;
+}
+
+function GoldDiceForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    return <TF label="Формула кубов" value={(data.dice as string) ?? ''} onChange={(v) => set('dice', v)} placeholder="5d4*10" />;
+}
+
+function PickOneForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    const options = (data.options as Array<{ id?: string; label: string; grants: Grant[] }>) ?? [];
+    return (
+        <div className="flex flex-col gap-2">
+            <div className="grid grid-cols-2 gap-2">
+                <TF label="Идентификатор" value={(data.id as string) ?? ''} onChange={(v) => set('id', v || undefined)} />
+                <TF label="Заголовок" value={(data.label as string) ?? ''} onChange={(v) => set('label', v || undefined)} />
+            </div>
+            <span className="text-[11px] text-pumpkin-muted">Варианты</span>
+            {options.map((opt, i) => (
+                <div key={i} className="border border-pumpkin-border rounded-md p-2 flex flex-col gap-2">
+                    <div className="flex items-center gap-2">
+                        <span className="text-[11px] text-pumpkin-muted w-5">{i + 1}.</span>
+                        <input
+                            value={opt.id ?? ''}
+                            onChange={(e) => {
+                                const next = [...options];
+                                next[i] = { ...next[i], id: e.target.value || undefined };
+                                set('options', next);
+                            }}
+                            className={inputClass + ' w-32'}
+                            placeholder="option-id"
+                        />
+                        <input
+                            value={opt.label}
+                            onChange={(e) => {
+                                const next = [...options];
+                                next[i] = { ...next[i], label: e.target.value };
+                                set('options', next);
+                            }}
+                            className={inputClass}
+                            placeholder="Label"
+                        />
+                        <button onClick={() => set('options', options.filter((_, j) => j !== i))} className="text-xs text-red-400">
+                            ×
+                        </button>
+                    </div>
+                    <div className="ml-5">
+                        <GrantList
+                            grants={opt.grants ?? []}
+                            entityPath={`pick-one/options[${i}]`}
+                            onChange={(g) => {
+                                const next = [...options];
+                                next[i] = { ...next[i], grants: g };
+                                set('options', next);
+                            }}
+                            compact
+                        />
+                    </div>
+                </div>
+            ))}
+            <button
+                onClick={() => set('options', [...options, { label: '', grants: [] }])}
+                className="text-xs text-pumpkin-muted hover:text-pumpkin-text"
+            >
+                + Вариант
+            </button>
+        </div>
+    );
+}

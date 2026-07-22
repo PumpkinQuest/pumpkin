@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BookOpen, FileJson, DoorOpen, ArrowRight } from "lucide-react";
+import { BookOpen, FileJson, DoorOpen, Database, ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Breadcrumbs from "@/shared/components/Breadcrumbs";
 
@@ -20,6 +20,12 @@ const sections = [
     icon: FileJson,
     title: "Файлы JSON",
     description: "Файлы заклинаний для LSS",
+  },
+  {
+    href: "/lss/dataset-editor",
+    icon: Database,
+    title: "Редактор датасетов",
+    description: "Создание и правка датасетов — коллекций классов, рас, предысторий и черт.",
   },
 ];
 
