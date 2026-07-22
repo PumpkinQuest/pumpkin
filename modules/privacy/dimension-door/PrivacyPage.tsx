@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "Политика конфиденциальности — Dimension Door",
   description:
     "Какие данные обрабатывает расширение Dimension Door и зачем.",
+  alternates: {
+    canonical: "/privacy/dimension-door/",
+  },
 };
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {

@@ -19,11 +19,32 @@ export const metadata: Metadata = {
   description:
     "PumpkinQuest — инструменты и материалы для НРИ",
   metadataBase: new URL("https://pumpkin.quest"),
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
     siteName: "PumpkinQuest",
     locale: "ru_RU",
     type: "website",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "PumpkinQuest",
+      },
+    ],
   },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "PumpkinQuest",
+  url: "https://pumpkin.quest",
+  description: "Инструменты и материалы для НРИ",
+  inLanguage: "ru",
 };
 
 export default function RootLayout({
@@ -34,6 +55,10 @@ export default function RootLayout({
   return (
     <html lang="ru" className={inter.variable}>
       <body className="font-[var(--font-inter)] bg-pumpkin-bg text-pumpkin-text flex flex-col min-h-screen antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

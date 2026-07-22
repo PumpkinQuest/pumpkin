@@ -4,8 +4,11 @@ import type { Metadata } from "next";
 import Breadcrumbs from "@/shared/components/Breadcrumbs";
 
 export const metadata: Metadata = {
-  title: "LSS — PumpkinQuest",
+  title: "LSS",
   description: "Материалы для листа Long Story Short",
+  alternates: {
+    canonical: "/lss/",
+  },
 };
 
 const sections = [
@@ -21,12 +24,12 @@ const sections = [
     title: "Файлы JSON",
     description: "Файлы заклинаний для LSS",
   },
-  {
-    href: "/lss/dataset-editor",
-    icon: Database,
-    title: "Редактор датасетов",
-    description: "Создание и правка датасетов — коллекций классов, рас, предысторий и черт.",
-  },
+//   {
+//     href: "/lss/dataset-editor",
+//     icon: Database,
+//     title: "Редактор датасетов",
+//     description: "Создание и правка датасетов — коллекций классов, рас, предысторий и черт.",
+//   },
 ];
 
 export default function LssPage() {

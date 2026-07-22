@@ -6,6 +6,9 @@ import Breadcrumbs from "@/shared/components/Breadcrumbs";
 export const metadata: Metadata = {
   title: "Инструменты",
   description: "Утилиты, генераторы и таблички для НРИ",
+  alternates: {
+    canonical: "/tools/",
+  },
 };
 
 const tools = [

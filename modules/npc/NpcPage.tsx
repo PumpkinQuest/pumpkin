@@ -4,8 +4,11 @@ import Breadcrumbs from "@/shared/components/Breadcrumbs";
 import NpcGenerator from "./components/NpcGenerator";
 
 export const metadata: Metadata = {
-  title: "Генератор NPC | PumpkinQuest",
+  title: "Генератор NPC",
   description: "Быстрая генерация персонажей для НРИ на основе spark-таблиц.",
+  alternates: {
+    canonical: "/tools/npc/",
+  },
 };
 
 export default function NpcPage() {

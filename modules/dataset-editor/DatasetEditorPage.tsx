@@ -4,8 +4,11 @@ import Breadcrumbs from "@/shared/components/Breadcrumbs";
 import DatasetManager from "./components/DatasetManager";
 
 export const metadata: Metadata = {
-    title: "Редактор датасетов LSS | PumpkinQuest",
+    title: "Редактор датасетов LSS",
     description: "Создание и редактирование датасетов Long Story Short — наборов классов, рас, предысторий и черт для конструктора персонажей.",
+    alternates: {
+        canonical: "/lss/dataset-editor/",
+    },
 };
 
 export default function DatasetEditorPage() {

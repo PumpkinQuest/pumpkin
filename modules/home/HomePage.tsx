@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "PumpkinQuest",
   description:
     "PumpkinQuest — инструменты и материалы для НРИ",
+  alternates: {
+    canonical: "/",
+  },
 };
 
 const sections = [
