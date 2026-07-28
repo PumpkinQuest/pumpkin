@@ -23,6 +23,10 @@ export default function DatasetEditor({ dataset, issues, ambient, onPersist, onB
     const [saved, setSaved] = useState(true);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const mountedRef = useRef(false);
+    const onPersistRef = useRef(onPersist);
+    onPersistRef.current = onPersist;
+    const ambientRef = useRef(ambient);
+    ambientRef.current = ambient;
 
     const updateField = useCallback(<K extends keyof Dataset>(key: K, value: Dataset[K]) => {
         setDs((prev) => ({ ...prev, [key]: value }));
@@ -36,12 +40,12 @@ export default function DatasetEditor({ dataset, issues, ambient, onPersist, onB
         setSaved(false);
         timerRef.current = setTimeout(() => {
             const clean = { ...ds, system: 'dnd_5', license: 'CC-BY-SA-4.0' };
-            onPersist(clean);
-            setLint(lintDataset(clean, ambient));
+            onPersistRef.current(clean);
+            setLint(lintDataset(clean, ambientRef.current));
             setSaved(true);
         }, 500);
         return () => { if (timerRef.current) clearTimeout(timerRef.current); };
-    }, [ds, ambient, onPersist]);
+    }, [ds]);
 
     const errorPaths = new Set(lint.filter((i) => i.severity === 'error').map((i) => i.path));
     const warnPaths = new Set(lint.filter((i) => i.severity === 'warning').map((i) => i.path));

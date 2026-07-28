@@ -412,18 +412,30 @@ function TraitForm({ data, set }: { data: Record<string, unknown>; set: (k: stri
             ) : (
                 <div className="grid grid-cols-2 gap-2">
                     <TF label="Идентификатор" value={id} onChange={(v) => set('id', v)} placeholder="second-wind" />
-                    <TF label="Название" value={(data.name as string) ?? ''} onChange={(v) => set('name', v)} />
+                    <TF
+                        label="Название"
+                        value={(data.name as string) ?? ''}
+                        onChange={(v) => set('name', v)}
+                        placeholder="[f:1d10+[LVL]|Второе дыхание]"
+                    />
                 </div>
             )}
-            <F label="Описание">
+            <F label="Описание (поддерживает [f:...]-формулы)">
                 <textarea
                     value={(data.description as string) ?? ''}
                     onChange={(e) => set('description', e.target.value || undefined)}
                     className={inputClass + ' min-h-[80px] resize-y'}
-                    placeholder="Описание особенности..."
+                    placeholder="Текст описания. Кость пишется так: [f:1d10+[LVL]] — она отразится и в свёрнутом спойлере, и в развёрнутом тексте."
                 />
             </F>
-            <TF label="Формула броска" value={(data.roll as string) ?? ''} onChange={(v) => set('roll', v || undefined)} placeholder="[LVL]d8" />
+            <div className="rounded-md border border-pumpkin-orange/20 bg-pumpkin-orange/5 p-2 flex flex-col gap-1">
+                <span className="text-[11px] font-medium text-pumpkin-orange">[f:...] — формулы с костями</span>
+                <code className="text-[11px] text-pumpkin-muted/80 leading-relaxed">
+                    [f:1d10+[LVL]|Второе дыхание]&nbsp;&nbsp;— кость с лейблом<br />
+                    [f:8+[CON]+[PROF]|Сл]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— DC с лейблом «Сл»<br />
+                    [f:(ceil([LVL]/2))d6]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— кость без лейбла
+                </code>
+            </div>
         </div>
     );
 }

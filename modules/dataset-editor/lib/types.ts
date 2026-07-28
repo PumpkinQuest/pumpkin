@@ -94,7 +94,6 @@ export type TraitGrant = {
     name: string;
     description?: string;
     params?: Record<string, number>;
-    roll?: string;
 };
 
 export type ArmorProfKey = 'armor-light' | 'armor-medium' | 'armor-heavy' | 'armor-label';

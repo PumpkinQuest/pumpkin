@@ -21,14 +21,20 @@ const sections = [
   {
     href: "/lss/spells",
     icon: FileJson,
-    title: "Файлы JSON",
+    title: "Заклинания JSON",
     description: "Файлы заклинаний для LSS",
   },
+  {
+    href: "/lss/dataset-editor",
+    icon: Database,
+    title: "Редактор датасетов",
+    description: "Создание и правка датасетов — коллекций классов, рас, предысторий и черт.",
+  },
 //   {
-//     href: "/lss/dataset-editor",
-//     icon: Database,
-//     title: "Редактор датасетов",
-//     description: "Создание и правка датасетов — коллекций классов, рас, предысторий и черт.",
+//     href: "/lss/datasets",
+//     icon: FileJson,
+//     title: "Датасеты JSON",
+//     description: "Скоро",
 //   },
 ];
 
