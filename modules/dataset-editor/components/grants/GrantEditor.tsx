@@ -4,17 +4,20 @@ import { useState, useCallback } from "react";
 import { Trash2 } from "lucide-react";
 import type { Grant, StatKey, ArmorProfKey, WeaponProfKey, CasterProgression, FeatCategory } from "../../lib/types";
 import { listBonusTargetsByGroup, STAT_KEYS, SKILL_KEYS, ARMOR_PROF_KEYS, WEAPON_PROF_KEYS, COMMON_LANGUAGES } from "../../lib/registry/bonusTargets";
+import { SENSE_TRAIT_IDS, SENSE_LABELS, isSenseTraitId, type SenseTraitId } from "../../lib/registry/senses";
 import GrantList from "./GrantList";
 
 type Props = {
     grant: Grant;
     entityPath: string;
+    /** Every `trait` grant across the whole entity — offered by ResourceForm's "pairs with" picker. */
+    siblingTraits: Array<{ id: string; name: string }>;
     onSave: (grant: Grant) => void;
     onCancel: () => void;
     onDelete: () => void;
 };
 
-export default function GrantEditor({ grant, onSave, onCancel, onDelete }: Props) {
+export default function GrantEditor({ grant, siblingTraits, onSave, onCancel, onDelete }: Props) {
     const [data, setData] = useState<Record<string, unknown>>(
         structuredClone(grant) as unknown as Record<string, unknown>,
     );
@@ -48,7 +51,7 @@ export default function GrantEditor({ grant, onSave, onCancel, onDelete }: Props
             </div>
 
             <div className="p-3 flex flex-col gap-2">
-                <GrantForm data={data} set={set} />
+                <GrantForm data={data} set={set} siblingTraits={siblingTraits} />
             </div>
         </div>
     );
@@ -56,7 +59,11 @@ export default function GrantEditor({ grant, onSave, onCancel, onDelete }: Props
 
 // ── Grant form dispatcher ─────────────────────────────────────────────────
 
-function GrantForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+function GrantForm({ data, set, siblingTraits }: {
+    data: Record<string, unknown>;
+    set: (k: string, v: unknown) => void;
+    siblingTraits: Array<{ id: string; name: string }>;
+}) {
     const type = data.type as string;
     switch (type) {
         case 'asi-fixed': return <AsiFixedForm data={data} set={set} />;
@@ -77,12 +84,12 @@ function GrantForm({ data, set }: { data: Record<string, unknown>; set: (k: stri
         case 'weapon-prof': return <WeaponProfForm data={data} set={set} />;
         case 'spellcasting': return <SpellcastingForm data={data} set={set} />;
         case 'hp-die': return <HpDieForm data={data} set={set} />;
-        case 'resource': return <ResourceForm data={data} set={set} />;
+        case 'resource': return <ResourceForm data={data} set={set} siblingTraits={siblingTraits} />;
         case 'equipment-fixed': return <EquipmentFixedForm data={data} set={set} />;
         case 'equipment-choice': return <EquipmentChoiceForm data={data} set={set} />;
         case 'gold': return <GoldForm data={data} set={set} />;
         case 'gold-dice': return <GoldDiceForm data={data} set={set} />;
-        case 'pick-one': return <PickOneForm data={data} set={set} />;
+        case 'pick-one': return <PickOneForm data={data} set={set} siblingTraits={siblingTraits} />;
         default:     return <div className="text-xs text-red-400">Неизвестный тип гранта: {type}</div>;
     }
 }
@@ -364,12 +371,58 @@ function SavingThrowForm({ data, set }: { data: Record<string, unknown>; set: (k
 }
 
 function TraitForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    const id = (data.id as string) ?? '';
+    const sense = isSenseTraitId(id) ? id : null;
+    const params = (data.params as Record<string, number> | undefined) ?? {};
+
+    const handleSenseChange = (next: string): void => {
+        if (next === '__none__') {
+            set('id', '');
+            set('params', undefined);
+            return;
+        }
+        set('id', next);
+        set('name', SENSE_LABELS[next as SenseTraitId]);
+        set('params', { range: params.range ?? 60 });
+    };
+
     return (
         <div className="flex flex-col gap-2">
-            <div className="grid grid-cols-2 gap-2">
-                <TF label="Идентификатор" value={(data.id as string) ?? ''} onChange={(v) => set('id', v)} placeholder="darkvision" />
-                <TF label="Название" value={(data.name as string) ?? ''} onChange={(v) => set('name', v)} />
-            </div>
+            <F label="Тип черты">
+                <select
+                    value={sense ?? '__custom__'}
+                    onChange={(e) => e.target.value === '__custom__' ? set('params', undefined) : handleSenseChange(e.target.value)}
+                    className={inputClass}
+                >
+                    <option value="__custom__">обычная черта</option>
+                    {SENSE_TRAIT_IDS.map((s) => (
+                        <option key={s} value={s}>{SENSE_LABELS[s]} (чувство)</option>
+                    ))}
+                </select>
+            </F>
+            {sense ? (
+                <F label={`Дистанция «${SENSE_LABELS[sense]}» (фт)`}>
+                    <input
+                        type="number"
+                        value={params.range ?? 60}
+                        onChange={(e) => set('params', { ...params, range: Number(e.target.value) })}
+                        className={inputClass}
+                    />
+                </F>
+            ) : (
+                <div className="grid grid-cols-2 gap-2">
+                    <TF label="Идентификатор" value={id} onChange={(v) => set('id', v)} placeholder="second-wind" />
+                    <TF label="Название" value={(data.name as string) ?? ''} onChange={(v) => set('name', v)} />
+                </div>
+            )}
+            <F label="Описание">
+                <textarea
+                    value={(data.description as string) ?? ''}
+                    onChange={(e) => set('description', e.target.value || undefined)}
+                    className={inputClass + ' min-h-[80px] resize-y'}
+                    placeholder="Описание особенности..."
+                />
+            </F>
             <TF label="Формула броска" value={(data.roll as string) ?? ''} onChange={(v) => set('roll', v || undefined)} placeholder="[LVL]d8" />
         </div>
     );
@@ -431,23 +484,57 @@ function HpDieForm({ data, set }: { data: Record<string, unknown>; set: (k: stri
     return <NF label="Кость хитов" value={data.die as number} onChange={(v) => set('die', v)} />;
 }
 
-function ResourceForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+function ResourceForm({ data, set, siblingTraits }: {
+    data: Record<string, unknown>;
+    set: (k: string, v: unknown) => void;
+    siblingTraits: Array<{ id: string; name: string }>;
+}) {
     return (
         <div className="flex flex-col gap-2">
             <div className="grid grid-cols-2 gap-2">
                 <TF label="Идентификатор" value={(data.id as string) ?? ''} onChange={(v) => set('id', v)} />
                 <TF label="Название" value={(data.name as string) ?? ''} onChange={(v) => set('name', v)} />
             </div>
+
+            <F label="К какой черте относится (pairId)">
+                <select
+                    value={data.pairId === null ? '__none__' : (data.pairId as string) ?? (data.id as string) ?? ''}
+                    onChange={(e) => {
+                        const v = e.target.value;
+                        if (v === '__none__') set('pairId', null);
+                        else if (v === (data.id as string)) set('pairId', undefined);
+                        else set('pairId', v || undefined);
+                    }}
+                    className={inputClass}
+                >
+                    <option value="">— не выбрано —</option>
+                    {siblingTraits.map((t) => (
+                        <option key={t.id} value={t.id}>{t.name} ({t.id})</option>
+                    ))}
+                    <option value="__none__">описания нет — pairId: null</option>
+                </select>
+            </F>
+            {siblingTraits.length === 0 && (
+                <span className="text-[11px] text-amber-400/80">
+                    У этой сущности пока нет черт (trait) — счётчик встанет в общую группу, а не под описанием. Добавьте черту с тем же названием или выберите «описания нет».
+                </span>
+            )}
+
             <div className="grid grid-cols-2 gap-2">
                 <NF label="Макс" value={data.max as number | undefined} onChange={(v) => set('max', v)} />
                 <TF label="Макс (выражение)" value={(data.maxExpr as string) ?? ''} onChange={(v) => set('maxExpr', v || undefined)} placeholder="[LVL]" />
             </div>
+
             <div className="flex items-center gap-4">
                 <label className="flex items-center gap-1.5 text-xs text-pumpkin-muted">
                     <input
                         type="checkbox"
                         checked={!!data.isShortRest}
-                        onChange={(e) => set('isShortRest', e.target.checked || undefined)}
+                        onChange={(e) => {
+                            const checked = e.target.checked;
+                            set('isShortRest', checked || undefined);
+                            if (!checked) set('shortRestRegain', undefined);
+                        }}
                         className="accent-pumpkin-orange size-3"
                     />
                     Короткий отдых
@@ -462,6 +549,24 @@ function ResourceForm({ data, set }: { data: Record<string, unknown>; set: (k: s
                     Длинный отдых
                 </label>
             </div>
+
+            {!!data.isShortRest && (
+                <TF
+                    label="Сколько восстанавливает короткий отдых (пусто = весь запас)"
+                    value={(data.shortRestRegain as string) ?? ''}
+                    onChange={(v) => set('shortRestRegain', v || undefined)}
+                    placeholder="1, [PROF], ceil([LVL]/2)"
+                />
+            )}
+
+            <F label="Заметка">
+                <textarea
+                    value={(data.notes as string) ?? ''}
+                    onChange={(e) => set('notes', e.target.value || undefined)}
+                    className={inputClass + ' min-h-[50px] resize-y'}
+                    placeholder="Правило, которое счётчик не выражает — кулдаун, «раз в ход», что покупает потраченное очко..."
+                />
+            </F>
         </div>
     );
 }
@@ -484,6 +589,12 @@ function EquipmentChoiceForm({ data, set }: { data: Record<string, unknown>; set
     const options = (data.options as string[][]) ?? [];
     return (
         <div className="flex flex-col gap-2">
+            <TF
+                label="Идентификатор выбора (необязательно)"
+                value={(data.id as string) ?? ''}
+                onChange={(v) => set('id', v || undefined)}
+                placeholder="starting-weapon"
+            />
             {options.map((opt, i) => (
                 <div key={i} className="flex items-center gap-2">
                     <span className="text-[11px] text-pumpkin-muted w-5">{i + 1}.</span>
@@ -517,7 +628,11 @@ function GoldDiceForm({ data, set }: { data: Record<string, unknown>; set: (k: s
     return <TF label="Формула кубов" value={(data.dice as string) ?? ''} onChange={(v) => set('dice', v)} placeholder="5d4*10" />;
 }
 
-function PickOneForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+function PickOneForm({ data, set, siblingTraits }: {
+    data: Record<string, unknown>;
+    set: (k: string, v: unknown) => void;
+    siblingTraits: Array<{ id: string; name: string }>;
+}) {
     const options = (data.options as Array<{ id?: string; label: string; grants: Grant[] }>) ?? [];
     return (
         <div className="flex flex-col gap-2">
@@ -558,6 +673,7 @@ function PickOneForm({ data, set }: { data: Record<string, unknown>; set: (k: st
                         <GrantList
                             grants={opt.grants ?? []}
                             entityPath={`pick-one/options[${i}]`}
+                            siblingTraits={siblingTraits}
                             onChange={(g) => {
                                 const next = [...options];
                                 next[i] = { ...next[i], grants: g };

@@ -1,6 +1,7 @@
 import type { Grant, Dataset, DatasetClass, DatasetSubclass, DatasetRace, DatasetSubrace, DatasetBackground, DatasetFeat } from "./types";
 import { isKnownBonusTarget, isLiveBonusTarget, SKILL_KEYS, STAT_KEYS, ARMOR_PROF_KEYS, WEAPON_PROF_KEYS } from "./registry/bonusTargets";
 import { isKnownGrantType, isLiveGrantType } from "./registry/grantTypes";
+import { isSenseTraitId } from "./registry/senses";
 import { STANDARD_CLASSES, STANDARD_RACES } from "./standardClasses";
 
 // ---------------------------------------------------------------------------
@@ -21,7 +22,11 @@ export type LintRule =
     | 'unknown-prof-key'
     | 'duplicate-id'
     | 'dangling-ref'
-    | 'non-slug-ref';
+    | 'non-slug-ref'
+    | 'numeric-trait-prose'
+    | 'resource-max'
+    | 'resource-pair'
+    | 'resource-no-slot';
 
 export type LintIssue = {
     severity: LintSeverity;
@@ -33,13 +38,29 @@ export type LintIssue = {
 const SKILL_KEY_SET = new Set<string>(SKILL_KEYS);
 const STAT_KEY_SET = new Set<string>(STAT_KEYS);
 const PROF_KEY_SET = new Set<string>([...ARMOR_PROF_KEYS, ...WEAPON_PROF_KEYS]);
-const STANDARD_CLASS_ID_SET = new Set<string>(STANDARD_CLASSES.map((c) => c.id));
-const STANDARD_RACE_ID_SET = new Set<string>(STANDARD_RACES.map((r) => r.id));
 
 // Expected shape of a cross-dataset-friendly id: lowercase slug of the
 // English name (see dataset-editor-guide.md §5.7) — not a strict rule,
 // just a hint for authors typing a custom classId/raceId by hand.
 const SLUG_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+
+/**
+ * pumpkin ships no bundled SRD data, so there's nothing to pass as `ambient`
+ * for the most common cross-book reference (a homebrew subclass pointing its
+ * `classId` at a standard class it doesn't itself carry). This synthesizes a
+ * minimal read-only "SRD" dataset from the well-known id lists so that case
+ * resolves out of the box; real ambient datasets (the rest of the user's
+ * local library) are merged in on top by the caller — see lintDataset below.
+ */
+const STANDARD_AMBIENT: Dataset = {
+    id: '__standard__',
+    name: 'Стандартные SRD id',
+    system: 'dnd_5',
+    edition: '',
+    author: '',
+    classes: STANDARD_CLASSES.map((c) => ({ id: c.id, label: c.label, grants: [], info: { primaryStats: [], complexity: 0 } })),
+    races: STANDARD_RACES.map((r) => ({ id: r.id, label: r.label, size: 'medium', grants: [] })),
+};
 
 // ── Grant walker (recursive into pick-one) ─────────────────────────────────
 
@@ -73,6 +94,9 @@ function entities(dataset: Dataset): Array<{ path: string; grants?: Grant[] }> {
     add('backgrounds', dataset.backgrounds);
     add('feats', dataset.feats);
 
+    // Leveled grants hang off classes/subclasses AND races/subraces (2024
+    // lineage spells at levels 3/5, Goliath Large Form at 5) — see
+    // DatasetRace.leveledGrants in types.ts.
     const addLeveled = (kind: string, list?: Array<{ id: string; leveledGrants?: Array<{ level: number; grants: Grant[] }> }>): void => {
         list?.forEach((e) => e.leveledGrants?.forEach((lg) => {
             out.push({ path: `${kind}/${e.id}@${lg.level}`, grants: lg.grants });
@@ -80,6 +104,8 @@ function entities(dataset: Dataset): Array<{ path: string; grants?: Grant[] }> {
     };
     addLeveled('classes', dataset.classes);
     addLeveled('subclasses', dataset.subclasses);
+    addLeveled('races', dataset.races);
+    addLeveled('subraces', dataset.subraces);
     return out;
 }
 
@@ -157,14 +183,113 @@ function lintGrant(grant: Grant, path: string, issues: LintIssue[]): void {
                 if (!PROF_KEY_SET.has(k)) err('unknown-prof-key', `Unknown weapon key "${k}".`);
             });
             break;
+        case 'trait': {
+            // The text channel filters out traits WITH params (their number
+            // already rides the numeric channel) — except senses, which render
+            // params AND description together in their own block. Any other
+            // trait carrying both params and description silently loses the
+            // description. See dataset-editor-guide.md §5.5.
+            if (grant.params && grant.description && !isSenseTraitId(grant.id)) {
+                warn('numeric-trait-prose',
+                    `Черта «${grant.id}» несёт params и при этом имеет описание — `
+                    + 'текстовый канал такие черты отфильтровывает, описание на лист не попадёт. '
+                    + 'Разделите на два гранта: числовой (с params) и текстовый (без).');
+            }
+            break;
+        }
+        case 'resource': {
+            const hasMax = typeof grant.max === 'number';
+            const maxExpr = typeof grant.maxExpr === 'string' && grant.maxExpr !== '' ? grant.maxExpr : null;
+            if (!hasMax && !maxExpr) {
+                err('resource-max', 'Ресурс без max и maxExpr — счётчик будет без максимума: отдых не восстановит его, «+» не остановится.');
+            }
+            if (hasMax && maxExpr) {
+                err('resource-max', 'У ресурса и max, и maxExpr — победит maxExpr, число не применится.');
+            }
+            if (grant.shortRestRegain && !grant.isShortRest) {
+                warn('resource-max', 'shortRestRegain без isShortRest — короткий отдых этот ресурс не восстанавливает, поле не сработает.');
+            }
+            // Only five slots read resources: class, subclass, race, subrace,
+            // feat. Anywhere else the grant parses and does nothing at all.
+            if (path.startsWith('backgrounds/')) {
+                warn('resource-no-slot',
+                    'Ресурс у предыстории никто не читает — счётчик не появится. '
+                    + 'Ресурсы собираются с класса, подкласса, вида, линейки и черт: '
+                    + 'перенесите его в черту происхождения (грант feat).');
+            }
+            if (path.includes('/options[')) {
+                warn('resource-no-slot',
+                    'Ресурс внутрь pick-one не заглядывают — счётчик не появится, какой бы вариант игрок ни выбрал. '
+                    + 'Выдайте его сущностью напрямую.');
+            }
+            break;
+        }
         default:
             break;
     }
 }
 
+/**
+ * A counter is placed next to the Spoiler describing the same feature, matched
+ * by `pairId` (default: the resource's own id) against the `trait` ids of the
+ * SAME entity (grants + leveledGrants). No match isn't broken, just lonely —
+ * the counter lands with the source's other counters instead of under its
+ * description. See dataset-editor-guide.md §5.8 point 4.
+ *
+ * Feats are exempt: their paired trait id is stamped by the runtime gatherer,
+ * not authored — mirrors datasetLint.ts's scope (classes/subclasses/races/subraces only).
+ */
+function lintResourcePairs(dataset: Dataset, issues: LintIssue[]): void {
+    type PairEntity = {
+        id: string;
+        grants?: Grant[];
+        leveledGrants?: Array<{ level: number; grants: Grant[] }>;
+    };
+    const check = (kind: string, list?: PairEntity[]): void => {
+        list?.forEach((entity) => {
+            const all = [
+                ...(entity.grants ?? []),
+                ...(entity.leveledGrants ?? []).flatMap((lg) => lg.grants),
+            ];
+            const traitIds = new Set(
+                all.filter((g): g is Extract<Grant, { type: 'trait' }> => g.type === 'trait').map((g) => g.id),
+            );
+            for (const grant of all) {
+                if (grant.type !== 'resource' || grant.pairId === null) continue;
+                const pairId = grant.pairId ?? grant.id;
+                if (traitIds.has(pairId)) continue;
+                issues.push({
+                    severity: 'warning',
+                    rule: 'resource-pair',
+                    path: `${kind}/${entity.id}`,
+                    message: `Счётчику «${grant.name}» не с чем встать рядом: черты с id «${pairId}» у сущности нет. `
+                        + 'На листе он окажется в общей группе счётчиков, а не под своим описанием. '
+                        + 'Дайте ресурсу id той черты, которая его выдаёт, или укажите pairId — '
+                        + 'а если описания и правда нет, поставьте pairId: null.',
+                });
+            }
+        });
+    };
+    check('classes', dataset.classes as PairEntity[] | undefined);
+    check('subclasses', dataset.subclasses as PairEntity[] | undefined);
+    check('races', dataset.races as PairEntity[] | undefined);
+    check('subraces', dataset.subraces as PairEntity[] | undefined);
+}
+
 // ── Cross-entity refs ──────────────────────────────────────────────────────
 
-function lintRefs(dataset: Dataset, issues: LintIssue[]): void {
+/** Ids of a kind across the dataset itself plus its ambient datasets. */
+function ambientIds(
+    dataset: Dataset,
+    ambient: Dataset[],
+    pick: (ds: Dataset) => Array<{ id: string }> | undefined,
+): Set<string> {
+    const set = new Set<string>();
+    for (const ds of [dataset, ...ambient]) pick(ds)?.forEach((e) => set.add(e.id));
+    return set;
+}
+
+function lintRefs(dataset: Dataset, ambient: Dataset[], issues: LintIssue[]): void {
     const checkDuplicates = (kind: string, list?: Array<{ id: string }>): void => {
         const seen = new Set<string>();
         list?.forEach((e) => {
@@ -184,48 +309,48 @@ function lintRefs(dataset: Dataset, issues: LintIssue[]): void {
     checkDuplicates('backgrounds', dataset.backgrounds);
     checkDuplicates('feats', dataset.feats);
 
-    // Refs are checked against the dataset itself *and* the well-known SRD
-    // class/race ids (STANDARD_CLASSES/STANDARD_RACES) — a subclass/subrace
-    // can legitimately point at a base class/race that lives outside this
-    // dataset, as long as it's one of those standard ids (see
-    // dataset-editor-guide.md §5.7 and the picker's tooltip in EntityEditor).
-    const classIds = new Set(dataset.classes?.map((c) => c.id) ?? []);
+    // Refs resolve against the dataset itself AND its ambient datasets (other
+    // datasets in the user's library, plus the synthetic standard-SRD-id list
+    // merged in by lintDataset) — a subclass/subrace can legitimately point at
+    // a base class/race that lives in a different connected book.
+    const classIds = ambientIds(dataset, ambient, (ds) => ds.classes);
     dataset.subclasses?.forEach((s) => {
-        if (classIds.has(s.classId) || STANDARD_CLASS_ID_SET.has(s.classId)) return;
+        if (classIds.has(s.classId)) return;
         issues.push({
             severity: 'error', rule: 'dangling-ref', path: `subclasses/${s.id}`,
-            message: `classId "${s.classId}" not found in dataset.classes and is not a standard SRD class — subclass will not appear.`,
+            message: `classId "${s.classId}" not found in the dataset or any connected book — subclass will not appear.`,
         });
         if (s.classId && !SLUG_RE.test(s.classId)) {
             issues.push({
                 severity: 'warning', rule: 'non-slug-ref', path: `subclasses/${s.id}`,
-                message: `classId "${s.classId}" is not a lowercase-hyphen slug — it won't match another dataset's class or a standard SRD id even if the class is added later.`,
+                message: `classId "${s.classId}" is not a lowercase-hyphen slug — it won't match another dataset's class even if the class is added later.`,
             });
         }
     });
 
-    const raceIds = new Set(dataset.races?.map((r) => r.id) ?? []);
+    const raceIds = ambientIds(dataset, ambient, (ds) => ds.races);
     dataset.subraces?.forEach((s) => {
-        if (raceIds.has(s.raceId) || STANDARD_RACE_ID_SET.has(s.raceId)) return;
+        if (raceIds.has(s.raceId)) return;
         issues.push({
             severity: 'error', rule: 'dangling-ref', path: `subraces/${s.id}`,
-            message: `raceId "${s.raceId}" not found in dataset.races and is not a standard SRD race — subrace will not appear.`,
+            message: `raceId "${s.raceId}" not found in the dataset or any connected book — subrace will not appear.`,
         });
         if (s.raceId && !SLUG_RE.test(s.raceId)) {
             issues.push({
                 severity: 'warning', rule: 'non-slug-ref', path: `subraces/${s.id}`,
-                message: `raceId "${s.raceId}" is not a lowercase-hyphen slug — it won't match another dataset's race or a standard SRD id even if the race is added later.`,
+                message: `raceId "${s.raceId}" is not a lowercase-hyphen slug — it won't match another dataset's race even if the race is added later.`,
             });
         }
     });
 
-    const featIds = new Set(dataset.feats?.map((f) => f.id) ?? []);
+    // `featId: 'any'` is an open slot the player fills by hand — not a dangling ref.
+    const featIds = ambientIds(dataset, ambient, (ds) => ds.feats);
     for (const entity of entities(dataset)) {
         walkGrants(entity.grants, `${entity.path}/grants`, (grant, path) => {
             if (grant.type === 'feat' && grant.featId !== 'any' && !featIds.has(grant.featId)) {
                 issues.push({
                     severity: 'error', rule: 'dangling-ref', path,
-                    message: `featId "${grant.featId}" not found in dataset.feats — feat will not grant.`,
+                    message: `featId "${grant.featId}" not found in dataset.feats or any connected book — feat will not grant.`,
                 });
             }
         });
@@ -234,19 +359,29 @@ function lintRefs(dataset: Dataset, issues: LintIssue[]): void {
 
 // ── Public API ─────────────────────────────────────────────────────────────
 
-export function lintDataset(dataset: Dataset): LintIssue[] {
+/**
+ * `ambient` are other datasets present alongside this one (the rest of the
+ * user's local library) whose entity ids count as resolvable for cross-entity
+ * refs but are NOT themselves linted. A homebrew "book" of subclasses passes
+ * the class-carrying dataset it targets so its `classId` refs resolve — see
+ * dataset-editor-guide.md §4.2. The synthetic standard-SRD-id list is always
+ * merged in underneath, since pumpkin ships no bundled SRD data of its own.
+ */
+export function lintDataset(dataset: Dataset, ambient: Dataset[] = []): LintIssue[] {
     const issues: LintIssue[] = [];
+    const allAmbient = [STANDARD_AMBIENT, ...ambient];
     for (const entity of entities(dataset)) {
         walkGrants(entity.grants, `${entity.path}/grants`, (grant, path) => {
             lintGrant(grant, path, issues);
         });
     }
-    lintRefs(dataset, issues);
+    lintResourcePairs(dataset, issues);
+    lintRefs(dataset, allAmbient, issues);
     return issues;
 }
 
-export function lintErrors(dataset: Dataset): LintIssue[] {
-    return lintDataset(dataset).filter((i) => i.severity === 'error');
+export function lintErrors(dataset: Dataset, ambient: Dataset[] = []): LintIssue[] {
+    return lintDataset(dataset, ambient).filter((i) => i.severity === 'error');
 }
 
 export function formatLintIssue(issue: LintIssue): string {

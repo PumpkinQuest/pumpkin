@@ -57,7 +57,7 @@ function coerceDataset(raw: Record<string, unknown>): { dataset: Dataset; genera
 
 // ── Import ─────────────────────────────────────────────────────────────────
 
-export function importDatasetFromText(text: string): ImportResult {
+export function importDatasetFromText(text: string, ambient: Dataset[] = []): ImportResult {
     let parsed: unknown;
     try {
         parsed = JSON.parse(text);
@@ -82,7 +82,7 @@ export function importDatasetFromText(text: string): ImportResult {
     }
 
     const { dataset, generatedId } = coerceDataset(raw);
-    const issues = lintDataset(dataset);
+    const issues = lintDataset(dataset, ambient);
     const errors = issues.filter((i) => i.severity === 'error');
     if (errors.length > 0) {
         return {

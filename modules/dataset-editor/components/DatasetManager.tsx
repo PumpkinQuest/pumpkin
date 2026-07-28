@@ -32,11 +32,13 @@ export default function DatasetManager() {
         setMounted(true);
     }, []);
 
+    const ambientFor = useCallback((dataset: Dataset) => datasets.filter((d) => d.id !== dataset.id), [datasets]);
+
     const updateLintFor = useCallback((dataset: Dataset) => {
-        const issues = lintDataset(dataset);
+        const issues = lintDataset(dataset, ambientFor(dataset));
         setLintIssues((prev) => ({ ...prev, [dataset.id]: issues }));
         return issues;
-    }, []);
+    }, [ambientFor]);
 
     const handleImportSuccess = useCallback((result: ImportResult) => {
         if (!result.ok) return;
@@ -102,6 +104,7 @@ export default function DatasetManager() {
             <DatasetEditor
                 dataset={ds}
                 issues={issues}
+                ambient={ambientFor(ds)}
                 onPersist={handlePersistDataset}
                 onBack={handleBackFromEditor}
             />
@@ -166,6 +169,7 @@ export default function DatasetManager() {
             {showImport && (
                 <ImportPanel
                     existingIds={new Set(datasets.map((d) => d.id))}
+                    ambient={datasets}
                     onImport={handleImportSuccess}
                     onClose={() => setShowImport(false)}
                 />

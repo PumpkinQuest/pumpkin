@@ -22,7 +22,7 @@ function transliterate(text: string): string {
 }
 
 /** Transliterates Cyrillic and collapses everything else into ascii `kebab-case`. */
-function slugify(text: string): string {
+export function slugify(text: string): string {
     return transliterate(text)
         .toLowerCase()
         .trim()

@@ -92,6 +92,7 @@ export type TraitGrant = {
     type: 'trait';
     id: string;
     name: string;
+    description?: string;
     params?: Record<string, number>;
     roll?: string;
 };
@@ -127,11 +128,27 @@ export type HpDieGrant = {
 export type ResourceGrant = {
     type: 'resource';
     id: string;
+    /**
+     * Which `trait` grant's Spoiler block this counter sits above (matched by id
+     * within the SAME entity — grants + leveledGrants). Defaults to `id`, which is
+     * why the id-of-the-trait convention exists. `null` = deliberately no paired
+     * description (e.g. a pool whose benefits are described elsewhere, under other
+     * ids). See dataset-editor-guide.md §5.8 point 4.
+     */
+    pairId?: string | null;
     name: Label;
     max?: number;
     maxExpr?: string;
     isShortRest?: boolean;
     isLongRest?: boolean;
+    /**
+     * How much a SHORT rest gives back, as a formula (`1`, `[PROF]`, `ceil([LVL]/2)`).
+     * Absent ⇒ a short rest refills the pool completely. Only meaningful together
+     * with `isShortRest`.
+     */
+    shortRestRegain?: string;
+    /** Free-text note for the rule the counter itself can't express (a cooldown, "one per turn", what a spent point buys). */
+    notes?: string;
 };
 
 export type EquipmentFixedGrant = {
@@ -141,6 +158,8 @@ export type EquipmentFixedGrant = {
 
 export type EquipmentChoiceGrant = {
     type: 'equipment-choice';
+    /** Stable key for the player's pick; falls back to the option contents when absent. */
+    id?: string;
     options: string[][];
 };
 
@@ -238,6 +257,14 @@ export type DatasetRace = {
     label: Label;
     size: 'small' | 'medium' | 'large';
     grants: Grant[];
+    /**
+     * Grants gained at a given CHARACTER level — not every species is a level-1
+     * bundle: 2024 lineages hand out a spell at levels 3/5, the Goliath's Large
+     * Form arrives at 5, each with its own counter that must not exist on a
+     * level-1 sheet. Read by the numeric, trait-text and resource channels; the
+     * aggregating channels (languages, tools, senses) read the flat `grants` only.
+     */
+    leveledGrants?: LeveledGrants[];
     info?: {
         tags?: Label[];
     };
@@ -248,6 +275,8 @@ export type DatasetSubrace = {
     raceId: string;
     label: Label;
     grants?: Grant[];
+    /** Same as `DatasetRace.leveledGrants` — the elven/fiendish lineage spells (levels 3 and 5) live here. */
+    leveledGrants?: LeveledGrants[];
     info?: {
         tagline?: Label;
         tags?: Label[];

@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, type KeyboardEvent } from "react";
 import { Plus, ChevronRight } from "lucide-react";
 import type { Dataset, Grant } from "../../lib/types";
 import type { LintIssue } from "../../lib/lint";
 import { countEntities } from "../../lib/extract";
-import { generateEntityId } from "../../lib/ids";
+import { generateEntityIdFromName } from "../../lib/ids";
+import InfoTooltip from "../common/InfoTooltip";
 import EntityEditor from "./EntityEditor";
 
 type Kind = 'classes' | 'subclasses' | 'races' | 'subraces' | 'backgrounds' | 'feats';
@@ -32,6 +33,8 @@ const KIND_SINGULAR: Record<Kind, string> = {
 
 type Props = {
     dataset: Dataset;
+    /** Other datasets in the library — lets classId/raceId pickers offer cross-book targets. */
+    ambient: Dataset[];
     errorPaths: Set<string>;
     warnPaths: Set<string>;
     issues: LintIssue[];
@@ -42,9 +45,12 @@ type Props = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type EntityRecord = Record<string, any>;
 
-export default function EntityList({ dataset, errorPaths, warnPaths, issues, onChange, onLint }: Props) {
+export default function EntityList({ dataset, ambient, errorPaths, warnPaths, issues, onChange, onLint }: Props) {
     const [activeTab, setActiveTab] = useState<Kind>('classes');
     const [editingId, setEditingId] = useState<string | null>(null);
+    const [pendingName, setPendingName] = useState<string | null>(null);
+    const [addingName, setAddingName] = useState(false);
+    const [draftName, setDraftName] = useState('');
     const counts = countEntities(dataset);
 
     // Build a map of entity path prefix → error/warning messages for tooltips
@@ -87,18 +93,35 @@ export default function EntityList({ dataset, errorPaths, warnPaths, issues, onC
         if (editingId === entityId) setEditingId(null);
     }, [list, activeTab, updateEntities, editingId]);
 
-    const handleAddEntity = useCallback(() => {
-        const id = generateEntityId(activeTab, dataset.id);
+    const handleStartAdd = useCallback(() => {
+        setDraftName('');
+        setAddingName(true);
+    }, []);
+
+    const handleConfirmAdd = useCallback(() => {
+        const name = draftName.trim();
+        if (!name) return;
+        const id = generateEntityIdFromName(name, list.map((e) => e.id as string));
+        setPendingName(name);
         setEditingId(id);
-    }, [activeTab, dataset.id]);
+        setAddingName(false);
+    }, [draftName, list]);
+
+    const handleCancelAdd = useCallback(() => setAddingName(false), []);
+
+    const handleAddKeyDown = useCallback((e: KeyboardEvent) => {
+        if (e.key === 'Enter') handleConfirmAdd();
+        if (e.key === 'Escape') handleCancelAdd();
+    }, [handleConfirmAdd, handleCancelAdd]);
 
     if (editing || editingId) {
-        const entity = editing ?? makeEmptyEntity(activeTab, editingId ?? '');
+        const entity = editing ?? makeEmptyEntity(activeTab, editingId ?? '', pendingName ?? '');
         return (
             <EntityEditor
                 kind={activeTab}
                 entity={entity}
                 dataset={dataset}
+                ambient={ambient}
                 errorPaths={errorPaths}
                 warnPaths={warnPaths}
                 onSave={handleSaveEntity}
@@ -178,29 +201,61 @@ export default function EntityList({ dataset, errorPaths, warnPaths, issues, onC
                     })
                 )}
 
-                <button
-                    onClick={handleAddEntity}
-                    className="flex items-center justify-center gap-2 p-3 rounded-lg border border-dashed border-pumpkin-border hover:border-pumpkin-orange/40 text-sm text-pumpkin-muted hover:text-pumpkin-text transition-colors"
-                >
-                    <Plus size={14} />
-                    Добавить {KIND_SINGULAR[activeTab]}
-                </button>
+                {addingName ? (
+                    <div className="flex flex-col gap-1.5 p-3 rounded-lg border border-pumpkin-orange/40 bg-pumpkin-orange/5">
+                        <label className="text-xs text-pumpkin-muted flex items-center gap-1">
+                            Английское название
+                            <InfoTooltip text="Id будет сгенерирован как слаг этого названия (например «Blood Hunter» → blood-hunter) и дальше не будет меняться — на него смогут сослаться другие датасеты (classId у подкласса и т.п.), а два независимых импорта одной сущности сойдутся на одном id. Отображаемое название (label) можно будет свободно менять позже — оно ни на что не влияет." />
+                        </label>
+                        <div className="flex items-center gap-2">
+                            <input
+                                value={draftName}
+                                onChange={(e) => setDraftName(e.target.value)}
+                                onKeyDown={handleAddKeyDown}
+                                placeholder="Blood Hunter"
+                                autoFocus
+                                className="flex-1 rounded-lg border border-pumpkin-border bg-pumpkin-bg text-pumpkin-text text-sm px-3 py-1.5 focus:outline-none focus:border-pumpkin-orange/50"
+                            />
+                            <button
+                                onClick={handleConfirmAdd}
+                                disabled={!draftName.trim()}
+                                className="px-3 py-1.5 rounded-lg bg-pumpkin-orange hover:bg-pumpkin-orange-dim disabled:opacity-40 disabled:cursor-not-allowed text-pumpkin-bg text-sm font-medium transition-colors"
+                            >
+                                Создать
+                            </button>
+                            <button
+                                onClick={handleCancelAdd}
+                                className="text-sm text-pumpkin-muted hover:text-pumpkin-text transition-colors"
+                            >
+                                Отмена
+                            </button>
+                        </div>
+                    </div>
+                ) : (
+                    <button
+                        onClick={handleStartAdd}
+                        className="flex items-center justify-center gap-2 p-3 rounded-lg border border-dashed border-pumpkin-border hover:border-pumpkin-orange/40 text-sm text-pumpkin-muted hover:text-pumpkin-text transition-colors"
+                    >
+                        <Plus size={14} />
+                        Добавить {KIND_SINGULAR[activeTab]}
+                    </button>
+                )}
             </div>
         </div>
     );
 }
 
-function makeEmptyEntity(kind: Kind, id: string) {
-    const base = { id, label: '' } as Record<string, unknown>;
+function makeEmptyEntity(kind: Kind, id: string, name: string) {
+    const base = { id, label: name } as Record<string, unknown>;
     switch (kind) {
         case 'classes':
-            return { ...base, grants: [], info: { primaryStats: [], complexity: 0 } };
+            return { ...base, grants: [], leveledGrants: [], info: { primaryStats: [], complexity: 0 } };
         case 'subclasses':
-            return { ...base, classId: '', grants: [] };
+            return { ...base, classId: '', grants: [], leveledGrants: [] };
         case 'races':
-            return { ...base, size: 'medium', grants: [] };
+            return { ...base, size: 'medium', grants: [], leveledGrants: [] };
         case 'subraces':
-            return { ...base, raceId: '', grants: [] };
+            return { ...base, raceId: '', grants: [], leveledGrants: [] };
         case 'backgrounds':
             return { ...base, grants: [] };
         case 'feats':

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, type KeyboardEvent } from "react";
 import { ArrowLeft, Trash2, AlertTriangle } from "lucide-react";
 import type { Dataset, Grant, LeveledGrants } from "../../lib/types";
 import { STANDARD_CLASSES, STANDARD_RACES } from "../../lib/standardClasses";
@@ -14,6 +14,8 @@ type Props = {
     kind: Kind;
     entity: Record<string, unknown>;
     dataset: Dataset;
+    /** Other datasets in the library — offered as extra classId/raceId targets alongside standard SRD ids. */
+    ambient: Dataset[];
     errorPaths: Set<string>;
     warnPaths: Set<string>;
     onSave: (entity: Record<string, unknown>) => void;
@@ -21,7 +23,9 @@ type Props = {
     onCancel: () => void;
 };
 
-export default function EntityEditor({ kind, entity, dataset, errorPaths, warnPaths, onSave, onDelete, onCancel }: Props) {
+const LEVELED_KINDS: Kind[] = ['classes', 'subclasses', 'races', 'subraces'];
+
+export default function EntityEditor({ kind, entity, dataset, ambient, errorPaths, warnPaths, onSave, onDelete, onCancel }: Props) {
     const [data, setData] = useState<Record<string, unknown>>(structuredClone(entity));
     const [deleteConfirm, setDeleteConfirm] = useState(false);
 
@@ -32,10 +36,21 @@ export default function EntityEditor({ kind, entity, dataset, errorPaths, warnPa
     const entityPath = `${kind}/${(data as { id: string }).id}`;
 
     const grants = (data.grants as Grant[]) ?? [];
-    const leveledGrants = (data.leveledGrants as LeveledGrants[] | undefined);
+    const leveledGrants = (data.leveledGrants as LeveledGrants[] | undefined) ?? [];
 
     const setGrants = useCallback((g: Grant[]) => update('grants', g), [update]);
     const setLeveled = useCallback((lg: LeveledGrants[]) => update('leveledGrants', lg), [update]);
+
+    // Every `trait` grant across the whole entity (top-level + all leveled
+    // buckets) — the sibling pool a `resource` grant's "pairs with" picker
+    // offers, matching how lintResourcePairs itself scopes pairing (entity-wide,
+    // not just the same grants list). See dataset-editor-guide.md §5.8 point 4.
+    const entityTraits = useMemo(() => {
+        const all = [...grants, ...leveledGrants.flatMap((lg) => lg.grants)];
+        return all
+            .filter((g): g is Extract<Grant, { type: 'trait' }> => g.type === 'trait')
+            .map((g) => ({ id: g.id, name: g.name || g.id }));
+    }, [grants, leveledGrants]);
 
     const classInfo = useMemo(
         () => (data.info as { primaryStats?: string[][]; complexity?: 0 | 1 | 2 } | undefined) ?? {},
@@ -145,6 +160,7 @@ export default function EntityEditor({ kind, entity, dataset, errorPaths, warnPa
                         <SubclassClassPicker
                             value={(data.classId as string) ?? ''}
                             dataset={dataset}
+                            ambient={ambient}
                             onChange={(v) => update('classId', v)}
                         />
                         <Field
@@ -161,6 +177,7 @@ export default function EntityEditor({ kind, entity, dataset, errorPaths, warnPa
                         <SubraceRacePicker
                             value={(data.raceId as string) ?? ''}
                             dataset={dataset}
+                            ambient={ambient}
                             onChange={(v) => update('raceId', v)}
                         />
                         <Field
@@ -245,20 +262,22 @@ export default function EntityEditor({ kind, entity, dataset, errorPaths, warnPa
                 <GrantList
                     grants={grants}
                     entityPath={entityPath}
+                    siblingTraits={entityTraits}
                     onChange={setGrants}
                 />
             </div>
 
-            {/* Leveled grants (classes/subclasses) */}
-            {(kind === 'classes' || kind === 'subclasses') && leveledGrants !== undefined && (
+            {/* Leveled grants (classes/subclasses/races/subraces) */}
+            {LEVELED_KINDS.includes(kind) && (
                 <div className="flex flex-col gap-3">
                     <h3 className="text-sm font-semibold text-pumpkin-text flex items-center gap-1">
                         Гранты по уровням
-                        <InfoTooltip text="Дополнительные гранты, которые применяются только начиная с указанного уровня персонажа — так описывается прогрессия классов/подклассов по уровням." />
+                        <InfoTooltip text="Дополнительные гранты, которые применяются только начиная с указанного уровня персонажа — так описывается прогрессия классов/подклассов по уровням, а у видов — эффекты вроде заклинания на 3/5 уровне или Большой формы голиафа на 5-м." />
                     </h3>
                     <LeveledGrantsEditor
                         leveledGrants={leveledGrants}
                         entityPath={entityPath}
+                        siblingTraits={entityTraits}
                         onChange={setLeveled}
                     />
                 </div>
@@ -316,15 +335,26 @@ function Field({ label, value, onChange, disabled, placeholder, hint }: {
 
 const CUSTOM_CLASS_VALUE = '__custom__';
 
-function SubclassClassPicker({ value, dataset, onChange }: {
+function SubclassClassPicker({ value, dataset, ambient, onChange }: {
     value: string;
     dataset: Dataset;
+    ambient: Dataset[];
     onChange: (v: string) => void;
 }) {
     const datasetClasses = dataset.classes ?? [];
+    const seenIds = new Set(datasetClasses.map((c) => c.id));
+    const ambientOptions: Array<{ id: string; label: string; source: string }> = [];
+    for (const ds of ambient) {
+        for (const c of ds.classes ?? []) {
+            if (seenIds.has(c.id)) continue;
+            seenIds.add(c.id);
+            ambientOptions.push({ id: c.id, label: c.label || c.id, source: ds.name || ds.id });
+        }
+    }
     const classOptions = [
         ...datasetClasses.map((c) => ({ id: c.id, label: c.label || c.id, source: 'датасет' })),
-        ...STANDARD_CLASSES.filter((sc) => !datasetClasses.some((c) => c.id === sc.id))
+        ...ambientOptions,
+        ...STANDARD_CLASSES.filter((sc) => !seenIds.has(sc.id))
             .map((sc) => ({ id: sc.id, label: sc.label, source: 'стандартный' })),
     ];
     const knownIds = useMemo(() => new Set(classOptions.map((c) => c.id)), [classOptions]);
@@ -376,15 +406,26 @@ function SubclassClassPicker({ value, dataset, onChange }: {
 
 const CUSTOM_RACE_VALUE = '__custom__';
 
-function SubraceRacePicker({ value, dataset, onChange }: {
+function SubraceRacePicker({ value, dataset, ambient, onChange }: {
     value: string;
     dataset: Dataset;
+    ambient: Dataset[];
     onChange: (v: string) => void;
 }) {
     const datasetRaces = dataset.races ?? [];
+    const seenIds = new Set(datasetRaces.map((r) => r.id));
+    const ambientOptions: Array<{ id: string; label: string; source: string }> = [];
+    for (const ds of ambient) {
+        for (const r of ds.races ?? []) {
+            if (seenIds.has(r.id)) continue;
+            seenIds.add(r.id);
+            ambientOptions.push({ id: r.id, label: r.label || r.id, source: ds.name || ds.id });
+        }
+    }
     const options = [
         ...datasetRaces.map((r) => ({ id: r.id, label: r.label || r.id, source: 'датасет' })),
-        ...STANDARD_RACES.filter((sr) => !datasetRaces.some((r) => r.id === sr.id))
+        ...ambientOptions,
+        ...STANDARD_RACES.filter((sr) => !seenIds.has(sr.id))
             .map((sr) => ({ id: sr.id, label: sr.label, source: 'стандартный' })),
     ];
     const knownIds = useMemo(() => new Set(options.map((o) => o.id)), [options]);
@@ -625,17 +666,36 @@ function TagsEditor({ label, tags, onChange, hint }: {
 
 // ── Leveled grants mini-editor ────────────────────────────────────────────
 
-function LeveledGrantsEditor({ leveledGrants, entityPath, onChange }: {
+function LeveledGrantsEditor({ leveledGrants, entityPath, siblingTraits, onChange }: {
     leveledGrants: LeveledGrants[];
     entityPath: string;
+    siblingTraits: Array<{ id: string; name: string }>;
     onChange: (lg: LeveledGrants[]) => void;
 }) {
-    const handleAddLevel = useCallback(() => {
+    const [addingLevel, setAddingLevel] = useState(false);
+    const [newLevel, setNewLevel] = useState('');
+
+    const handleStartAdd = useCallback(() => {
         const existing = new Set(leveledGrants.map((l) => l.level));
         let level = 1;
         while (existing.has(level)) level++;
+        setNewLevel(String(level));
+        setAddingLevel(true);
+    }, [leveledGrants]);
+
+    const handleConfirmAdd = useCallback(() => {
+        const level = Number(newLevel);
+        if (isNaN(level) || level < 1 || !Number.isInteger(level)) return;
+        const existing = new Set(leveledGrants.map((l) => l.level));
+        if (existing.has(level)) return;
         onChange([...leveledGrants, { level, grants: [] }].sort((a, b) => a.level - b.level));
-    }, [leveledGrants, onChange]);
+        setAddingLevel(false);
+    }, [newLevel, leveledGrants, onChange]);
+
+    const handleKeyDown = useCallback((e: KeyboardEvent) => {
+        if (e.key === 'Enter') handleConfirmAdd();
+        if (e.key === 'Escape') setAddingLevel(false);
+    }, [handleConfirmAdd]);
 
     const updateLevel = useCallback((level: number, grants: Grant[]) => {
         onChange(leveledGrants.map((l) => l.level === level ? { ...l, grants } : l));
@@ -662,18 +722,47 @@ function LeveledGrantsEditor({ leveledGrants, entityPath, onChange }: {
                         <GrantList
                             grants={lg.grants}
                             entityPath={`${entityPath}@${lg.level}`}
+                            siblingTraits={siblingTraits}
                             onChange={(g) => updateLevel(lg.level, g)}
                             compact
                         />
                     </div>
                 </div>
             ))}
-            <button
-                onClick={handleAddLevel}
-                className="text-sm text-pumpkin-muted hover:text-pumpkin-text transition-colors self-start py-1"
-            >
-                + Добавить уровень
-            </button>
+            {addingLevel ? (
+                <div className="flex items-center gap-2">
+                    <input
+                        type="number"
+                        min={1}
+                        max={20}
+                        value={newLevel}
+                        onChange={(e) => setNewLevel(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        placeholder="Уровень"
+                        autoFocus
+                        className="w-20 rounded-lg border border-pumpkin-border bg-pumpkin-bg text-pumpkin-text text-sm px-3 py-1.5 focus:outline-none focus:border-pumpkin-orange/50"
+                    />
+                    <button
+                        onClick={handleConfirmAdd}
+                        className="text-sm text-pumpkin-orange hover:text-pumpkin-orange-dim transition-colors"
+                    >
+                        OK
+                    </button>
+                    <button
+                        onClick={() => setAddingLevel(false)}
+                        className="text-sm text-pumpkin-muted hover:text-pumpkin-text transition-colors"
+                    >
+                        Отмена
+                    </button>
+                </div>
+            ) : (
+                <button
+                    onClick={handleStartAdd}
+                    className="text-sm text-pumpkin-muted hover:text-pumpkin-text transition-colors self-start py-1"
+                >
+                    + Добавить уровень
+                </button>
+            )}
         </div>
     );
 }

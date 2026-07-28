@@ -3,11 +3,14 @@
 import { useState, useCallback } from "react";
 import { Plus, GripVertical, ChevronDown } from "lucide-react";
 import type { Grant } from "../../lib/types";
+import { generateGrantId } from "../../lib/ids";
 import GrantEditor from "./GrantEditor";
 
 type Props = {
     grants: Grant[];
     entityPath: string;
+    /** Every `trait` grant across the whole entity — offered as the "pairs with" target when adding/editing a `resource` grant. */
+    siblingTraits: Array<{ id: string; name: string }>;
     onChange: (grants: Grant[]) => void;
     compact?: boolean;
 };
@@ -41,17 +44,17 @@ const GRANT_TYPE_LABELS: Record<string, string> = {
 
 const GRANT_TYPES = Object.keys(GRANT_TYPE_LABELS);
 
-export default function GrantList({ grants, entityPath, onChange, compact }: Props) {
+export default function GrantList({ grants, entityPath, siblingTraits, onChange, compact }: Props) {
     const [editingIndex, setEditingIndex] = useState<number | null>(null);
     const [addingType, setAddingType] = useState<string | null>(null);
 
     const handleAdd = useCallback((type: string) => {
-        const newGrant = makeDefaultGrant(type);
+        const newGrant = makeDefaultGrant(type, siblingTraits);
         const next = [...grants, newGrant];
         onChange(next);
         setEditingIndex(next.length - 1);
         setAddingType(null);
-    }, [grants, onChange]);
+    }, [grants, onChange, siblingTraits]);
 
     const handleUpdate = useCallback((index: number, grant: Grant) => {
         const next = [...grants];
@@ -83,6 +86,7 @@ export default function GrantList({ grants, entityPath, onChange, compact }: Pro
                             key={i}
                             grant={grant}
                             entityPath={`${entityPath}/grants[${i}]`}
+                            siblingTraits={siblingTraits}
                             onSave={(g) => handleUpdate(i, g)}
                             onCancel={() => setEditingIndex(null)}
                             onDelete={() => handleDelete(i)}
@@ -163,8 +167,19 @@ export default function GrantList({ grants, entityPath, onChange, compact }: Pro
     );
 }
 
-function makeDefaultGrant(type: string): Grant {
+function makeDefaultGrant(type: string, siblingTraits: Array<{ id: string; name: string }>): Grant {
     switch (type) {
+        case 'resource': {
+            // Prefill from the entity's traits per dataset-editor-guide.md §5.8
+            // point 4: a blank "which trait does this belong to" is a silent
+            // wrong-placement default, not a neutral one. Exactly one sibling
+            // trait → assume it's the one being paired; otherwise leave the id
+            // blank and let the author pick explicitly in the form.
+            if (siblingTraits.length === 1) {
+                return { type: 'resource', id: siblingTraits[0].id, name: siblingTraits[0].name };
+            }
+            return { type: 'resource', id: '', name: '' };
+        }
         case 'asi-fixed': return { type: 'asi-fixed', values: {} };
         case 'asi-flexible': return { type: 'asi-flexible', sets: [] };
         case 'asi-pool': return { type: 'asi-pool', total: 3, max: 2, options: [] };
@@ -178,12 +193,11 @@ function makeDefaultGrant(type: string): Grant {
         case 'language-choice': return { type: 'language-choice', count: 1 };
         case 'speed': return { type: 'speed', value: 30 };
         case 'saving-throw': return { type: 'saving-throw', stats: [] };
-        case 'trait': return { type: 'trait', id: '', name: '' };
+        case 'trait': return { type: 'trait', id: generateGrantId(), name: '', description: '' };
         case 'armor-prof': return { type: 'armor-prof', armors: [] };
         case 'weapon-prof': return { type: 'weapon-prof', weapons: [] };
         case 'spellcasting': return { type: 'spellcasting', ability: 'int', casterType: 'list' };
         case 'hp-die': return { type: 'hp-die', die: 8 };
-        case 'resource': return { type: 'resource', id: '', name: '' };
         case 'equipment-fixed': return { type: 'equipment-fixed', items: [] };
         case 'equipment-choice': return { type: 'equipment-choice', options: [] };
         case 'gold': return { type: 'gold', amount: 0 };

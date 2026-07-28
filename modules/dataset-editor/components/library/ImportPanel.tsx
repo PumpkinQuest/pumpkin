@@ -4,14 +4,17 @@ import { useState, useCallback, useRef } from "react";
 import { Upload, X, AlertTriangle, CheckCircle } from "lucide-react";
 import { importDatasetFromText, type ImportResult } from "../../lib/importDataset";
 import type { LintIssue } from "../../lib/lint";
+import type { Dataset } from "../../lib/types";
 
 type Props = {
     existingIds: Set<string>;
+    /** Other datasets already in the library — resolves cross-book refs (e.g. a subclass book pointing classId at a class defined elsewhere) instead of false-flagging them as dangling. */
+    ambient: Dataset[];
     onImport: (result: ImportResult) => void;
     onClose: () => void;
 };
 
-export default function ImportPanel({ existingIds, onImport, onClose }: Props) {
+export default function ImportPanel({ existingIds, ambient, onImport, onClose }: Props) {
     const [text, setText] = useState("");
     const [fileName, setFileName] = useState<string | null>(null);
     const [result, setResult] = useState<ImportResult | null>(null);
@@ -33,9 +36,9 @@ export default function ImportPanel({ existingIds, onImport, onClose }: Props) {
     }, [handleFile]);
 
     const handleParse = useCallback(() => {
-        const res = importDatasetFromText(text);
+        const res = importDatasetFromText(text, ambient);
         setResult(res);
-    }, [text]);
+    }, [text, ambient]);
 
     const handleAccept = useCallback(() => {
         if (result?.ok) {

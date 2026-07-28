@@ -11,11 +11,13 @@ import EntityList from "./EntityList";
 type Props = {
     dataset: Dataset;
     issues: LintIssue[];
+    /** Other datasets in the user's library — resolves cross-book classId/raceId/featId refs instead of false-flagging them. */
+    ambient: Dataset[];
     onPersist: (dataset: Dataset) => void;
     onBack: () => void;
 };
 
-export default function DatasetEditor({ dataset, issues, onPersist, onBack }: Props) {
+export default function DatasetEditor({ dataset, issues, ambient, onPersist, onBack }: Props) {
     const [ds, setDs] = useState<Dataset>(structuredClone(dataset));
     const [lint, setLint] = useState<LintIssue[]>(issues);
     const [saved, setSaved] = useState(true);
@@ -35,11 +37,11 @@ export default function DatasetEditor({ dataset, issues, onPersist, onBack }: Pr
         timerRef.current = setTimeout(() => {
             const clean = { ...ds, system: 'dnd_5', license: 'CC-BY-SA-4.0' };
             onPersist(clean);
-            setLint(lintDataset(clean));
+            setLint(lintDataset(clean, ambient));
             setSaved(true);
         }, 500);
         return () => { if (timerRef.current) clearTimeout(timerRef.current); };
-    }, [ds, onPersist]);
+    }, [ds, ambient, onPersist]);
 
     const errorPaths = new Set(lint.filter((i) => i.severity === 'error').map((i) => i.path));
     const warnPaths = new Set(lint.filter((i) => i.severity === 'warning').map((i) => i.path));
@@ -48,8 +50,8 @@ export default function DatasetEditor({ dataset, issues, onPersist, onBack }: Pr
     const hasIssues = lint.length > 0;
 
     const relintFromChild = useCallback((childDs: Dataset) => {
-        setLint(lintDataset(childDs));
-    }, []);
+        setLint(lintDataset(childDs, ambient));
+    }, [ambient]);
 
     return (
         <div className="flex flex-col gap-6">
@@ -105,6 +107,7 @@ export default function DatasetEditor({ dataset, issues, onPersist, onBack }: Pr
             {/* Entities */}
             <EntityList
                 dataset={ds}
+                ambient={ambient}
                 errorPaths={errorPaths}
                 warnPaths={warnPaths}
                 issues={lint}
