@@ -73,6 +73,7 @@ function GrantForm({ data, set, siblingTraits }: {
         case 'feat': return <FeatGrantForm data={data} set={set} />;
         case 'skill-fixed': return <SkillFixedForm data={data} set={set} />;
         case 'skill-choice': return <SkillChoiceForm data={data} set={set} />;
+        case 'expertise-choice': return <ExpertiseChoiceForm data={data} set={set} />;
         case 'tool-fixed': return <ToolFixedForm data={data} set={set} />;
         case 'tool-choice': return <ToolChoiceForm data={data} set={set} />;
         case 'language-fixed': return <LanguageFixedForm data={data} set={set} />;
@@ -306,6 +307,37 @@ function SkillChoiceForm({ data, set }: { data: Record<string, unknown>; set: (k
             </F>
             {Array.isArray(opts) && (
                 <MultiSelect label="Навыки" options={[...SKILL_KEYS]} selected={opts} onChange={(v) => set('options', v)} />
+            )}
+        </div>
+    );
+}
+
+function ExpertiseChoiceForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    const opts = (data.options as string[] | undefined) ?? [];
+    const restricted = data.options !== undefined;
+    return (
+        <div className="flex flex-col gap-2">
+            <NF label="Количество" value={data.count as number} onChange={(v) => set('count', v)} />
+            <F label="Варианты (оставьте пустым для любых навыков с владением)">
+                <select
+                    value={restricted ? '_custom' : '_any'}
+                    onChange={(e) => {
+                        if (e.target.value === '_any') set('options', undefined);
+                        else set('options', []);
+                    }}
+                    className={inputClass}
+                >
+                    <option value="_any">любые (при наличии владения)</option>
+                    <option value="_custom">ограничить...</option>
+                </select>
+            </F>
+            {restricted && (
+                <div className="flex flex-col gap-1">
+                    <MultiSelect label="Навыки" options={[...SKILL_KEYS]} selected={opts} onChange={(v) => set('options', v)} />
+                    <span className="text-[11px] text-pumpkin-muted/70">
+                        Игрок сможет выбрать только из навыков, которыми он уже владеет — этот список дополнительно сужает пул.
+                    </span>
+                </div>
             )}
         </div>
     );

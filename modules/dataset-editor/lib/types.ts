@@ -56,6 +56,12 @@ export type SkillChoiceGrant = {
     options: string[] | 'any';
 };
 
+export type ExpertiseChoiceGrant = {
+    type: 'expertise-choice';
+    count: number;
+    options?: string[];
+};
+
 export type ToolFixedGrant = {
     type: 'tool-fixed';
     tools: string[];
@@ -199,6 +205,7 @@ export type Grant =
     | FeatGrant
     | SkillFixedGrant
     | SkillChoiceGrant
+    | ExpertiseChoiceGrant
     | ToolFixedGrant
     | ToolChoiceGrant
     | LanguageFixedGrant

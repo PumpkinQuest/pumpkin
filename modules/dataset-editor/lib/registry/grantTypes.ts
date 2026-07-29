@@ -44,8 +44,9 @@ export const GRANT_TYPE_SPECS: Record<Grant['type'], GrantTypeSpec> = {
     'resource': { channel: 'resource', live: true },
 
     // Choice-driven
-    'skill-choice': { channel: 'choice', live: true },
-    'spellcasting': { channel: 'choice', live: true },
+    'skill-choice':     { channel: 'choice', live: true },
+    'expertise-choice': { channel: 'choice', live: true, note: 'Proficiency required for each selected skill.' },
+    'spellcasting':     { channel: 'choice', live: true },
 
     // Gold ledger
     'gold':      { channel: 'gold', live: true },

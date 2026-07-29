@@ -23,6 +23,7 @@ const GRANT_TYPE_LABELS: Record<string, string> = {
     'feat': 'Черта',
     'skill-fixed': 'Навыки (фикс)',
     'skill-choice': 'Навыки (выбор)',
+    'expertise-choice': 'Экспертиза (выбор)',
     'tool-fixed': 'Инструменты (фикс)',
     'tool-choice': 'Инструменты (выбор)',
     'language-fixed': 'Языки (фикс)',
@@ -187,6 +188,7 @@ function makeDefaultGrant(type: string, siblingTraits: Array<{ id: string; name:
         case 'feat': return { type: 'feat', featId: '' };
         case 'skill-fixed': return { type: 'skill-fixed', skills: [] };
         case 'skill-choice': return { type: 'skill-choice', count: 1, options: 'any' };
+        case 'expertise-choice': return { type: 'expertise-choice', count: 1 };
         case 'tool-fixed': return { type: 'tool-fixed', tools: [] };
         case 'tool-choice': return { type: 'tool-choice', count: 1, options: [] };
         case 'language-fixed': return { type: 'language-fixed', languages: [] };
@@ -225,6 +227,8 @@ function grantSummary(grant: Grant): string {
             return grant.skills.join(', ');
         case 'skill-choice':
             return `pick ${grant.count} from ${grant.options === 'any' ? 'any' : grant.options.join(', ')}`;
+        case 'expertise-choice':
+            return `pick ${grant.count}` + (grant.options ? ` from ${grant.options.join(', ')}` : ' (any proficient skill)');
         case 'tool-fixed':
             return grant.tools.join(', ');
         case 'tool-choice':
