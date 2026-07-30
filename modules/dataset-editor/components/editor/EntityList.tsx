@@ -1,35 +1,20 @@
 "use client";
 
-import { useState, useCallback, type KeyboardEvent } from "react";
-import { Plus, ChevronRight } from "lucide-react";
-import type { Dataset, Grant } from "../../lib/types";
+import { useState, useCallback, useMemo, type KeyboardEvent } from "react";
+import { Plus, ChevronRight, Search } from "lucide-react";
+import type { Dataset } from "../../lib/types";
 import type { LintIssue } from "../../lib/lint";
 import { countEntities } from "../../lib/extract";
 import { generateEntityIdFromName } from "../../lib/ids";
+import { slugify } from "../../lib/exportDataset";
+import {
+    ENTITY_KINDS, KIND_ACCUSATIVE, KIND_GENITIVE_PLURAL, KIND_LABELS, type EntityKind,
+} from "../../lib/registry/kinds";
 import InfoTooltip from "../common/InfoTooltip";
 import EntityEditor from "./EntityEditor";
 
-type Kind = 'classes' | 'subclasses' | 'races' | 'subraces' | 'backgrounds' | 'feats';
-
-const KINDS: Kind[] = ['classes', 'subclasses', 'races', 'subraces', 'backgrounds', 'feats'];
-
-const KIND_LABELS: Record<Kind, string> = {
-    classes: 'Классы',
-    subclasses: 'Подклассы',
-    races: 'Расы',
-    subraces: 'Подрасы',
-    backgrounds: 'Предыстории',
-    feats: 'Черты',
-};
-
-const KIND_SINGULAR: Record<Kind, string> = {
-    classes: 'класс',
-    subclasses: 'подкласс',
-    races: 'расу',
-    subraces: 'подрасу',
-    backgrounds: 'предысторию',
-    feats: 'черту',
-};
+/** Above this many entities the list gets a search box — below it, scanning is faster than typing. */
+const SEARCH_THRESHOLD = 6;
 
 type Props = {
     dataset: Dataset;
@@ -46,17 +31,21 @@ type Props = {
 type EntityRecord = Record<string, any>;
 
 export default function EntityList({ dataset, ambient, errorPaths, warnPaths, issues, onChange, onLint }: Props) {
-    const [activeTab, setActiveTab] = useState<Kind>('classes');
+    // Races first, classes last — see registry/kinds.ts and guide §7: classes are
+    // the least expressible kind and the worst possible landing tab.
+    const [activeTab, setActiveTab] = useState<EntityKind>('races');
     const [editingId, setEditingId] = useState<string | null>(null);
     const [pendingName, setPendingName] = useState<string | null>(null);
     const [addingName, setAddingName] = useState(false);
     const [draftName, setDraftName] = useState('');
+    const [draftEnglish, setDraftEnglish] = useState('');
+    const [query, setQuery] = useState('');
     const counts = countEntities(dataset);
 
     // Build a map of entity path prefix → error/warning messages for tooltips
     const issueByPrefix = new Map<string, string[]>();
     for (const issue of issues) {
-        for (const kind of KINDS) {
+        for (const kind of ENTITY_KINDS) {
             const prefix = `${kind}/`;
             if (issue.path.startsWith(prefix)) {
                 const entityId = issue.path.slice(prefix.length).split('/')[0].split('@')[0];
@@ -70,7 +59,15 @@ export default function EntityList({ dataset, ambient, errorPaths, warnPaths, is
     const list = (dataset[activeTab] ?? []) as EntityRecord[];
     const editing = editingId ? list.find((e) => e.id === editingId) : null;
 
-    const updateEntities = useCallback((kind: Kind, entities: EntityRecord[]) => {
+    const visibleList = useMemo(() => {
+        const q = query.trim().toLowerCase();
+        if (!q) return list;
+        return list.filter(
+            (e) => String(e.label ?? '').toLowerCase().includes(q) || String(e.id ?? '').includes(q),
+        );
+    }, [list, query]);
+
+    const updateEntities = useCallback((kind: EntityKind, entities: EntityRecord[]) => {
         onChange({ ...dataset, [kind]: entities } as Dataset);
         onLint({ ...dataset, [kind]: entities } as Dataset);
     }, [dataset, onChange, onLint]);
@@ -95,17 +92,27 @@ export default function EntityList({ dataset, ambient, errorPaths, warnPaths, is
 
     const handleStartAdd = useCallback(() => {
         setDraftName('');
+        setDraftEnglish('');
         setAddingName(true);
     }, []);
+
+    // The id comes from the ENGLISH name (guide §5.7: it's the only key two
+    // independent imports of the same entity can converge on), the displayed
+    // label from what the author typed in Russian. Leaving the English field
+    // empty falls back to a transliterated slug of the label rather than
+    // blocking the author.
+    const idSource = (draftEnglish.trim() || draftName.trim());
+    const previewId = idSource ? slugify(idSource) : '';
 
     const handleConfirmAdd = useCallback(() => {
         const name = draftName.trim();
         if (!name) return;
-        const id = generateEntityIdFromName(name, list.map((e) => e.id as string));
+        const source = draftEnglish.trim() || name;
+        const id = generateEntityIdFromName(source, list.map((e) => e.id as string));
         setPendingName(name);
         setEditingId(id);
         setAddingName(false);
-    }, [draftName, list]);
+    }, [draftName, draftEnglish, list]);
 
     const handleCancelAdd = useCallback(() => setAddingName(false), []);
 
@@ -138,12 +145,12 @@ export default function EntityList({ dataset, ambient, errorPaths, warnPaths, is
         <div className="flex flex-col gap-4">
             {/* Tabs */}
             <div className="flex items-center gap-1 border-b border-pumpkin-border overflow-x-auto">
-                {KINDS.map((kind) => {
+                {ENTITY_KINDS.map((kind) => {
                     const count = counts[kind];
                     return (
                         <button
                             key={kind}
-                            onClick={() => { setActiveTab(kind); setEditingId(null); }}
+                            onClick={() => { setActiveTab(kind); setEditingId(null); setQuery(''); }}
                             className={`px-3 py-2 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
                                 activeTab === kind
                                     ? 'border-pumpkin-orange text-pumpkin-text'
@@ -159,63 +166,94 @@ export default function EntityList({ dataset, ambient, errorPaths, warnPaths, is
                 })}
             </div>
 
+            {/* Search */}
+            {list.length > SEARCH_THRESHOLD && (
+                <div className="relative">
+                    <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-pumpkin-muted/60" />
+                    <input
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        placeholder={`Поиск по ${KIND_GENITIVE_PLURAL[activeTab]}…`}
+                        className="w-full rounded-lg border border-pumpkin-border bg-pumpkin-bg pl-9 pr-3 py-2 text-sm text-pumpkin-text placeholder:text-pumpkin-muted/50 focus:outline-none focus:border-pumpkin-orange/50"
+                    />
+                </div>
+            )}
+
             {/* Entity list */}
             <div className="flex flex-col gap-2">
-                {list.length === 0 ? (
+                {list.length === 0 && (
                     <div className="text-sm text-pumpkin-muted py-4 text-center">
-                        Нет {KIND_LABELS[activeTab].toLowerCase()}
+                        Здесь пока пусто
                     </div>
-                ) : (
-                    list.map((entity) => {
-                        const prefix = `${activeTab}/${entity.id}`;
-                        const hasError = Array.from(errorPaths).some((p) => p.startsWith(prefix));
-                        const hasWarn = Array.from(warnPaths).some((p) => p.startsWith(prefix));
-                        const entityIssues = issueByPrefix.get(prefix);
-
-                        return (
-                            <button
-                                key={entity.id}
-                                onClick={() => setEditingId(entity.id)}
-                                title={entityIssues?.join('\n')}
-                                className="flex items-center gap-3 p-3 rounded-lg border border-pumpkin-border bg-pumpkin-surface hover:border-pumpkin-orange/30 text-left transition-colors group"
-                            >
-                                <div className="flex flex-col min-w-0 flex-1">
-                                    <span className="text-sm font-medium text-pumpkin-text truncate">
-                                        {entity.label}
-                                    </span>
-                                    <span className="text-xs text-pumpkin-muted font-mono">
-                                        {entity.id}
-                                    </span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    {hasError && (
-                                        <span className="w-2 h-2 rounded-full bg-red-400" title="Есть ошибки" />
-                                    )}
-                                    {hasWarn && !hasError && (
-                                        <span className="w-2 h-2 rounded-full bg-amber-400" title="Есть предупреждения" />
-                                    )}
-                                    <ChevronRight size={14} className="text-pumpkin-muted group-hover:text-pumpkin-orange transition-colors" />
-                                </div>
-                            </button>
-                        );
-                    })
                 )}
+                {list.length > 0 && visibleList.length === 0 && (
+                    <div className="text-sm text-pumpkin-muted py-4 text-center">
+                        Ничего не найдено
+                    </div>
+                )}
+                {visibleList.map((entity) => {
+                    const prefix = `${activeTab}/${entity.id}`;
+                    const hasError = Array.from(errorPaths).some((p) => p.startsWith(prefix));
+                    const hasWarn = Array.from(warnPaths).some((p) => p.startsWith(prefix));
+                    const entityIssues = issueByPrefix.get(prefix);
+
+                    return (
+                        <button
+                            key={entity.id}
+                            onClick={() => setEditingId(entity.id)}
+                            title={entityIssues?.join('\n')}
+                            className="flex items-center gap-3 p-3 rounded-lg border border-pumpkin-border bg-pumpkin-surface hover:border-pumpkin-orange/30 text-left transition-colors group"
+                        >
+                            <div className="flex flex-col min-w-0 flex-1">
+                                <span className="text-sm font-medium text-pumpkin-text truncate">
+                                    {entity.label}
+                                </span>
+                                <span className="text-xs text-pumpkin-muted font-mono">
+                                    {entity.id}
+                                </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                {hasError && (
+                                    <span className="w-2 h-2 rounded-full bg-red-400" title="Есть ошибки" />
+                                )}
+                                {hasWarn && !hasError && (
+                                    <span className="w-2 h-2 rounded-full bg-amber-400" title="Есть предупреждения" />
+                                )}
+                                <ChevronRight size={14} className="text-pumpkin-muted group-hover:text-pumpkin-orange transition-colors" />
+                            </div>
+                        </button>
+                    );
+                })}
 
                 {addingName ? (
-                    <div className="flex flex-col gap-1.5 p-3 rounded-lg border border-pumpkin-orange/40 bg-pumpkin-orange/5">
-                        <label className="text-xs text-pumpkin-muted flex items-center gap-1">
-                            Английское название
-                            <InfoTooltip text="Id будет сгенерирован как слаг этого названия (например «Blood Hunter» → blood-hunter) и дальше не будет меняться — на него смогут сослаться другие датасеты (classId у подкласса и т.п.), а два независимых импорта одной сущности сойдутся на одном id. Отображаемое название (label) можно будет свободно менять позже — оно ни на что не влияет." />
-                        </label>
-                        <div className="flex items-center gap-2">
-                            <input
-                                value={draftName}
-                                onChange={(e) => setDraftName(e.target.value)}
-                                onKeyDown={handleAddKeyDown}
-                                placeholder="Blood Hunter"
-                                autoFocus
-                                className="flex-1 rounded-lg border border-pumpkin-border bg-pumpkin-bg text-pumpkin-text text-sm px-3 py-1.5 focus:outline-none focus:border-pumpkin-orange/50"
-                            />
+                    <div className="flex flex-col gap-3 p-3 rounded-lg border border-pumpkin-orange/40 bg-pumpkin-orange/5">
+                        <div className="grid sm:grid-cols-2 gap-3">
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-xs text-pumpkin-muted">Название</label>
+                                <input
+                                    value={draftName}
+                                    onChange={(e) => setDraftName(e.target.value)}
+                                    onKeyDown={handleAddKeyDown}
+                                    placeholder="Кровавый охотник"
+                                    autoFocus
+                                    className="rounded-lg border border-pumpkin-border bg-pumpkin-bg text-pumpkin-text text-sm px-3 py-1.5 focus:outline-none focus:border-pumpkin-orange/50"
+                                />
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-xs text-pumpkin-muted flex items-center gap-1">
+                                    English name
+                                    <InfoTooltip text="Из английского названия генерируется id (например «Blood Hunter» → blood-hunter). Дальше он не меняется — на него ссылаются другие сущности и датасеты, а два независимых импорта одной сущности сойдутся на одном id. Если оставить поле пустым, id соберётся из русского названия транслитерацией." />
+                                </label>
+                                <input
+                                    value={draftEnglish}
+                                    onChange={(e) => setDraftEnglish(e.target.value)}
+                                    onKeyDown={handleAddKeyDown}
+                                    placeholder="Blood Hunter"
+                                    className="rounded-lg border border-pumpkin-border bg-pumpkin-bg text-pumpkin-text text-sm px-3 py-1.5 focus:outline-none focus:border-pumpkin-orange/50"
+                                />
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-2 flex-wrap">
                             <button
                                 onClick={handleConfirmAdd}
                                 disabled={!draftName.trim()}
@@ -229,6 +267,11 @@ export default function EntityList({ dataset, ambient, errorPaths, warnPaths, is
                             >
                                 Отмена
                             </button>
+                            {previewId && (
+                                <span className="ml-auto text-xs text-pumpkin-muted font-mono">
+                                    id: {previewId}
+                                </span>
+                            )}
                         </div>
                     </div>
                 ) : (
@@ -237,7 +280,7 @@ export default function EntityList({ dataset, ambient, errorPaths, warnPaths, is
                         className="flex items-center justify-center gap-2 p-3 rounded-lg border border-dashed border-pumpkin-border hover:border-pumpkin-orange/40 text-sm text-pumpkin-muted hover:text-pumpkin-text transition-colors"
                     >
                         <Plus size={14} />
-                        Добавить {KIND_SINGULAR[activeTab]}
+                        Добавить {KIND_ACCUSATIVE[activeTab]}
                     </button>
                 )}
             </div>
@@ -245,7 +288,7 @@ export default function EntityList({ dataset, ambient, errorPaths, warnPaths, is
     );
 }
 
-function makeEmptyEntity(kind: Kind, id: string, name: string) {
+function makeEmptyEntity(kind: EntityKind, id: string, name: string) {
     const base = { id, label: name } as Record<string, unknown>;
     switch (kind) {
         case 'classes':

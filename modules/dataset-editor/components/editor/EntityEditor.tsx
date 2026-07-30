@@ -5,13 +5,15 @@ import { ArrowLeft, Trash2, AlertTriangle } from "lucide-react";
 import type { Dataset, Grant, LeveledGrants } from "../../lib/types";
 import { STANDARD_CLASSES, STANDARD_RACES } from "../../lib/standardClasses";
 import { STAT_KEYS } from "../../lib/registry/bonusTargets";
+import type { EntityKind } from "../../lib/registry/kinds";
+import {
+    FEAT_CATEGORIES, FEAT_CATEGORY_LABELS, SIZE_LABELS, STAT_LABELS, labelOf,
+} from "../../lib/registry/labels";
 import InfoTooltip from "../common/InfoTooltip";
 import GrantList from "../grants/GrantList";
 
-type Kind = 'classes' | 'subclasses' | 'races' | 'subraces' | 'backgrounds' | 'feats';
-
 type Props = {
-    kind: Kind;
+    kind: EntityKind;
     entity: Record<string, unknown>;
     dataset: Dataset;
     /** Other datasets in the library — offered as extra classId/raceId targets alongside standard SRD ids. */
@@ -23,7 +25,7 @@ type Props = {
     onCancel: () => void;
 };
 
-const LEVELED_KINDS: Kind[] = ['classes', 'subclasses', 'races', 'subraces'];
+const LEVELED_KINDS: EntityKind[] = ['classes', 'subclasses', 'races', 'subraces'];
 
 export default function EntityEditor({ kind, entity, dataset, ambient, errorPaths, warnPaths, onSave, onDelete, onCancel }: Props) {
     const [data, setData] = useState<Record<string, unknown>>(structuredClone(entity));
@@ -136,7 +138,7 @@ export default function EntityEditor({ kind, entity, dataset, ambient, errorPath
                             value={(data.likes as string) ?? ''}
                             onChange={(v) => update('likes', v || undefined)}
                             placeholder="Скрытность"
-                            hint="Краткое описание в одно слово. В визарде отобразиться как 'Любит скрытность'"
+                            hint="Краткое описание в одно слово. В визарде отобразится как «Любит скрытность»."
                         />
                         <div className="flex flex-col gap-1">
                             <label className="text-xs text-pumpkin-muted flex items-center gap-1">
@@ -200,9 +202,9 @@ export default function EntityEditor({ kind, entity, dataset, ambient, errorPath
                             onChange={(e) => update('size', e.target.value)}
                             className="w-full rounded-lg border border-pumpkin-border bg-pumpkin-bg px-3 py-2 text-sm text-pumpkin-text focus:outline-none focus:border-pumpkin-orange/50"
                         >
-                            <option value="small">Маленький</option>
-                            <option value="medium">Средний</option>
-                            <option value="large">Большой</option>
+                            {Object.entries(SIZE_LABELS).map(([value, label]) => (
+                                <option key={value} value={value}>{label}</option>
+                            ))}
                         </select>
                     </div>
                 )}
@@ -475,14 +477,6 @@ function SubraceRacePicker({ value, dataset, ambient, onChange }: {
 
 // ── Feat category picker ─────────────────────────────────────────────────
 
-const FEAT_CATEGORIES = [
-    { value: 'origin', label: 'Происхождение' },
-    { value: 'general', label: 'Общая' },
-    { value: 'fighting-style', label: 'Боевой стиль' },
-    { value: 'epic-boon', label: 'Эпический дар' },
-    { value: 'invocation', label: 'Инвокация' },
-];
-
 function FeatCategoryPicker({ value, onChange }: {
     value: string;
     onChange: (v: string | undefined) => void;
@@ -500,7 +494,7 @@ function FeatCategoryPicker({ value, onChange }: {
             >
                 <option value="">— без категории —</option>
                 {FEAT_CATEGORIES.map((c) => (
-                    <option key={c.value} value={c.value}>{c.label}</option>
+                    <option key={c} value={c}>{FEAT_CATEGORY_LABELS[c]}</option>
                 ))}
             </select>
         </div>
@@ -561,7 +555,7 @@ function PrimaryStatsEditor({ groups, onChange }: {
                                                 : 'border-pumpkin-border bg-pumpkin-bg text-pumpkin-muted hover:border-pumpkin-orange/20'
                                         }`}
                                     >
-                                        {stat}
+                                        {labelOf(STAT_LABELS, stat)}
                                     </button>
                                 );
                             })}
@@ -576,7 +570,7 @@ function PrimaryStatsEditor({ groups, onChange }: {
                     </div>
                     {group.length > 1 && (
                         <span className="text-[10px] text-pumpkin-muted/70 pl-0.5">
-                            {group.map((s) => s.toUpperCase()).join(' и ')}
+                            {group.map((s) => labelOf(STAT_LABELS, s)).join(' и ')}
                         </span>
                     )}
                 </div>

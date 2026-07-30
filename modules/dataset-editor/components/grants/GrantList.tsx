@@ -1,9 +1,15 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { Plus, GripVertical, ChevronDown } from "lucide-react";
+import { useState, useCallback, useMemo } from "react";
+import { Plus, GripVertical, Search } from "lucide-react";
 import type { Grant } from "../../lib/types";
 import { generateGrantId } from "../../lib/ids";
+import { GRANT_TYPE_LABELS, GRANT_TYPES, grantTypeLabel } from "../../lib/registry/grantLabels";
+import {
+    ARMOR_PROF_LABELS, CASTER_PROGRESSION_LABELS, CASTER_TYPE_LABELS, LANGUAGE_LABELS,
+    SKILL_LABELS, STAT_LABELS, WEAPON_PROF_LABELS, labelList, labelOf,
+} from "../../lib/registry/labels";
+import { pluralWithCount } from "../../lib/plural";
 import GrantEditor from "./GrantEditor";
 
 type Props = {
@@ -15,45 +21,35 @@ type Props = {
     compact?: boolean;
 };
 
-const GRANT_TYPE_LABELS: Record<string, string> = {
-    'asi-fixed': 'Характеристики (фикс)',
-    'asi-flexible': 'Характеристики (выбор)',
-    'asi-pool': 'Характеристики (пул)',
-    'bonus': 'Бонус',
-    'feat': 'Черта',
-    'skill-fixed': 'Навыки (фикс)',
-    'skill-choice': 'Навыки (выбор)',
-    'expertise-choice': 'Экспертиза (выбор)',
-    'tool-fixed': 'Инструменты (фикс)',
-    'tool-choice': 'Инструменты (выбор)',
-    'language-fixed': 'Языки (фикс)',
-    'language-choice': 'Языки (выбор)',
-    'speed': 'Скорость',
-    'saving-throw': 'Спасбросок',
-    'trait': 'Особенность',
-    'armor-prof': 'Владение бронёй',
-    'weapon-prof': 'Владение оружием',
-    'spellcasting': 'Заклинания',
-    'hp-die': 'Кость хитов',
-    'resource': 'Ресурс',
-    'equipment-fixed': 'Снаряжение (фикс)',
-    'equipment-choice': 'Снаряжение (выбор)',
-    'gold': 'Золото',
-    'gold-dice': 'Золото (кубы)',
-    'pick-one': 'Выбор одного',
-};
-
-const GRANT_TYPES = Object.keys(GRANT_TYPE_LABELS);
-
 export default function GrantList({ grants, entityPath, siblingTraits, onChange, compact }: Props) {
     const [editingIndex, setEditingIndex] = useState<number | null>(null);
     const [addingType, setAddingType] = useState<string | null>(null);
+    const [typeQuery, setTypeQuery] = useState('');
+
+    const visibleTypes = useMemo(() => {
+        const q = typeQuery.trim().toLowerCase();
+        if (!q) return GRANT_TYPES;
+        return GRANT_TYPES.filter(
+            (type) => GRANT_TYPE_LABELS[type].toLowerCase().includes(q) || type.includes(q),
+        );
+    }, [typeQuery]);
+
+    const handleStartAdd = useCallback(() => {
+        setTypeQuery('');
+        setAddingType('_pick');
+    }, []);
+
+    const handleCancelAdd = useCallback(() => {
+        setTypeQuery('');
+        setAddingType(null);
+    }, []);
 
     const handleAdd = useCallback((type: string) => {
         const newGrant = makeDefaultGrant(type, siblingTraits);
         const next = [...grants, newGrant];
         onChange(next);
         setEditingIndex(next.length - 1);
+        setTypeQuery('');
         setAddingType(null);
     }, [grants, onChange, siblingTraits]);
 
@@ -95,7 +91,7 @@ export default function GrantList({ grants, entityPath, siblingTraits, onChange,
                     );
                 }
 
-                const typeLabel = GRANT_TYPE_LABELS[grant.type] ?? grant.type;
+                const typeLabel = grantTypeLabel(grant.type);
                 const summary = grantSummary(grant);
 
                 return (
@@ -137,8 +133,18 @@ export default function GrantList({ grants, entityPath, siblingTraits, onChange,
             {addingType ? (
                 <div className="flex flex-col gap-1.5 p-3 rounded-lg border border-pumpkin-orange/40 bg-pumpkin-orange/5">
                     <span className="text-xs text-pumpkin-muted">Тип гранта:</span>
+                    <div className="relative">
+                        <Search size={12} className="absolute left-2 top-1/2 -translate-y-1/2 text-pumpkin-muted/60" />
+                        <input
+                            value={typeQuery}
+                            onChange={(e) => setTypeQuery(e.target.value)}
+                            placeholder="Поиск по типам…"
+                            autoFocus
+                            className="w-full rounded-md border border-pumpkin-border bg-pumpkin-bg pl-7 pr-2 py-1.5 text-xs text-pumpkin-text placeholder:text-pumpkin-muted/50 focus:outline-none focus:border-pumpkin-orange/50"
+                        />
+                    </div>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-1 max-h-40 overflow-y-auto">
-                        {GRANT_TYPES.map((type) => (
+                        {visibleTypes.map((type) => (
                             <button
                                 key={type}
                                 onClick={() => handleAdd(type)}
@@ -148,8 +154,11 @@ export default function GrantList({ grants, entityPath, siblingTraits, onChange,
                             </button>
                         ))}
                     </div>
+                    {visibleTypes.length === 0 && (
+                        <span className="text-xs text-pumpkin-muted/70">Ничего не найдено</span>
+                    )}
                     <button
-                        onClick={() => setAddingType(null)}
+                        onClick={handleCancelAdd}
                         className="text-xs text-pumpkin-muted hover:text-pumpkin-text self-start"
                     >
                         Отмена
@@ -157,7 +166,7 @@ export default function GrantList({ grants, entityPath, siblingTraits, onChange,
                 </div>
             ) : (
                 <button
-                    onClick={() => setAddingType('_pick')}
+                    onClick={handleStartAdd}
                     className="flex items-center gap-1.5 text-sm text-pumpkin-muted hover:text-pumpkin-text transition-colors self-start py-1"
                 >
                     <Plus size={14} />
@@ -209,60 +218,86 @@ function makeDefaultGrant(type: string, siblingTraits: Array<{ id: string; name:
     }
 }
 
+const OPTION_FORMS: [string, string, string] = ['вариант', 'варианта', 'вариантов'];
+
+function signed(value: number): string {
+    return value >= 0 ? `+${value}` : String(value);
+}
+
+/** One-line preview shown on a collapsed grant row. Author-facing, so: Russian, keys resolved to labels. */
 function grantSummary(grant: Grant): string {
     switch (grant.type) {
         case 'asi-fixed': {
             const values = Object.entries(grant.values).filter(([, v]) => v !== undefined);
-            return values.map(([k, v]) => `${k}+${v}`).join(', ') || '—';
+            return values.map(([k, v]) => `${labelOf(STAT_LABELS, k)} ${signed(v as number)}`).join(', ') || '—';
         }
         case 'asi-flexible':
-            return grant.sets.map((s) => `${s.count}×+${s.amount}`).join(', ') || '—';
+            return grant.sets.map((s) => `${s.count} × ${signed(s.amount)}`).join(', ') || '—';
         case 'asi-pool':
-            return `${grant.total} pts, max ${grant.max}`;
-        case 'bonus':
-            return `${grant.target} ${grant.value ?? grant.expr ?? '?'} (${grant.label})`;
+            return `${grant.total} очк. всего, максимум ${grant.max} на характеристику`;
+        case 'bonus': {
+            const amount = grant.value !== undefined ? signed(grant.value) : (grant.expr || '?');
+            return `${grant.target} ${amount}${grant.label ? ` — ${grant.label}` : ''}`;
+        }
         case 'feat':
-            return grant.featId;
+            return grant.featId === 'any' ? 'любая черта на выбор' : (grant.featId || '—');
         case 'skill-fixed':
-            return grant.skills.join(', ');
+            return labelList(SKILL_LABELS, grant.skills) || '—';
         case 'skill-choice':
-            return `pick ${grant.count} from ${grant.options === 'any' ? 'any' : grant.options.join(', ')}`;
+            return grant.options === 'any'
+                ? `выбрать ${grant.count} из любых навыков`
+                : `выбрать ${grant.count} из: ${labelList(SKILL_LABELS, grant.options) || '—'}`;
         case 'expertise-choice':
-            return `pick ${grant.count}` + (grant.options ? ` from ${grant.options.join(', ')}` : ' (any proficient skill)');
+            return grant.options
+                ? `выбрать ${grant.count} из: ${labelList(SKILL_LABELS, grant.options) || '—'}`
+                : `выбрать ${grant.count} из освоенных навыков`;
         case 'tool-fixed':
-            return grant.tools.join(', ');
+            return grant.tools.join(', ') || '—';
         case 'tool-choice':
-            return `pick ${grant.count} from ${grant.options.join(', ')}`;
+            return `выбрать ${grant.count} из: ${grant.options.join(', ') || '—'}`;
         case 'language-fixed':
-            return grant.languages.join(', ');
+            return labelList(LANGUAGE_LABELS, grant.languages) || '—';
         case 'language-choice':
-            return `pick ${grant.count}` + (grant.options ? ` from ${grant.options.join(', ')}` : '');
+            return grant.options
+                ? `выбрать ${grant.count} из: ${labelList(LANGUAGE_LABELS, grant.options) || '—'}`
+                : `выбрать ${grant.count} из любых языков`;
         case 'speed':
-            return `${grant.value} ft`;
+            return `${grant.value} футов`;
         case 'saving-throw':
-            return grant.stats.join(', ');
+            return labelList(STAT_LABELS, grant.stats) || '—';
         case 'trait':
-            return grant.name || grant.id;
+            return grant.name || grant.id || '—';
         case 'armor-prof':
-            return grant.armors.join(', ');
+            return labelList(ARMOR_PROF_LABELS, grant.armors) || '—';
         case 'weapon-prof':
-            return [...grant.weapons, ...(grant.specific ?? [])].join(', ');
-        case 'spellcasting':
-            return `${grant.ability} / ${grant.casterType}` + (grant.progression ? ` (${grant.progression})` : '');
+            return [
+                ...grant.weapons.map((w) => labelOf(WEAPON_PROF_LABELS, w)),
+                ...(grant.specific ?? []),
+            ].filter(Boolean).join(', ') || '—';
+        case 'spellcasting': {
+            const parts = [
+                labelOf(STAT_LABELS, grant.ability),
+                labelOf(CASTER_TYPE_LABELS, grant.casterType),
+            ];
+            if (grant.progression) parts.push(labelOf(CASTER_PROGRESSION_LABELS, grant.progression));
+            return parts.join(' · ');
+        }
         case 'hp-die':
             return `d${grant.die}`;
-        case 'resource':
-            return `${grant.name} (${grant.max ?? grant.maxExpr ?? '?'})`;
+        case 'resource': {
+            const max = grant.max ?? grant.maxExpr;
+            return `${grant.name || grant.id || '—'}${max !== undefined ? ` (макс. ${max})` : ''}`;
+        }
         case 'equipment-fixed':
-            return grant.items.join(', ');
+            return grant.items.join(', ') || '—';
         case 'equipment-choice':
-            return `${grant.options.length} options`;
+            return pluralWithCount(grant.options.length, OPTION_FORMS);
         case 'gold':
-            return `${grant.amount} gp`;
+            return `${grant.amount} зм`;
         case 'gold-dice':
             return grant.dice;
         case 'pick-one':
-            return grant.label ?? `${grant.options.length} options`;
+            return grant.label ?? pluralWithCount(grant.options.length, OPTION_FORMS);
         default:
             return '—';
     }

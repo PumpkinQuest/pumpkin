@@ -2,9 +2,15 @@
 
 import { useState, useCallback, useEffect } from "react";
 import { Trash2 } from "lucide-react";
-import type { Grant, StatKey, ArmorProfKey, WeaponProfKey, CasterProgression, FeatCategory } from "../../lib/types";
+import type { Grant } from "../../lib/types";
 import { listBonusTargetsByGroup, STAT_KEYS, SKILL_KEYS, ARMOR_PROF_KEYS, WEAPON_PROF_KEYS, COMMON_LANGUAGES } from "../../lib/registry/bonusTargets";
 import { SENSE_TRAIT_IDS, SENSE_LABELS, isSenseTraitId, type SenseTraitId } from "../../lib/registry/senses";
+import { grantTypeLabel } from "../../lib/registry/grantLabels";
+import {
+    ARMOR_PROF_LABELS, CASTER_PROGRESSIONS, CASTER_PROGRESSION_LABELS, CASTER_TYPE_LABELS,
+    FEAT_CATEGORIES, FEAT_CATEGORY_LABELS, LANGUAGE_LABELS, SKILL_LABELS, STAT_LABELS,
+    WEAPON_PROF_LABELS, labelOf,
+} from "../../lib/registry/labels";
 import GrantList from "./GrantList";
 
 type Props = {
@@ -32,7 +38,7 @@ export default function GrantEditor({ grant, siblingTraits, onSave, onCancel, on
         <div className="rounded-lg border border-pumpkin-orange/40 bg-pumpkin-orange/5 overflow-hidden">
             <div className="flex items-center justify-between px-3 py-2 border-b border-pumpkin-orange/20">
                 <span className="text-xs font-medium text-pumpkin-orange">
-                    {data.type as string}
+                    {grantTypeLabel(data.type as string)}
                 </span>
                 <div className="flex items-center gap-1">
                     <button
@@ -130,11 +136,18 @@ function NF({ label, value, onChange, placeholder }: { label: string; value: num
     );
 }
 
-function MultiSelect({ label, options, selected, onChange }: {
+/**
+ * Toggle chips over a closed key set. `labels` maps the stored key to what the
+ * author reads — the keys themselves are the sheet's contract and stay as-is
+ * (dataset-editor-guide.md §5.4), but nobody should have to recognise
+ * `'sleight of hand'` or `'armor-label'` on screen.
+ */
+function MultiSelect({ label, options, selected, onChange, labels }: {
     label: string;
     options: string[];
     selected: string[];
     onChange: (v: string[]) => void;
+    labels?: Record<string, string>;
 }) {
     return (
         <F label={label}>
@@ -151,7 +164,7 @@ function MultiSelect({ label, options, selected, onChange }: {
                                     : 'border-pumpkin-border bg-pumpkin-bg text-pumpkin-muted hover:border-pumpkin-orange/20'
                             }`}
                         >
-                            {opt}
+                            {labels ? labelOf(labels, opt) : opt}
                         </button>
                     );
                 })}
@@ -206,7 +219,7 @@ function AsiFixedForm({ data, set }: { data: Record<string, unknown>; set: (k: s
             <span className="text-[11px] text-pumpkin-muted">Характеристики</span>
             {STAT_KEYS.map((stat) => (
                 <div key={stat} className="flex items-center gap-2">
-                    <span className="text-xs text-pumpkin-muted w-8">{stat.toUpperCase()}</span>
+                    <span className="text-xs text-pumpkin-muted w-8">{labelOf(STAT_LABELS, stat)}</span>
                     <input
                         type="number"
                         value={values[stat] ?? ''}
@@ -263,7 +276,7 @@ function AsiPoolForm({ data, set }: { data: Record<string, unknown>; set: (k: st
                 <NF label="Всего" value={data.total as number} onChange={(v) => set('total', v)} />
                 <NF label="Макс на хар-ку" value={data.max as number} onChange={(v) => set('max', v)} />
             </div>
-            <MultiSelect label="Варианты" options={[...STAT_KEYS]} selected={options} onChange={(v) => set('options', v)} />
+            <MultiSelect label="Варианты" options={[...STAT_KEYS]} selected={options} onChange={(v) => set('options', v)} labels={STAT_LABELS} />
         </div>
     );
 }
@@ -310,8 +323,8 @@ function FeatGrantForm({ data, set }: { data: Record<string, unknown>; set: (k: 
             <F label="Категория">
                 <select value={(data.category as string) ?? ''} onChange={(e) => set('category', e.target.value || undefined)} className={inputClass}>
                     <option value="">—</option>
-                    {(['origin', 'general', 'fighting-style', 'epic-boon', 'invocation'] as FeatCategory[]).map((c) => (
-                        <option key={c} value={c}>{c}</option>
+                    {FEAT_CATEGORIES.map((c) => (
+                        <option key={c} value={c}>{FEAT_CATEGORY_LABELS[c]}</option>
                     ))}
                 </select>
             </F>
@@ -321,7 +334,7 @@ function FeatGrantForm({ data, set }: { data: Record<string, unknown>; set: (k: 
 
 function SkillFixedForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
     const skills = (data.skills as string[]) ?? [];
-    return <MultiSelect label="Навыки" options={[...SKILL_KEYS]} selected={skills} onChange={(v) => set('skills', v)} />;
+    return <MultiSelect label="Навыки" options={[...SKILL_KEYS]} selected={skills} onChange={(v) => set('skills', v)} labels={SKILL_LABELS} />;
 }
 
 function SkillChoiceForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
@@ -343,7 +356,7 @@ function SkillChoiceForm({ data, set }: { data: Record<string, unknown>; set: (k
                 </select>
             </F>
             {Array.isArray(opts) && (
-                <MultiSelect label="Навыки" options={[...SKILL_KEYS]} selected={opts} onChange={(v) => set('options', v)} />
+                <MultiSelect label="Навыки" options={[...SKILL_KEYS]} selected={opts} onChange={(v) => set('options', v)} labels={SKILL_LABELS} />
             )}
         </div>
     );
@@ -370,7 +383,7 @@ function ExpertiseChoiceForm({ data, set }: { data: Record<string, unknown>; set
             </F>
             {restricted && (
                 <div className="flex flex-col gap-1">
-                    <MultiSelect label="Навыки" options={[...SKILL_KEYS]} selected={opts} onChange={(v) => set('options', v)} />
+                    <MultiSelect label="Навыки" options={[...SKILL_KEYS]} selected={opts} onChange={(v) => set('options', v)} labels={SKILL_LABELS} />
                     <span className="text-[11px] text-pumpkin-muted/70">
                         Игрок сможет выбрать только из навыков, которыми он уже владеет — этот список дополнительно сужает пул.
                     </span>
@@ -411,7 +424,7 @@ function ToolChoiceForm({ data, set }: { data: Record<string, unknown>; set: (k:
 
 function LanguageFixedForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
     const langs = (data.languages as string[]) ?? [];
-    return <MultiSelect label="Языки" options={[...COMMON_LANGUAGES]} selected={langs} onChange={(v) => set('languages', v)} />;
+    return <MultiSelect label="Языки" options={[...COMMON_LANGUAGES]} selected={langs} onChange={(v) => set('languages', v)} labels={LANGUAGE_LABELS} />;
 }
 
 function LanguageChoiceForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
@@ -420,7 +433,7 @@ function LanguageChoiceForm({ data, set }: { data: Record<string, unknown>; set:
         <div className="flex flex-col gap-2">
             <NF label="Количество" value={data.count as number} onChange={(v) => set('count', v)} />
             {options && (
-                <MultiSelect label="Варианты" options={[...COMMON_LANGUAGES]} selected={options} onChange={(v) => set('options', v)} />
+                <MultiSelect label="Варианты" options={[...COMMON_LANGUAGES]} selected={options} onChange={(v) => set('options', v)} labels={LANGUAGE_LABELS} />
             )}
         </div>
     );
@@ -432,7 +445,7 @@ function SpeedForm({ data, set }: { data: Record<string, unknown>; set: (k: stri
 
 function SavingThrowForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
     const stats = (data.stats as string[]) ?? [];
-    return <MultiSelect label="Спасброски" options={[...STAT_KEYS]} selected={stats} onChange={(v) => set('stats', v)} />;
+    return <MultiSelect label="Спасброски" options={[...STAT_KEYS]} selected={stats} onChange={(v) => set('stats', v)} labels={STAT_LABELS} />;
 }
 
 function TraitForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
@@ -507,7 +520,7 @@ function TraitForm({ data, set }: { data: Record<string, unknown>; set: (k: stri
 
 function ArmorProfForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
     const armors = (data.armors as string[]) ?? [];
-    return <MultiSelect label="Владение бронёй" options={[...ARMOR_PROF_KEYS]} selected={armors} onChange={(v) => set('armors', v)} />;
+    return <MultiSelect label="Владение бронёй" options={[...ARMOR_PROF_KEYS]} selected={armors} onChange={(v) => set('armors', v)} labels={ARMOR_PROF_LABELS} />;
 }
 
 function WeaponProfForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
@@ -515,7 +528,7 @@ function WeaponProfForm({ data, set }: { data: Record<string, unknown>; set: (k:
     const specific = (data.specific as string[]) ?? [];
     return (
         <div className="flex flex-col gap-2">
-            <MultiSelect label="Категории оружия" options={[...WEAPON_PROF_KEYS]} selected={weapons} onChange={(v) => set('weapons', v)} />
+            <MultiSelect label="Категории оружия" options={[...WEAPON_PROF_KEYS]} selected={weapons} onChange={(v) => set('weapons', v)} labels={WEAPON_PROF_LABELS} />
             <CommaListField
                 label="Особое оружие (через запятую)"
                 value={specific}
@@ -538,16 +551,16 @@ function SpellcastingForm({ data, set }: { data: Record<string, unknown>; set: (
             </F>
             <F label="Тип заклинателя">
                 <select value={(data.casterType as string) ?? 'list'} onChange={(e) => set('casterType', e.target.value)} className={inputClass}>
-                    <option value="memory">память</option>
-                    <option value="list">список</option>
-                    <option value="book">книга</option>
+                    {Object.entries(CASTER_TYPE_LABELS).map(([value, label]) => (
+                        <option key={value} value={value}>{label}</option>
+                    ))}
                 </select>
             </F>
             <F label="Прогрессия">
                 <select value={(data.progression as string) ?? ''} onChange={(e) => set('progression', e.target.value || undefined)} className={inputClass}>
                     <option value="">—</option>
-                    {(['full', 'half', 'third', 'pact'] as CasterProgression[]).map((p) => (
-                        <option key={p} value={p}>{p}</option>
+                    {CASTER_PROGRESSIONS.map((p) => (
+                        <option key={p} value={p}>{CASTER_PROGRESSION_LABELS[p]}</option>
                     ))}
                 </select>
             </F>

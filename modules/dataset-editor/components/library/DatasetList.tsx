@@ -1,10 +1,12 @@
 "use client";
 
+import { useState, useCallback } from "react";
 import { Pencil, Download, Trash2, ExternalLink } from "lucide-react";
 import type { Dataset } from "../../lib/types";
 import type { LintIssue } from "../../lib/lint";
 import { downloadDataset } from "../../lib/exportDataset";
 import { countEntities } from "../../lib/extract";
+import { KIND_GENITIVE_PLURAL, type EntityKind } from "../../lib/registry/kinds";
 
 type Props = {
     datasets: Dataset[];
@@ -15,16 +17,16 @@ type Props = {
     onUpdate: (dataset: Dataset) => void;
 };
 
-const ENTITY_LABELS: Record<string, string> = {
-    classes: 'классов',
-    subclasses: 'подклассов',
-    races: 'рас',
-    subraces: 'подрас',
-    backgrounds: 'предысторий',
-    feats: 'черт',
-};
-
 export default function DatasetList({ datasets, lintIssues, onEdit, onExtract, onDelete }: Props) {
+    // Deleting a dataset is unrecoverable (localStorage, no history), so it asks
+    // first — the same inline confirm the entity editor uses.
+    const [confirmingId, setConfirmingId] = useState<string | null>(null);
+
+    const handleConfirmDelete = useCallback((id: string) => {
+        setConfirmingId(null);
+        onDelete(id);
+    }, [onDelete]);
+
     if (datasets.length === 0) return null;
 
     return (
@@ -79,13 +81,30 @@ export default function DatasetList({ datasets, lintIssues, onEdit, onExtract, o
                                 >
                                     <Download size={15} />
                                 </button>
-                                <button
-                                    onClick={() => onDelete(ds.id)}
-                                    className="p-1.5 rounded-lg hover:bg-red-500/10 text-pumpkin-muted hover:text-red-400 transition-colors"
-                                    title="Удалить"
-                                >
-                                    <Trash2 size={15} />
-                                </button>
+                                {confirmingId === ds.id ? (
+                                    <div className="flex items-center gap-1">
+                                        <button
+                                            onClick={() => handleConfirmDelete(ds.id)}
+                                            className="px-2 py-1 rounded text-xs bg-red-500/20 text-red-400 hover:bg-red-500/30 transition-colors"
+                                        >
+                                            Удалить
+                                        </button>
+                                        <button
+                                            onClick={() => setConfirmingId(null)}
+                                            className="px-2 py-1 rounded text-xs text-pumpkin-muted hover:text-pumpkin-text transition-colors"
+                                        >
+                                            Нет
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <button
+                                        onClick={() => setConfirmingId(ds.id)}
+                                        className="p-1.5 rounded-lg hover:bg-red-500/10 text-pumpkin-muted hover:text-red-400 transition-colors"
+                                        title="Удалить"
+                                    >
+                                        <Trash2 size={15} />
+                                    </button>
+                                )}
                             </div>
                         </div>
 
@@ -95,7 +114,7 @@ export default function DatasetList({ datasets, lintIssues, onEdit, onExtract, o
                                 .filter(([, n]) => n > 0)
                                 .map(([kind, n]) => (
                                     <span key={kind} className="text-pumpkin-muted">
-                                        {ENTITY_LABELS[kind]}: {n}
+                                        {KIND_GENITIVE_PLURAL[kind as EntityKind]}: {n}
                                     </span>
                                 ))}
                             {totalEntities === 0 && (

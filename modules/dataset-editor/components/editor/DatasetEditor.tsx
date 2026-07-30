@@ -59,11 +59,22 @@ export default function DatasetEditor({ dataset, issues, ambient, onPersist, onB
 
     return (
         <div className="flex flex-col gap-6">
-            <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold truncate">
-                    Редактирование: {ds.name}
-                </h2>
-                <div className="flex items-center gap-3">
+            <div className="flex items-start justify-between gap-3">
+                <div className="flex flex-col gap-1 min-w-0">
+                    <h2 className="text-lg font-semibold truncate">
+                        Редактирование: {ds.name}
+                    </h2>
+                    {/* id and license are fixed for the lifetime of a dataset — a caption,
+                        not two read-only inputs competing with the fields that do accept input. */}
+                    <div className="flex items-center gap-2 text-xs text-pumpkin-muted flex-wrap">
+                        <span className="font-mono">{ds.id}</span>
+                        <InfoTooltip text="Идентификатор датасета. Используется для проверки конфликтов при объединении нескольких датасетов. Генерируется один раз при создании и не меняется." />
+                        <span className="opacity-40">·</span>
+                        <span>CC-BY-SA-4.0</span>
+                        <InfoTooltip text="Creative Commons «Атрибуция — На тех же условиях» 4.0: контент можно свободно использовать, изменять и распространять, но с указанием авторства и с публикацией производных работ под этой же лицензией. Зафиксирована для всех датасетов и не может быть изменена." />
+                    </div>
+                </div>
+                <div className="flex items-center gap-3 shrink-0">
                     <span className={`text-xs transition-colors duration-300 ${saved ? 'text-green-400/60' : 'text-amber-400'}`}>
                         {saved ? 'сохранено' : 'сохраняется…'}
                     </span>
@@ -78,13 +89,7 @@ export default function DatasetEditor({ dataset, issues, ambient, onPersist, onB
             </div>
 
             {/* Metadata */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                <Field
-                    label="Идентификатор"
-                    value={ds.id}
-                    disabled
-                    hint="Используется для проверки конфликтов при объединении нескольких датасетов. Генерируется один раз при создании и не меняется."
-                />
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <Field label="Название" value={ds.name} onChange={(v) => updateField('name', v)} />
                 <Field label="Автор" value={ds.author} onChange={(v) => updateField('author', v)} />
                 <Field
@@ -95,12 +100,6 @@ export default function DatasetEditor({ dataset, issues, ambient, onPersist, onB
                     hint="Свободная строка версии для вашего собственного учёта изменений (например 1.0, 2024.1) — формат не проверяется."
                 />
                 <EditionToggle value={ds.edition} onChange={(v) => updateField('edition', v)} />
-                <Field
-                    label="Лицензия"
-                    value="CC-BY-SA-4.0"
-                    disabled
-                    hint="Creative Commons «Атрибуция — На тех же условиях» 4.0: контент можно свободно использовать, изменять и распространять, но с указанием авторства и с публикацией производных работ под этой же лицензией. Зафиксирована для всех датасетов и не может быть изменена."
-                />
             </div>
 
             {/* Lint panel */}

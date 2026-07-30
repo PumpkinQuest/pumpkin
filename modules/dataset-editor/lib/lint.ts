@@ -121,66 +121,66 @@ function lintGrant(grant: Grant, path: string, issues: LintIssue[]): void {
 
     const type: string = grant.type;
     if (!isKnownGrantType(type)) {
-        err('unknown-grant-type', `Unknown grant type "${type}" — this grant will never apply. Typo?`);
+        err('unknown-grant-type', `Неизвестный тип гранта «${type}» — он никогда не применится. Опечатка?`);
         return;
     }
     if (!isLiveGrantType(type)) {
-        warn('dead-grant-type', `Grant type "${type}" is declared but not consumed — the grant will be silently ignored.`);
+        warn('dead-grant-type', `Тип гранта «${type}» описан в формате, но лист его не читает — грант будет молча проигнорирован.`);
     }
 
     switch (grant.type) {
         case 'bonus': {
             if (!isKnownBonusTarget(grant.target)) {
-                err('unknown-target', `Unknown target "${grant.target}" — the bonus will not apply. Typo?`);
+                err('unknown-target', `Неизвестная цель «${grant.target}» — бонус не применится. Опечатка?`);
             } else if (!isLiveBonusTarget(grant.target)) {
-                warn('dead-target', `Target "${grant.target}" is declared but not read by the sheet — bonus ignored.`);
+                warn('dead-target', `Цель «${grant.target}» описана в формате, но лист её не читает — бонус ни на что не повлияет.`);
             }
             const hasValue = typeof grant.value === 'number';
             const hasExpr = typeof grant.expr === 'string' && grant.expr !== '';
-            if (!hasValue && !hasExpr) err('bonus-value', 'Bonus has no value and no expr — always yields 0.');
-            if (hasValue && hasExpr) err('bonus-value', 'Bonus has both value and expr — value wins, expr will not compute.');
+            if (!hasValue && !hasExpr) err('bonus-value', 'У бонуса нет ни значения, ни формулы — он всегда даст 0.');
+            if (hasValue && hasExpr) err('bonus-value', 'У бонуса есть и значение, и формула — победит значение, формула не посчитается. Оставьте что-то одно.');
             break;
         }
         case 'skill-fixed':
             grant.skills.forEach((s) => {
-                if (!SKILL_KEY_SET.has(s)) err('unknown-skill', `Unknown skill "${s}" — proficiency will not set.`);
+                if (!SKILL_KEY_SET.has(s)) err('unknown-skill', `Неизвестный навык «${s}» — владение не проставится.`);
             });
             break;
         case 'skill-choice':
             if (grant.options !== 'any') {
                 grant.options.forEach((s) => {
-                    if (!SKILL_KEY_SET.has(s)) err('unknown-skill', `Unknown skill "${s}" in choice options.`);
+                    if (!SKILL_KEY_SET.has(s)) err('unknown-skill', `Неизвестный навык «${s}» среди вариантов выбора.`);
                 });
             }
             break;
         case 'saving-throw':
             grant.stats.forEach((s) => {
-                if (!STAT_KEY_SET.has(s)) err('unknown-stat', `Unknown ability score "${s}" — save proficiency not set.`);
+                if (!STAT_KEY_SET.has(s)) err('unknown-stat', `Неизвестная характеристика «${s}» — владение спасброском не проставится.`);
             });
             break;
         case 'asi-fixed':
             Object.keys(grant.values).forEach((s) => {
-                if (!STAT_KEY_SET.has(s)) err('unknown-stat', `Unknown ability score "${s}" in asi-fixed.`);
+                if (!STAT_KEY_SET.has(s)) err('unknown-stat', `Неизвестная характеристика «${s}» в фиксированном бонусе к характеристикам.`);
             });
             break;
         case 'asi-flexible':
             grant.sets.forEach((set, i) => set.options?.forEach((s) => {
-                if (!STAT_KEY_SET.has(s)) err('unknown-stat', `Unknown ability score "${s}" in sets[${i}].options.`);
+                if (!STAT_KEY_SET.has(s)) err('unknown-stat', `Неизвестная характеристика «${s}» в наборе №${i + 1}.`);
             }));
             break;
         case 'asi-pool':
             grant.options.forEach((s) => {
-                if (!STAT_KEY_SET.has(s)) err('unknown-stat', `Unknown ability score "${s}" in asi-pool.options.`);
+                if (!STAT_KEY_SET.has(s)) err('unknown-stat', `Неизвестная характеристика «${s}» среди вариантов пула.`);
             });
             break;
         case 'armor-prof':
             grant.armors.forEach((k) => {
-                if (!PROF_KEY_SET.has(k)) err('unknown-prof-key', `Unknown armor key "${k}".`);
+                if (!PROF_KEY_SET.has(k)) err('unknown-prof-key', `Неизвестный тип брони «${k}» — владение не проставится.`);
             });
             break;
         case 'weapon-prof':
             grant.weapons.forEach((k) => {
-                if (!PROF_KEY_SET.has(k)) err('unknown-prof-key', `Unknown weapon key "${k}".`);
+                if (!PROF_KEY_SET.has(k)) err('unknown-prof-key', `Неизвестная категория оружия «${k}» — владение не проставится.`);
             });
             break;
         case 'trait': {
@@ -296,7 +296,7 @@ function lintRefs(dataset: Dataset, ambient: Dataset[], issues: LintIssue[]): vo
             if (seen.has(e.id)) {
                 issues.push({
                     severity: 'error', rule: 'duplicate-id', path: `${kind}/${e.id}`,
-                    message: `Duplicate id "${e.id}" — character choices resolve by id, last one wins.`,
+                    message: `Дубль id «${e.id}» — выборы персонажа резолвятся по id, победит последняя сущность с этим id.`,
                 });
             }
             seen.add(e.id);
@@ -318,12 +318,12 @@ function lintRefs(dataset: Dataset, ambient: Dataset[], issues: LintIssue[]): vo
         if (classIds.has(s.classId)) return;
         issues.push({
             severity: 'error', rule: 'dangling-ref', path: `subclasses/${s.id}`,
-            message: `classId "${s.classId}" not found in the dataset or any connected book — subclass will not appear.`,
+            message: `Класс «${s.classId}» не найден ни в этом датасете, ни в подключённых — подкласс не появится в билдере.`,
         });
         if (s.classId && !SLUG_RE.test(s.classId)) {
             issues.push({
                 severity: 'warning', rule: 'non-slug-ref', path: `subclasses/${s.id}`,
-                message: `classId "${s.classId}" is not a lowercase-hyphen slug — it won't match another dataset's class even if the class is added later.`,
+                message: `Идентификатор класса «${s.classId}» не похож на слаг (строчные буквы через дефис) — он не совпадёт с классом из другого датасета, даже если тот появится позже.`,
             });
         }
     });
@@ -333,12 +333,12 @@ function lintRefs(dataset: Dataset, ambient: Dataset[], issues: LintIssue[]): vo
         if (raceIds.has(s.raceId)) return;
         issues.push({
             severity: 'error', rule: 'dangling-ref', path: `subraces/${s.id}`,
-            message: `raceId "${s.raceId}" not found in the dataset or any connected book — subrace will not appear.`,
+            message: `Раса «${s.raceId}» не найдена ни в этом датасете, ни в подключённых — подраса не появится в билдере.`,
         });
         if (s.raceId && !SLUG_RE.test(s.raceId)) {
             issues.push({
                 severity: 'warning', rule: 'non-slug-ref', path: `subraces/${s.id}`,
-                message: `raceId "${s.raceId}" is not a lowercase-hyphen slug — it won't match another dataset's race even if the race is added later.`,
+                message: `Идентификатор расы «${s.raceId}» не похож на слаг (строчные буквы через дефис) — он не совпадёт с расой из другого датасета, даже если та появится позже.`,
             });
         }
     });
@@ -350,7 +350,7 @@ function lintRefs(dataset: Dataset, ambient: Dataset[], issues: LintIssue[]): vo
             if (grant.type === 'feat' && grant.featId !== 'any' && !featIds.has(grant.featId)) {
                 issues.push({
                     severity: 'error', rule: 'dangling-ref', path,
-                    message: `featId "${grant.featId}" not found in dataset.feats or any connected book — feat will not grant.`,
+                    message: `Черта «${grant.featId}» не найдена ни в этом датасете, ни в подключённых — она не выдастся персонажу.`,
                 });
             }
         });

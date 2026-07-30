@@ -1,4 +1,5 @@
 import { lintDataset } from "./lint";
+import { plural } from "./plural";
 import type { LintIssue } from "./lint";
 import type { Dataset } from "./types";
 
@@ -62,11 +63,11 @@ export function importDatasetFromText(text: string, ambient: Dataset[] = []): Im
     try {
         parsed = JSON.parse(text);
     } catch {
-        return { ok: false, reason: 'parse', message: 'File is not valid JSON.' };
+        return { ok: false, reason: 'parse', message: 'Это не корректный JSON.' };
     }
 
     if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
-        return { ok: false, reason: 'shape', message: 'Expected a JSON object (dataset manifest).' };
+        return { ok: false, reason: 'shape', message: 'Ожидался JSON-объект с описанием датасета.' };
     }
 
     const raw = parsed as Record<string, unknown>;
@@ -77,7 +78,7 @@ export function importDatasetFromText(text: string, ambient: Dataset[] = []): Im
         return {
             ok: false,
             reason: 'shape',
-            message: 'Dataset contains no entities (classes/subclasses/races/subraces/backgrounds/feats).',
+            message: 'В датасете нет ни одной сущности: классов, подклассов, рас, подрас, предысторий или черт.',
         };
     }
 
@@ -88,7 +89,7 @@ export function importDatasetFromText(text: string, ambient: Dataset[] = []): Im
         return {
             ok: false,
             reason: 'lint',
-            message: `Dataset rejected: ${errors.length} validation error${errors.length === 1 ? '' : 's'}.`,
+            message: `Датасет отклонён: ${errors.length} ${plural(errors.length, ['ошибка', 'ошибки', 'ошибок'])} проверки.`,
             errors,
         };
     }

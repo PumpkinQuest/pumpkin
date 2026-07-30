@@ -45,7 +45,7 @@ export default function ImportPanel({ existingIds, ambient, onImport, onClose }:
             const dedup = existingIds.has(result.dataset.id);
             if (dedup) {
                 const confirmed = window.confirm(
-                    `Dataset "${result.dataset.id}" already exists. Overwrite?`,
+                    `Датасет «${result.dataset.id}» уже подключён. Перезаписать его?`,
                 );
                 if (!confirmed) return;
             }

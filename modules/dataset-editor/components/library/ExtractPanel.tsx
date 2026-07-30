@@ -3,8 +3,9 @@
 import { useState, useCallback } from "react";
 import { ExternalLink } from "lucide-react";
 import type { Dataset } from "../../lib/types";
-import { extractEntities, countEntities } from "../../lib/extract";
+import { extractEntities } from "../../lib/extract";
 import { slugifyName } from "../../lib/importDataset";
+import { ENTITY_KINDS, KIND_LABELS, type EntityKind } from "../../lib/registry/kinds";
 
 type Props = {
     dataset: Dataset;
@@ -12,19 +13,8 @@ type Props = {
     onCancel: () => void;
 };
 
-type Kind = 'classes' | 'subclasses' | 'races' | 'subraces' | 'backgrounds' | 'feats';
-
-const KIND_LABELS: Record<Kind, string> = {
-    classes: 'Классы',
-    subclasses: 'Подклассы',
-    races: 'Расы',
-    subraces: 'Подрасы',
-    backgrounds: 'Фоны',
-    feats: 'Фиты',
-};
-
 export default function ExtractPanel({ dataset, onSave, onCancel }: Props) {
-    const [selected, setSelected] = useState<Record<Kind, Set<string>>>({
+    const [selected, setSelected] = useState<Record<EntityKind, Set<string>>>({
         classes: new Set(),
         subclasses: new Set(),
         races: new Set(),
@@ -34,7 +24,7 @@ export default function ExtractPanel({ dataset, onSave, onCancel }: Props) {
     });
     const [newName, setNewName] = useState(`${dataset.name} (extract)`);
 
-    const toggle = useCallback((kind: Kind, id: string) => {
+    const toggle = useCallback((kind: EntityKind, id: string) => {
         setSelected((prev) => {
             const next = { ...prev, [kind]: new Set(prev[kind]) };
             if (next[kind].has(id)) next[kind].delete(id);
@@ -59,7 +49,6 @@ export default function ExtractPanel({ dataset, onSave, onCancel }: Props) {
         onSave(result);
     }, [dataset, selected, newName, onSave]);
 
-    const counts = countEntities(dataset);
     const selectedCount = Object.values(selected).reduce((a, s) => a + s.size, 0);
 
     return (
@@ -75,7 +64,7 @@ export default function ExtractPanel({ dataset, onSave, onCancel }: Props) {
 
             {/* Entity selectors by kind */}
             <div className="flex flex-col gap-4">
-                {(Object.keys(KIND_LABELS) as Kind[]).map((kind) => {
+                {ENTITY_KINDS.map((kind) => {
                     const list = dataset[kind];
                     if (!list || list.length === 0) return null;
                     return (
