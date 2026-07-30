@@ -1,16 +1,17 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
-import { Plus, GripVertical, Search } from "lucide-react";
+import { useState, useCallback } from "react";
+import { Plus, GripVertical } from "lucide-react";
 import type { Grant } from "../../lib/types";
-import { generateGrantId } from "../../lib/ids";
-import { GRANT_TYPE_LABELS, GRANT_TYPES, grantTypeLabel } from "../../lib/registry/grantLabels";
+import { grantTypeLabel } from "../../lib/registry/grantLabels";
 import {
     ARMOR_PROF_LABELS, CASTER_PROGRESSION_LABELS, CASTER_TYPE_LABELS, LANGUAGE_LABELS,
     SKILL_LABELS, STAT_LABELS, WEAPON_PROF_LABELS, labelList, labelOf,
 } from "../../lib/registry/labels";
+import { isSenseTraitId } from "../../lib/registry/senses";
 import { pluralWithCount } from "../../lib/plural";
 import GrantEditor from "./GrantEditor";
+import GrantPicker from "./GrantPicker";
 
 type Props = {
     grants: Grant[];
@@ -23,35 +24,24 @@ type Props = {
 
 export default function GrantList({ grants, entityPath, siblingTraits, onChange, compact }: Props) {
     const [editingIndex, setEditingIndex] = useState<number | null>(null);
-    const [addingType, setAddingType] = useState<string | null>(null);
-    const [typeQuery, setTypeQuery] = useState('');
-
-    const visibleTypes = useMemo(() => {
-        const q = typeQuery.trim().toLowerCase();
-        if (!q) return GRANT_TYPES;
-        return GRANT_TYPES.filter(
-            (type) => GRANT_TYPE_LABELS[type].toLowerCase().includes(q) || type.includes(q),
-        );
-    }, [typeQuery]);
+    const [picking, setPicking] = useState(false);
 
     const handleStartAdd = useCallback(() => {
-        setTypeQuery('');
-        setAddingType('_pick');
+        setPicking(true);
     }, []);
 
     const handleCancelAdd = useCallback(() => {
-        setTypeQuery('');
-        setAddingType(null);
+        setPicking(false);
     }, []);
 
-    const handleAdd = useCallback((type: string) => {
-        const newGrant = makeDefaultGrant(type, siblingTraits);
-        const next = [...grants, newGrant];
+    /** A picker entry hands back a list, so this appends it and opens the first new row. */
+    const handleAdd = useCallback((added: Grant[]) => {
+        if (added.length === 0) return;
+        const next = [...grants, ...added];
         onChange(next);
-        setEditingIndex(next.length - 1);
-        setTypeQuery('');
-        setAddingType(null);
-    }, [grants, onChange, siblingTraits]);
+        setEditingIndex(grants.length);
+        setPicking(false);
+    }, [grants, onChange]);
 
     const handleUpdate = useCallback((index: number, grant: Grant) => {
         const next = [...grants];
@@ -130,40 +120,12 @@ export default function GrantList({ grants, entityPath, siblingTraits, onChange,
             })}
 
             {/* Add grant picker */}
-            {addingType ? (
-                <div className="flex flex-col gap-1.5 p-3 rounded-lg border border-pumpkin-orange/40 bg-pumpkin-orange/5">
-                    <span className="text-xs text-pumpkin-muted">Тип гранта:</span>
-                    <div className="relative">
-                        <Search size={12} className="absolute left-2 top-1/2 -translate-y-1/2 text-pumpkin-muted/60" />
-                        <input
-                            value={typeQuery}
-                            onChange={(e) => setTypeQuery(e.target.value)}
-                            placeholder="Поиск по типам…"
-                            autoFocus
-                            className="w-full rounded-md border border-pumpkin-border bg-pumpkin-bg pl-7 pr-2 py-1.5 text-xs text-pumpkin-text placeholder:text-pumpkin-muted/50 focus:outline-none focus:border-pumpkin-orange/50"
-                        />
-                    </div>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-1 max-h-40 overflow-y-auto">
-                        {visibleTypes.map((type) => (
-                            <button
-                                key={type}
-                                onClick={() => handleAdd(type)}
-                                className="text-left px-2 py-1 rounded text-xs text-pumpkin-muted hover:bg-pumpkin-orange/10 hover:text-pumpkin-text transition-colors"
-                            >
-                                {GRANT_TYPE_LABELS[type]}
-                            </button>
-                        ))}
-                    </div>
-                    {visibleTypes.length === 0 && (
-                        <span className="text-xs text-pumpkin-muted/70">Ничего не найдено</span>
-                    )}
-                    <button
-                        onClick={handleCancelAdd}
-                        className="text-xs text-pumpkin-muted hover:text-pumpkin-text self-start"
-                    >
-                        Отмена
-                    </button>
-                </div>
+            {picking ? (
+                <GrantPicker
+                    siblingTraits={siblingTraits}
+                    onPick={handleAdd}
+                    onCancel={handleCancelAdd}
+                />
             ) : (
                 <button
                     onClick={handleStartAdd}
@@ -175,47 +137,6 @@ export default function GrantList({ grants, entityPath, siblingTraits, onChange,
             )}
         </div>
     );
-}
-
-function makeDefaultGrant(type: string, siblingTraits: Array<{ id: string; name: string }>): Grant {
-    switch (type) {
-        case 'resource': {
-            // Prefill from the entity's traits per dataset-editor-guide.md §5.8
-            // point 4: a blank "which trait does this belong to" is a silent
-            // wrong-placement default, not a neutral one. Exactly one sibling
-            // trait → assume it's the one being paired; otherwise leave the id
-            // blank and let the author pick explicitly in the form.
-            if (siblingTraits.length === 1) {
-                return { type: 'resource', id: siblingTraits[0].id, name: siblingTraits[0].name };
-            }
-            return { type: 'resource', id: '', name: '' };
-        }
-        case 'asi-fixed': return { type: 'asi-fixed', values: {} };
-        case 'asi-flexible': return { type: 'asi-flexible', sets: [] };
-        case 'asi-pool': return { type: 'asi-pool', total: 3, max: 2, options: [] };
-        case 'bonus': return { type: 'bonus', target: '', value: 0, label: '' };
-        case 'feat': return { type: 'feat', featId: '' };
-        case 'skill-fixed': return { type: 'skill-fixed', skills: [] };
-        case 'skill-choice': return { type: 'skill-choice', count: 1, options: 'any' };
-        case 'expertise-choice': return { type: 'expertise-choice', count: 1 };
-        case 'tool-fixed': return { type: 'tool-fixed', tools: [] };
-        case 'tool-choice': return { type: 'tool-choice', count: 1, options: [] };
-        case 'language-fixed': return { type: 'language-fixed', languages: [] };
-        case 'language-choice': return { type: 'language-choice', count: 1 };
-        case 'speed': return { type: 'speed', value: 30 };
-        case 'saving-throw': return { type: 'saving-throw', stats: [] };
-        case 'trait': return { type: 'trait', id: generateGrantId(), name: '', description: '' };
-        case 'armor-prof': return { type: 'armor-prof', armors: [] };
-        case 'weapon-prof': return { type: 'weapon-prof', weapons: [] };
-        case 'spellcasting': return { type: 'spellcasting', ability: 'int', casterType: 'list' };
-        case 'hp-die': return { type: 'hp-die', die: 8 };
-        case 'equipment-fixed': return { type: 'equipment-fixed', items: [] };
-        case 'equipment-choice': return { type: 'equipment-choice', options: [] };
-        case 'gold': return { type: 'gold', amount: 0 };
-        case 'gold-dice': return { type: 'gold-dice', dice: '5d4' };
-        case 'pick-one': return { type: 'pick-one', options: [] };
-        default: return { type: 'bonus', target: '', value: 0, label: '' } as Grant;
-    }
 }
 
 const OPTION_FORMS: [string, string, string] = ['вариант', 'варианта', 'вариантов'];
@@ -265,8 +186,16 @@ function grantSummary(grant: Grant): string {
             return `${grant.value} футов`;
         case 'saving-throw':
             return labelList(STAT_LABELS, grant.stats) || '—';
-        case 'trait':
-            return grant.name || grant.id || '—';
+        case 'trait': {
+            const name = grant.name || grant.id || '—';
+            // Senses are the one trait whose `params` the sheet actually reads
+            // (§5.5), so the distance belongs on the row — otherwise «Тёмное
+            // зрение» looks the same whether it reaches 60 or 120 feet.
+            if (isSenseTraitId(grant.id) && typeof grant.params?.range === 'number') {
+                return `${name}, ${grant.params.range} фт`;
+            }
+            return name;
+        }
         case 'armor-prof':
             return labelList(ARMOR_PROF_LABELS, grant.armors) || '—';
         case 'weapon-prof':

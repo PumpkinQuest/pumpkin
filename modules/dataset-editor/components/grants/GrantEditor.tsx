@@ -511,7 +511,7 @@ function TraitForm({ data, set }: { data: Record<string, unknown>; set: (k: stri
                 <code className="text-[11px] text-pumpkin-muted/80 leading-relaxed">
                     [f:1d10+[LVL]|Второе дыхание]&nbsp;&nbsp;— кость с лейблом<br />
                     [f:8+[CON]+[PROF]|Сл]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— DC с лейблом «Сл»<br />
-                    [f:(ceil([LVL]/2))d6]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— кость без лейбла
+                    [f:(ceil([LVL]/2))d6]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— кость без лейбла
                 </code>
             </div>
         </div>
