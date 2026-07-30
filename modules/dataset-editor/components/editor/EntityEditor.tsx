@@ -215,7 +215,7 @@ export default function EntityEditor({ kind, entity, dataset, ambient, errorPath
                             onChange={(v) => update('category', v || undefined)}
                         />
                         <Field
-                            label="Пререквизит"
+                            label="Требования"
                             value={(data.prerequisite as string) ?? ''}
                             onChange={(v) => update('prerequisite', v || undefined)}
                             placeholder="например: Ловкость 13+"
