@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Trash2 } from "lucide-react";
 import type { Grant, StatKey, ArmorProfKey, WeaponProfKey, CasterProgression, FeatCategory } from "../../lib/types";
 import { listBonusTargetsByGroup, STAT_KEYS, SKILL_KEYS, ARMOR_PROF_KEYS, WEAPON_PROF_KEYS, COMMON_LANGUAGES } from "../../lib/registry/bonusTargets";
@@ -156,6 +156,43 @@ function MultiSelect({ label, options, selected, onChange }: {
                     );
                 })}
             </div>
+        </F>
+    );
+}
+
+function CommaListField({ label, value, onChange, placeholder }: {
+    label: string;
+    value: string[];
+    onChange: (v: string[]) => void;
+    placeholder?: string;
+}) {
+    const [text, setText] = useState(value.join(', '));
+    const [focused, setFocused] = useState(false);
+
+    // Re-sync from the prop when it changes externally (e.g. a sibling row
+    // shifting index after deletion) — but only while the user isn't typing,
+    // so we don't clobber in-progress edits.
+    useEffect(() => {
+        if (!focused) setText(value.join(', '));
+    }, [value, focused]);
+
+    const commit = () => {
+        setFocused(false);
+        const next = text.split(',').map((s) => s.trim()).filter(Boolean);
+        onChange(next);
+        setText(next.join(', '));
+    };
+
+    return (
+        <F label={label}>
+            <input
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                onFocus={() => setFocused(true)}
+                onBlur={commit}
+                className={inputClass}
+                placeholder={placeholder}
+            />
         </F>
     );
 }
@@ -347,14 +384,12 @@ function ToolFixedForm({ data, set }: { data: Record<string, unknown>; set: (k: 
     const tools = (data.tools as string[]) ?? [];
     return (
         <div className="flex flex-col gap-2">
-            <F label="Инструменты (через запятую)">
-                <input
-                    value={tools.join(', ')}
-                    onChange={(e) => set('tools', e.target.value.split(',').map((s) => s.trim()).filter(Boolean))}
-                    className={inputClass}
-                    placeholder="thieves' tools, herbalism kit"
-                />
-            </F>
+            <CommaListField
+                label="Инструменты (через запятую)"
+                value={tools}
+                onChange={(v) => set('tools', v)}
+                placeholder="thieves' tools, herbalism kit"
+            />
         </div>
     );
 }
@@ -364,14 +399,12 @@ function ToolChoiceForm({ data, set }: { data: Record<string, unknown>; set: (k:
     return (
         <div className="flex flex-col gap-2">
             <NF label="Количество" value={data.count as number} onChange={(v) => set('count', v)} />
-            <F label="Варианты (через запятую)">
-                <input
-                    value={options.join(', ')}
-                    onChange={(e) => set('options', e.target.value.split(',').map((s) => s.trim()).filter(Boolean))}
-                    className={inputClass}
-                    placeholder="thieves' tools, herbalism kit"
-                />
-            </F>
+            <CommaListField
+                label="Варианты (через запятую)"
+                value={options}
+                onChange={(v) => set('options', v)}
+                placeholder="thieves' tools, herbalism kit"
+            />
         </div>
     );
 }
@@ -483,14 +516,12 @@ function WeaponProfForm({ data, set }: { data: Record<string, unknown>; set: (k:
     return (
         <div className="flex flex-col gap-2">
             <MultiSelect label="Категории оружия" options={[...WEAPON_PROF_KEYS]} selected={weapons} onChange={(v) => set('weapons', v)} />
-            <F label="Особое оружие (через запятую)">
-                <input
-                    value={specific.join(', ')}
-                    onChange={(e) => set('specific', e.target.value.split(',').map((s) => s.trim()).filter(Boolean))}
-                    className={inputClass}
-                    placeholder="longsword, shortbow"
-                />
-            </F>
+            <CommaListField
+                label="Особое оружие (через запятую)"
+                value={specific}
+                onChange={(v) => set('specific', v)}
+                placeholder="longsword, shortbow"
+            />
         </div>
     );
 }
@@ -618,14 +649,12 @@ function ResourceForm({ data, set, siblingTraits }: {
 function EquipmentFixedForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
     const items = (data.items as string[]) ?? [];
     return (
-        <F label="Предметы (через запятую)">
-            <input
-                value={items.join(', ')}
-                onChange={(e) => set('items', e.target.value.split(',').map((s) => s.trim()).filter(Boolean))}
-                className={inputClass}
-                placeholder="longsword, shield, explorer's pack"
-            />
-        </F>
+        <CommaListField
+            label="Предметы (через запятую)"
+            value={items}
+            onChange={(v) => set('items', v)}
+            placeholder="longsword, shield, explorer's pack"
+        />
     );
 }
 
@@ -642,16 +671,18 @@ function EquipmentChoiceForm({ data, set }: { data: Record<string, unknown>; set
             {options.map((opt, i) => (
                 <div key={i} className="flex items-center gap-2">
                     <span className="text-[11px] text-pumpkin-muted w-5">{i + 1}.</span>
-                    <input
-                        value={opt.join(', ')}
-                        onChange={(e) => {
-                            const next = [...options];
-                            next[i] = e.target.value.split(',').map((s) => s.trim()).filter(Boolean);
-                            set('options', next);
-                        }}
-                        className={inputClass}
-                        placeholder="longsword, shield"
-                    />
+                    <div className="flex-1">
+                        <CommaListField
+                            label=""
+                            value={opt}
+                            onChange={(v) => {
+                                const next = [...options];
+                                next[i] = v;
+                                set('options', next);
+                            }}
+                            placeholder="longsword, shield"
+                        />
+                    </div>
                     <button onClick={() => set('options', options.filter((_, j) => j !== i))} className="text-xs text-red-400">
                         ×
                     </button>
