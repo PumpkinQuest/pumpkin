@@ -21,6 +21,10 @@ export default function DatasetEditor({ dataset, issues, ambient, onPersist, onB
     const [ds, setDs] = useState<Dataset>(structuredClone(dataset));
     const [lint, setLint] = useState<LintIssue[]>(issues);
     const [saved, setSaved] = useState(true);
+    // While an entity is open the screen belongs to it alone: the dataset's own
+    // header, metadata and the way out to the library all fold away, so the
+    // author isn't editing a race next to four fields about the book it lives in.
+    const [editingEntity, setEditingEntity] = useState(false);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const mountedRef = useRef(false);
     const onPersistRef = useRef(onPersist);
@@ -59,48 +63,54 @@ export default function DatasetEditor({ dataset, issues, ambient, onPersist, onB
 
     return (
         <div className="flex flex-col gap-6">
-            <div className="flex items-start justify-between gap-3">
-                <div className="flex flex-col gap-1 min-w-0">
-                    <h2 className="text-lg font-semibold truncate">
-                        Редактирование: {ds.name}
-                    </h2>
-                    {/* id and license are fixed for the lifetime of a dataset — a caption,
-                        not two read-only inputs competing with the fields that do accept input. */}
-                    <div className="flex items-center gap-2 text-xs text-pumpkin-muted flex-wrap">
-                        <span className="font-mono">{ds.id}</span>
-                        <InfoTooltip text="Идентификатор датасета. Используется для проверки конфликтов при объединении нескольких датасетов. Генерируется один раз при создании и не меняется." />
-                        <span className="opacity-40">·</span>
-                        <span>CC-BY-SA-4.0</span>
-                        <InfoTooltip text="Creative Commons «Атрибуция — На тех же условиях» 4.0: контент можно свободно использовать, изменять и распространять, но с указанием авторства и с публикацией производных работ под этой же лицензией. Зафиксирована для всех датасетов и не может быть изменена." />
+            {/* Header + metadata — one slot, so hiding it doesn't shift EntityList
+                to another position in the children array and remount it. */}
+            {!editingEntity && (
+                <>
+                    <div className="flex items-start justify-between gap-3">
+                        <div className="flex flex-col gap-1 min-w-0">
+                            <h2 className="text-lg font-semibold truncate">
+                                Редактирование: {ds.name}
+                            </h2>
+                            {/* id and license are fixed for the lifetime of a dataset — a caption,
+                                not two read-only inputs competing with the fields that do accept input. */}
+                            <div className="flex items-center gap-2 text-xs text-pumpkin-muted flex-wrap">
+                                <span className="font-mono">{ds.id}</span>
+                                <InfoTooltip text="Идентификатор датасета. Используется для проверки конфликтов при объединении нескольких датасетов. Генерируется один раз при создании и не меняется." />
+                                <span className="opacity-40">·</span>
+                                <span>CC-BY-SA-4.0</span>
+                                <InfoTooltip text="Creative Commons «Атрибуция — На тех же условиях» 4.0: контент можно свободно использовать, изменять и распространять, но с указанием авторства и с публикацией производных работ под этой же лицензией. Зафиксирована для всех датасетов и не может быть изменена." />
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-3 shrink-0">
+                            <span className={`text-xs transition-colors duration-300 ${saved ? 'text-green-400/60' : 'text-amber-400'}`}>
+                                {saved ? 'сохранено' : 'сохраняется…'}
+                            </span>
+                            <button
+                                onClick={onBack}
+                                className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-pumpkin-border text-pumpkin-muted hover:text-pumpkin-text text-sm transition-colors"
+                            >
+                                <ArrowLeft size={14} />
+                                Назад
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div className="flex items-center gap-3 shrink-0">
-                    <span className={`text-xs transition-colors duration-300 ${saved ? 'text-green-400/60' : 'text-amber-400'}`}>
-                        {saved ? 'сохранено' : 'сохраняется…'}
-                    </span>
-                    <button
-                        onClick={onBack}
-                        className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-pumpkin-border text-pumpkin-muted hover:text-pumpkin-text text-sm transition-colors"
-                    >
-                        <ArrowLeft size={14} />
-                        Назад
-                    </button>
-                </div>
-            </div>
 
-            {/* Metadata */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <Field label="Название" value={ds.name} onChange={(v) => updateField('name', v)} />
-                <Field label="Автор" value={ds.author} onChange={(v) => updateField('author', v)} />
-                <Field
-                    label="Версия"
-                    value={ds.version ?? ''}
-                    onChange={(v) => updateField('version', v || undefined)}
-                    placeholder="1.0"
-                    hint="Свободная строка версии для вашего собственного учёта изменений (например 1.0, 2024.1) — формат не проверяется."
-                />
-                <EditionToggle value={ds.edition} onChange={(v) => updateField('edition', v)} />
-            </div>
+                    {/* Metadata */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        <Field label="Название" value={ds.name} onChange={(v) => updateField('name', v)} />
+                        <Field label="Автор" value={ds.author} onChange={(v) => updateField('author', v)} />
+                        <Field
+                            label="Версия"
+                            value={ds.version ?? ''}
+                            onChange={(v) => updateField('version', v || undefined)}
+                            placeholder="1.0"
+                            hint="Свободная строка версии для вашего собственного учёта изменений (например 1.0, 2024.1) — формат не проверяется."
+                        />
+                        <EditionToggle value={ds.edition} onChange={(v) => updateField('edition', v)} />
+                    </div>
+                </>
+            )}
 
             {/* Lint panel */}
             {hasIssues && (
@@ -116,6 +126,7 @@ export default function DatasetEditor({ dataset, issues, ambient, onPersist, onB
                 issues={lint}
                 onChange={setDs}
                 onLint={relintFromChild}
+                onEditingChange={setEditingEntity}
             />
         </div>
     );

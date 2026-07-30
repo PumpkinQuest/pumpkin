@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Trash2 } from "lucide-react";
 import type { Grant } from "../../lib/types";
 import { listBonusTargetsByGroup, STAT_KEYS, SKILL_KEYS, ARMOR_PROF_KEYS, WEAPON_PROF_KEYS, COMMON_LANGUAGES } from "../../lib/registry/bonusTargets";
@@ -18,37 +18,28 @@ type Props = {
     entityPath: string;
     /** Every `trait` grant across the whole entity — offered by ResourceForm's "pairs with" picker. */
     siblingTraits: Array<{ id: string; name: string }>;
-    onSave: (grant: Grant) => void;
-    onCancel: () => void;
+    onChange: (grant: Grant) => void;
     onDelete: () => void;
+    onClose: () => void;
 };
 
-export default function GrantEditor({ grant, siblingTraits, onSave, onCancel, onDelete }: Props) {
-    const [data, setData] = useState<Record<string, unknown>>(
-        structuredClone(grant) as unknown as Record<string, unknown>,
-    );
-
+export default function GrantEditor({ grant, siblingTraits, onChange, onDelete, onClose }: Props) {
     const set = useCallback((key: string, value: unknown) => {
-        setData((prev) => ({ ...prev, [key]: value }));
-    }, []);
-
-    const handleSave = () => onSave(data as unknown as Grant);
+        onChange({ ...(grant as unknown as Record<string, unknown>), [key]: value } as unknown as Grant);
+    }, [grant, onChange]);
 
     return (
         <div className="rounded-lg border border-pumpkin-orange/40 bg-pumpkin-orange/5 overflow-hidden">
             <div className="flex items-center justify-between px-3 py-2 border-b border-pumpkin-orange/20">
                 <span className="text-xs font-medium text-pumpkin-orange">
-                    {grantTypeLabel(data.type as string)}
+                    {grantTypeLabel(grant.type)}
                 </span>
                 <div className="flex items-center gap-1">
                     <button
-                        onClick={handleSave}
+                        onClick={onClose}
                         className="px-2 py-0.5 rounded text-xs bg-pumpkin-orange text-pumpkin-bg font-medium"
                     >
-                        OK
-                    </button>
-                    <button onClick={onCancel} className="px-2 py-0.5 rounded text-xs text-pumpkin-muted hover:text-pumpkin-text">
-                        Отмена
+                        Готово
                     </button>
                     <button onClick={onDelete} className="p-0.5 text-pumpkin-muted hover:text-red-400">
                         <Trash2 size={12} />
@@ -57,7 +48,7 @@ export default function GrantEditor({ grant, siblingTraits, onSave, onCancel, on
             </div>
 
             <div className="p-3 flex flex-col gap-2">
-                <GrantForm data={data} set={set} siblingTraits={siblingTraits} />
+                <GrantForm data={grant as unknown as Record<string, unknown>} set={set} siblingTraits={siblingTraits} />
             </div>
         </div>
     );

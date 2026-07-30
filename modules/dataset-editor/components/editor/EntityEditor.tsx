@@ -20,20 +20,19 @@ type Props = {
     ambient: Dataset[];
     errorPaths: Set<string>;
     warnPaths: Set<string>;
-    onSave: (entity: Record<string, unknown>) => void;
+    onChange: (entity: Record<string, unknown>) => void;
     onDelete: () => void;
-    onCancel: () => void;
+    onClose: () => void;
 };
 
 const LEVELED_KINDS: EntityKind[] = ['classes', 'subclasses', 'races', 'subraces'];
 
-export default function EntityEditor({ kind, entity, dataset, ambient, errorPaths, warnPaths, onSave, onDelete, onCancel }: Props) {
-    const [data, setData] = useState<Record<string, unknown>>(structuredClone(entity));
+export default function EntityEditor({ kind, entity: data, dataset, ambient, errorPaths, warnPaths, onChange, onDelete, onClose }: Props) {
     const [deleteConfirm, setDeleteConfirm] = useState(false);
 
     const update = useCallback((key: string, value: unknown) => {
-        setData((prev) => ({ ...prev, [key]: value }));
-    }, []);
+        onChange({ ...data, [key]: value });
+    }, [data, onChange]);
 
     const entityPath = `${kind}/${(data as { id: string }).id}`;
 
@@ -79,7 +78,7 @@ export default function EntityEditor({ kind, entity, dataset, ambient, errorPath
         <div className="flex flex-col gap-5">
             {/* Header */}
             <div className="flex items-center gap-3">
-                <button onClick={onCancel} className="p-1 text-pumpkin-muted hover:text-pumpkin-text">
+                <button onClick={onClose} className="p-1 text-pumpkin-muted hover:text-pumpkin-text">
                     <ArrowLeft size={18} />
                 </button>
                 <span className="text-sm font-medium text-pumpkin-text">
@@ -285,19 +284,13 @@ export default function EntityEditor({ kind, entity, dataset, ambient, errorPath
                 </div>
             )}
 
-            {/* Save */}
+            {/* Changes save as you type — see EntityList/EntityList onEntityChange. */}
             <div className="flex items-center gap-2">
                 <button
-                    onClick={() => onSave(data)}
+                    onClick={onClose}
                     className="px-4 py-2 rounded-lg bg-pumpkin-orange hover:bg-pumpkin-orange-dim text-pumpkin-bg font-semibold text-sm transition-colors"
                 >
-                    Сохранить
-                </button>
-                <button
-                    onClick={onCancel}
-                    className="px-3 py-2 rounded-lg border border-pumpkin-border text-pumpkin-muted hover:text-pumpkin-text text-sm transition-colors"
-                >
-                    Отмена
+                    Готово
                 </button>
             </div>
         </div>

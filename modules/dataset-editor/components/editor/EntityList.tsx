@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo, type KeyboardEvent } from "react";
+import { useState, useCallback, useEffect, useMemo, type KeyboardEvent } from "react";
 import { Plus, ChevronRight, Search } from "lucide-react";
 import type { Dataset } from "../../lib/types";
 import type { LintIssue } from "../../lib/lint";
@@ -25,17 +25,18 @@ type Props = {
     issues: LintIssue[];
     onChange: (ds: Dataset) => void;
     onLint: (ds: Dataset) => void;
+    /** Fires when an entity opens or closes — the parent folds its own chrome away while one is open. */
+    onEditingChange: (editing: boolean) => void;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type EntityRecord = Record<string, any>;
 
-export default function EntityList({ dataset, ambient, errorPaths, warnPaths, issues, onChange, onLint }: Props) {
+export default function EntityList({ dataset, ambient, errorPaths, warnPaths, issues, onChange, onLint, onEditingChange }: Props) {
     // Races first, classes last — see registry/kinds.ts and guide §7: classes are
     // the least expressible kind and the worst possible landing tab.
     const [activeTab, setActiveTab] = useState<EntityKind>('races');
     const [editingId, setEditingId] = useState<string | null>(null);
-    const [pendingName, setPendingName] = useState<string | null>(null);
     const [addingName, setAddingName] = useState(false);
     const [draftName, setDraftName] = useState('');
     const [draftEnglish, setDraftEnglish] = useState('');
@@ -59,6 +60,9 @@ export default function EntityList({ dataset, ambient, errorPaths, warnPaths, is
     const list = (dataset[activeTab] ?? []) as EntityRecord[];
     const editing = editingId ? list.find((e) => e.id === editingId) : null;
 
+    const isEditing = Boolean(editing);
+    useEffect(() => { onEditingChange(isEditing); }, [isEditing, onEditingChange]);
+
     const visibleList = useMemo(() => {
         const q = query.trim().toLowerCase();
         if (!q) return list;
@@ -72,16 +76,13 @@ export default function EntityList({ dataset, ambient, errorPaths, warnPaths, is
         onLint({ ...dataset, [kind]: entities } as Dataset);
     }, [dataset, onChange, onLint]);
 
-    const handleSaveEntity = useCallback((entity: EntityRecord) => {
+    /** Fires on every field edit inside EntityEditor — changes save as they happen, no explicit commit step. */
+    const handleEntityChange = useCallback((entity: EntityRecord) => {
         const entities = [...list];
         const idx = entities.findIndex((e) => e.id === entity.id);
-        if (idx >= 0) {
-            entities[idx] = entity;
-        } else {
-            entities.push(entity);
-        }
+        if (idx >= 0) entities[idx] = entity;
+        else entities.push(entity);
         updateEntities(activeTab, entities);
-        setEditingId(null);
     }, [list, activeTab, updateEntities]);
 
     const handleDeleteEntity = useCallback((entityId: string) => {
@@ -109,10 +110,10 @@ export default function EntityList({ dataset, ambient, errorPaths, warnPaths, is
         if (!name) return;
         const source = draftEnglish.trim() || name;
         const id = generateEntityIdFromName(source, list.map((e) => e.id as string));
-        setPendingName(name);
+        updateEntities(activeTab, [...list, makeEmptyEntity(activeTab, id, name)]);
         setEditingId(id);
         setAddingName(false);
-    }, [draftName, draftEnglish, list]);
+    }, [draftName, draftEnglish, list, activeTab, updateEntities]);
 
     const handleCancelAdd = useCallback(() => setAddingName(false), []);
 
@@ -121,22 +122,18 @@ export default function EntityList({ dataset, ambient, errorPaths, warnPaths, is
         if (e.key === 'Escape') handleCancelAdd();
     }, [handleConfirmAdd, handleCancelAdd]);
 
-    if (editing || editingId) {
-        const entity = editing ?? makeEmptyEntity(activeTab, editingId ?? '', pendingName ?? '');
+    if (isEditing && editing) {
         return (
             <EntityEditor
                 kind={activeTab}
-                entity={entity}
+                entity={editing}
                 dataset={dataset}
                 ambient={ambient}
                 errorPaths={errorPaths}
                 warnPaths={warnPaths}
-                onSave={handleSaveEntity}
-                onDelete={() => {
-                    if (editing) handleDeleteEntity((editing as EntityRecord).id as string);
-                    setEditingId(null);
-                }}
-                onCancel={() => setEditingId(null)}
+                onChange={handleEntityChange}
+                onDelete={() => handleDeleteEntity(editing.id as string)}
+                onClose={() => setEditingId(null)}
             />
         );
     }

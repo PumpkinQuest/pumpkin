@@ -43,12 +43,13 @@ export default function GrantList({ grants, entityPath, siblingTraits, onChange,
         setPicking(false);
     }, [grants, onChange]);
 
-    const handleUpdate = useCallback((index: number, grant: Grant) => {
+    const handleGrantChange = useCallback((index: number, grant: Grant) => {
         const next = [...grants];
         next[index] = grant;
         onChange(next);
-        setEditingIndex(null);
     }, [grants, onChange]);
+
+    const handleCloseEdit = useCallback(() => setEditingIndex(null), []);
 
     const handleDelete = useCallback((index: number) => {
         const next = grants.filter((_, i) => i !== index);
@@ -74,8 +75,8 @@ export default function GrantList({ grants, entityPath, siblingTraits, onChange,
                             grant={grant}
                             entityPath={`${entityPath}/grants[${i}]`}
                             siblingTraits={siblingTraits}
-                            onSave={(g) => handleUpdate(i, g)}
-                            onCancel={() => setEditingIndex(null)}
+                            onChange={(g) => handleGrantChange(i, g)}
+                            onClose={handleCloseEdit}
                             onDelete={() => handleDelete(i)}
                         />
                     );
