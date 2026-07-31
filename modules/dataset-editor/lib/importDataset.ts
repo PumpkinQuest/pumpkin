@@ -1,4 +1,5 @@
 import { lintDataset } from "./lint";
+import { migrateLegacyGrantFields } from "./migrateGrants";
 import { plural } from "./plural";
 import type { LintIssue } from "./lint";
 import type { Dataset } from "./types";
@@ -82,7 +83,8 @@ export function importDatasetFromText(text: string, ambient: Dataset[] = []): Im
         };
     }
 
-    const { dataset, generatedId } = coerceDataset(raw);
+    const { dataset: coerced, generatedId } = coerceDataset(raw);
+    const dataset = migrateLegacyGrantFields(coerced);
     const issues = lintDataset(dataset, ambient);
     const errors = issues.filter((i) => i.severity === 'error');
     if (errors.length > 0) {

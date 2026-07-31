@@ -31,8 +31,7 @@ export default function DatasetEditorPage() {
                 </p>
                 <p className="text-pumpkin-muted text-base max-w-xl leading-relaxed">
                     Данные хранятся в вашем браузере.{" "}
-                    <a href="/lss/dataset-editor/guide/" className="text-pumpkin-orange hover:underline">Гайд по редактору</a>{" "}
-                    объясняет самое непонятное за 5 минут.
+                    У редактора есть короткий <a href="/lss/dataset-editor/guide/" className="text-pumpkin-orange hover:underline">гайд</a>.
                 </p>
             </div>
 

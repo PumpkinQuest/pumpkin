@@ -158,7 +158,7 @@ function grantSummary(grant: Grant): string {
         case 'asi-pool':
             return `${grant.total} очк. всего, максимум ${grant.max} на характеристику`;
         case 'bonus': {
-            const amount = grant.value !== undefined ? signed(grant.value) : (grant.expr || '?');
+            const amount = grant.expr || '?';
             return `${grant.target} ${amount}${grant.label ? ` — ${grant.label}` : ''}`;
         }
         case 'feat':
@@ -217,8 +217,8 @@ function grantSummary(grant: Grant): string {
         case 'size':
             return labelOf(SIZE_LABELS, grant.value);
         case 'resource': {
-            const max = grant.max ?? grant.maxExpr;
-            return `${grant.name || grant.id || '—'}${max !== undefined ? ` (макс. ${max})` : ''}`;
+            const max = grant.maxExpr;
+            return `${grant.name || grant.id || '—'}${max ? ` (макс. ${max})` : ''}`;
         }
         case 'equipment-fixed':
             return grant.items.join(', ') || '—';

@@ -73,7 +73,7 @@ export function makeDefaultGrant(type: string, siblingTraits: Array<{ id: string
         case 'asi-fixed': return { type: 'asi-fixed', values: {} };
         case 'asi-flexible': return { type: 'asi-flexible', sets: [] };
         case 'asi-pool': return { type: 'asi-pool', total: 3, max: 2, options: [] };
-        case 'bonus': return { type: 'bonus', target: '', value: 0, label: '' };
+        case 'bonus': return { type: 'bonus', target: '', expr: '', label: '' };
         case 'feat': return { type: 'feat', featId: '' };
         case 'skill-fixed': return { type: 'skill-fixed', skills: [] };
         case 'skill-choice': return { type: 'skill-choice', count: 1, options: 'any' };

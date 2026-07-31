@@ -12,7 +12,7 @@ export const CONTRIBUTORS = ["Ilia"];
 export const DATASET_FILES: Record<Edition, DatasetFile[]> = {
   "2014": [
     { slug: "SRD", name: "SRD 2014", description: "Это пример, не добавляйте его в лист LSS. Там эти данные уже включены по умолчанию.", path: "/data/datasets/2014/SRD.json" },
-    { slug: "PHB", name: "Книга игрока 2014", description: "Player's Handbook 2014", path: "/data/datasets/2014/PHB.json" },
+    // { slug: "PHB", name: "Книга игрока 2014", description: "Player's Handbook 2014", path: "/data/datasets/2014/PHB.json" },
   ],
   "2024": [],
 };

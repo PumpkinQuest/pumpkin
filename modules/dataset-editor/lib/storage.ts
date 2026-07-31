@@ -1,3 +1,4 @@
+import { migrateLegacyGrantFields } from "./migrateGrants";
 import type { Dataset } from "./types";
 
 const STORAGE_KEY = "pumpkin_datasets";
@@ -7,7 +8,8 @@ export function loadDatasets(): Dataset[] {
     try {
         const raw = window.localStorage.getItem(STORAGE_KEY);
         if (!raw) return [];
-        return JSON.parse(raw) as Dataset[];
+        const parsed = JSON.parse(raw) as Dataset[];
+        return parsed.map(migrateLegacyGrantFields);
     } catch {
         return [];
     }

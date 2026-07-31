@@ -136,10 +136,8 @@ function lintGrant(grant: Grant, path: string, issues: LintIssue[]): void {
             } else if (!isLiveBonusTarget(grant.target)) {
                 warn('dead-target', `Цель «${grant.target}» описана в формате, но лист её не читает — бонус ни на что не повлияет.`);
             }
-            const hasValue = typeof grant.value === 'number';
             const hasExpr = typeof grant.expr === 'string' && grant.expr !== '';
-            if (!hasValue && !hasExpr) err('bonus-value', 'У бонуса нет ни значения, ни формулы — он всегда даст 0.');
-            if (hasValue && hasExpr) err('bonus-value', 'У бонуса есть и значение, и формула — победит значение, формула не посчитается. Оставьте что-то одно.');
+            if (!hasExpr) err('bonus-value', 'У бонуса нет значения — он всегда даст 0.');
             break;
         }
         case 'skill-fixed':
@@ -206,13 +204,9 @@ function lintGrant(grant: Grant, path: string, issues: LintIssue[]): void {
             break;
         }
         case 'resource': {
-            const hasMax = typeof grant.max === 'number';
             const maxExpr = typeof grant.maxExpr === 'string' && grant.maxExpr !== '' ? grant.maxExpr : null;
-            if (!hasMax && !maxExpr) {
-                err('resource-max', 'Ресурс без max и maxExpr — счётчик будет без максимума: отдых не восстановит его, «+» не остановится.');
-            }
-            if (hasMax && maxExpr) {
-                err('resource-max', 'У ресурса и max, и maxExpr — победит maxExpr, число не применится.');
+            if (!maxExpr) {
+                err('resource-max', 'Ресурс без maxExpr — счётчик будет без максимума: отдых не восстановит его, «+» не остановится.');
             }
             if (grant.shortRestRegain && !grant.isShortRest) {
                 warn('resource-max', 'shortRestRegain без isShortRest — короткий отдых этот ресурс не восстанавливает, поле не сработает.');

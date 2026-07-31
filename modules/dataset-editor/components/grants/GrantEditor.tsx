@@ -291,10 +291,7 @@ function BonusForm({ data, set }: { data: Record<string, unknown>; set: (k: stri
                 </select>
             </F>
             <TF label="Метка" value={(data.label as string) ?? ''} onChange={(v) => set('label', v)} />
-            <div className="grid grid-cols-2 gap-2">
-                <NF label="Значение" value={data.value as number | undefined} onChange={(v) => { set('value', v); if (v !== undefined) set('expr', undefined); }} />
-                <TF label="Выражение" value={(data.expr as string) ?? ''} onChange={(v) => { set('expr', v || undefined); if (v) set('value', undefined); }} placeholder="[LVL]" />
-            </div>
+            <TF label="Значение или формула" value={(data.expr as string) ?? ''} onChange={(v) => set('expr', v || undefined)} placeholder="2 или [LVL]" />
             <F label="Режим">
                 <select value={(data.mode as string) ?? 'add'} onChange={(e) => set('mode', e.target.value || undefined)} className={inputClass}>
                     <option value="add">добавить</option>
@@ -612,10 +609,7 @@ function ResourceForm({ data, set, siblingTraits }: {
                 </span>
             )}
 
-            <div className="grid grid-cols-2 gap-2">
-                <NF label="Макс" value={data.max as number | undefined} onChange={(v) => set('max', v)} />
-                <TF label="Макс (выражение)" value={(data.maxExpr as string) ?? ''} onChange={(v) => set('maxExpr', v || undefined)} placeholder="[LVL]" />
-            </div>
+            <TF label="Макс (число или формула)" value={(data.maxExpr as string) ?? ''} onChange={(v) => set('maxExpr', v || undefined)} placeholder="3 или [LVL]" />
 
             <div className="flex items-center gap-4">
                 <label className="flex items-center gap-1.5 text-xs text-pumpkin-muted">

@@ -40,7 +40,7 @@ export type BonusGrant = {
     type: 'bonus';
     target: BonusTarget;
     mode?: BonusMode;
-    value?: number;
+    /** Value or formula, e.g. `"2"` or `"[LVL]"` — a plain number is a valid formula. */
     expr?: string;
     label: Label;
 };
@@ -147,7 +147,7 @@ export type ResourceGrant = {
      */
     pairId?: string | null;
     name: Label;
-    max?: number;
+    /** Value or formula, e.g. `"3"` or `"[LVL]"` — a plain number is a valid formula. */
     maxExpr?: string;
     isShortRest?: boolean;
     isLongRest?: boolean;
