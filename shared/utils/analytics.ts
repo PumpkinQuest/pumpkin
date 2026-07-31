@@ -4,6 +4,7 @@ type AnalyticsEvents = {
   npc_lock: undefined;
   npc_reroll_field: { field: string };
   spell_download: { book: string; edition: string };
+  dataset_download: { book: string; edition: string };
   dimension_door_download: { version: string };
   dimension_door_store_click: undefined;
 };

@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Plus, FolderOpen, FilePlus } from "lucide-react";
+import { Plus, FolderOpen, FilePlus, ArrowRight } from "lucide-react";
+import Link from "next/link";
 import type { Dataset } from "@/modules/dataset-editor/lib/types";
 import { loadDatasets, saveDataset, removeDataset, getDataset } from "@/modules/dataset-editor/lib/storage";
 import type { ImportResult } from "@/modules/dataset-editor/lib/importDataset";
+import { importDatasetFromText } from "@/modules/dataset-editor/lib/importDataset";
 import type { LintIssue } from "@/modules/dataset-editor/lib/lint";
 import { lintDataset } from "@/modules/dataset-editor/lib/lint";
 import { generateDatasetId } from "@/modules/dataset-editor/lib/ids";
@@ -30,6 +32,16 @@ export default function DatasetManager() {
     useEffect(() => {
         setDatasets(loadDatasets());
         setMounted(true);
+
+        const pending = sessionStorage.getItem("pendingDatasetImport");
+        if (pending) {
+            sessionStorage.removeItem("pendingDatasetImport");
+            const result = importDatasetFromText(pending, []);
+            if (result.ok) {
+                const next = saveDataset(result.dataset);
+                setDatasets(next);
+            }
+        }
     }, []);
 
     const ambientFor = useCallback((dataset: Dataset) => datasets.filter((d) => d.id !== dataset.id), [datasets]);
@@ -138,6 +150,16 @@ export default function DatasetManager() {
 
     return (
         <div className="flex flex-col gap-6">
+            <Link
+                href="/lss/datasets/"
+                className="flex items-center justify-between gap-3 p-4 rounded-xl border border-pumpkin-orange/30 bg-pumpkin-orange/5 hover:bg-pumpkin-orange/10 hover:border-pumpkin-orange/50 transition-all duration-200"
+            >
+                <span className="text-sm font-medium text-pumpkin-text">
+                    Готовые датасеты можно скачать здесь
+                </span>
+                <ArrowRight size={16} className="text-pumpkin-orange shrink-0" />
+            </Link>
+
             {/* Actions bar */}
             <div className="flex items-center gap-3 flex-wrap">
                 <button

@@ -10,6 +10,7 @@ const pages = [
   { path: "/lss/spells", changefreq: "monthly", priority: 0.7 },
   { path: "/lss/dimension-door", changefreq: "monthly", priority: 0.7 },
   { path: "/lss/dataset-editor", changefreq: "monthly", priority: 0.7 },
+  { path: "/lss/dataset-editor/guide", changefreq: "yearly", priority: 0.4 },
   { path: "/privacy/dimension-door", changefreq: "yearly", priority: 0.3 },
 ];
 

@@ -30,7 +30,9 @@ export default function DatasetEditorPage() {
                     конструктора персонажей.
                 </p>
                 <p className="text-pumpkin-muted text-base max-w-xl leading-relaxed">
-                    Данные хранятся в вашем браузере.
+                    Данные хранятся в вашем браузере.{" "}
+                    <a href="/lss/dataset-editor/guide/" className="text-pumpkin-orange hover:underline">Гайд по редактору</a>{" "}
+                    объясняет самое непонятное за 5 минут.
                 </p>
             </div>
 

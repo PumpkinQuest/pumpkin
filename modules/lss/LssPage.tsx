@@ -30,12 +30,12 @@ const sections = [
     title: "Редактор датасетов",
     description: "Создание и правка датасетов — коллекций классов, рас, предысторий и черт.",
   },
-//   {
-//     href: "/lss/datasets",
-//     icon: FileJson,
-//     title: "Датасеты JSON",
-//     description: "Скоро",
-//   },
+  {
+    href: "/lss/datasets",
+    icon: FileJson,
+    title: "Датасеты JSON",
+    description: "Файлы датасетов для LSS",
+  },
 ];
 
 export default function LssPage() {
