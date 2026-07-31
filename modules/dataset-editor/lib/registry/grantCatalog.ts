@@ -25,7 +25,7 @@ export const GRANT_GROUPS: Array<{ id: GrantGroupId; label: string }> = [
     { id: 'stats', label: 'Характеристики' },
     { id: 'proficiency', label: 'Владения' },
     { id: 'abilities', label: 'Способности' },
-    { id: 'combat', label: 'Боевое' },
+    { id: 'combat', label: 'Прочие бонусы' },
     { id: 'class', label: 'Класс' },
     { id: 'start', label: 'Старт персонажа' },
     { id: 'fork', label: 'Развилки' },
@@ -89,6 +89,7 @@ export function makeDefaultGrant(type: string, siblingTraits: Array<{ id: string
         case 'weapon-prof': return { type: 'weapon-prof', weapons: [] };
         case 'spellcasting': return { type: 'spellcasting', ability: 'int', casterType: 'list' };
         case 'hp-die': return { type: 'hp-die', die: 8 };
+        case 'size': return { type: 'size', value: 'medium' };
         case 'equipment-fixed': return { type: 'equipment-fixed', items: [] };
         case 'equipment-choice': return { type: 'equipment-choice', options: [] };
         case 'gold': return { type: 'gold', amount: 0 };
@@ -171,10 +172,13 @@ const PLAIN_ENTRIES = [
         'Счётчик с делениями — «Ярость 3/3», восстановление на коротком или длинном отдыхе.',
         ['ресурс', 'заряды', 'ярость', 'использования', 'раз в день', 'очки', 'pool']),
 
-    // Боевое
+    // Прочие бонусы
     plain('speed', 'combat', 'Скорость',
         'Задаст базовую скорость ходьбы в футах.',
         ['ходьба', 'футы', '30', 'быстрый', 'speed', 'передвижение']),
+    plain('size', 'combat', 'Размер',
+        'Задаст размерную категорию персонажа — маленький, средний или большой. Для развилки размера положите два таких гранта в разные варианты pick-one.',
+        ['размер', 'маленький', 'средний', 'большой', 'size', 'категория размера']),
     plain('bonus', 'combat', 'Бонус к чему-либо',
         'Прибавит число к готовому показателю листа — КД, инициативе, хитам, урону.',
         ['кд', 'ac', 'класс доспеха', 'инициатива', 'урон', 'хиты', 'модификатор', 'прибавка']),

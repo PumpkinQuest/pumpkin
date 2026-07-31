@@ -6,7 +6,7 @@ import type { Grant } from "../../lib/types";
 import { grantTypeLabel } from "../../lib/registry/grantLabels";
 import {
     ARMOR_PROF_LABELS, CASTER_PROGRESSION_LABELS, CASTER_TYPE_LABELS, LANGUAGE_LABELS,
-    SKILL_LABELS, STAT_LABELS, WEAPON_PROF_LABELS, labelList, labelOf,
+    SIZE_LABELS, SKILL_LABELS, STAT_LABELS, WEAPON_PROF_LABELS, labelList, labelOf,
 } from "../../lib/registry/labels";
 import { isSenseTraitId } from "../../lib/registry/senses";
 import { pluralWithCount } from "../../lib/plural";
@@ -214,6 +214,8 @@ function grantSummary(grant: Grant): string {
         }
         case 'hp-die':
             return `d${grant.die}`;
+        case 'size':
+            return labelOf(SIZE_LABELS, grant.value);
         case 'resource': {
             const max = grant.max ?? grant.maxExpr;
             return `${grant.name || grant.id || '—'}${max !== undefined ? ` (макс. ${max})` : ''}`;

@@ -39,6 +39,7 @@ export const GRANT_TYPE_SPECS: Record<Grant['type'], GrantTypeSpec> = {
 
     // Base writes
     'hp-die': { channel: 'base', live: true },
+    'size':   { channel: 'base', live: true, note: 'Categorical, write-once — not the numeric channel.' },
 
     // Resource pools
     'resource': { channel: 'resource', live: true },

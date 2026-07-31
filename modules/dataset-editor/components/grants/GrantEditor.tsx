@@ -8,7 +8,7 @@ import { SENSE_TRAIT_IDS, SENSE_LABELS, isSenseTraitId, type SenseTraitId } from
 import { grantTypeLabel } from "../../lib/registry/grantLabels";
 import {
     ARMOR_PROF_LABELS, CASTER_PROGRESSIONS, CASTER_PROGRESSION_LABELS, CASTER_TYPE_LABELS,
-    FEAT_CATEGORIES, FEAT_CATEGORY_LABELS, LANGUAGE_LABELS, SKILL_LABELS, STAT_LABELS,
+    FEAT_CATEGORIES, FEAT_CATEGORY_LABELS, LANGUAGE_LABELS, SIZE_LABELS, SKILL_LABELS, STAT_LABELS,
     WEAPON_PROF_LABELS, labelOf,
 } from "../../lib/registry/labels";
 import GrantList from "./GrantList";
@@ -82,6 +82,7 @@ function GrantForm({ data, set, siblingTraits }: {
         case 'weapon-prof': return <WeaponProfForm data={data} set={set} />;
         case 'spellcasting': return <SpellcastingForm data={data} set={set} />;
         case 'hp-die': return <HpDieForm data={data} set={set} />;
+        case 'size': return <SizeForm data={data} set={set} />;
         case 'resource': return <ResourceForm data={data} set={set} siblingTraits={siblingTraits} />;
         case 'equipment-fixed': return <EquipmentFixedForm data={data} set={set} />;
         case 'equipment-choice': return <EquipmentChoiceForm data={data} set={set} />;
@@ -561,6 +562,18 @@ function SpellcastingForm({ data, set }: { data: Record<string, unknown>; set: (
 
 function HpDieForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
     return <NF label="Кость хитов" value={data.die as number} onChange={(v) => set('die', v)} />;
+}
+
+function SizeForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    return (
+        <F label="Размер">
+            <select value={(data.value as string) ?? 'medium'} onChange={(e) => set('value', e.target.value)} className={inputClass}>
+                {Object.entries(SIZE_LABELS).map(([value, label]) => (
+                    <option key={value} value={value}>{label}</option>
+                ))}
+            </select>
+        </F>
+    );
 }
 
 function ResourceForm({ data, set, siblingTraits }: {

@@ -130,6 +130,11 @@ export type HpDieGrant = {
     die: number;
 };
 
+export type SizeGrant = {
+    type: 'size';
+    value: 'small' | 'medium' | 'large';
+};
+
 export type ResourceGrant = {
     type: 'resource';
     id: string;
@@ -217,6 +222,7 @@ export type Grant =
     | WeaponProfGrant
     | SpellcastingGrant
     | HpDieGrant
+    | SizeGrant
     | ResourceGrant
     | EquipmentFixedGrant
     | EquipmentChoiceGrant

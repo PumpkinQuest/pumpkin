@@ -1,7 +1,7 @@
 import type { Grant } from "../types";
 
 // ---------------------------------------------------------------------------
-// Russian captions for the 25 grant types. Lives here rather than in GrantList
+// Russian captions for the 26 grant types. Lives here rather than in GrantList
 // so the grant editor's header can name the type it is editing (it used to
 // print the raw `asi-flexible`-style key) without importing its own parent.
 // ---------------------------------------------------------------------------
@@ -26,6 +26,7 @@ export const GRANT_TYPE_LABELS: Record<Grant['type'], string> = {
     'weapon-prof': 'Владение оружием',
     'spellcasting': 'Заклинания',
     'hp-die': 'Кость хитов',
+    'size': 'Размер',
     'resource': 'Ресурс',
     'equipment-fixed': 'Снаряжение (фикс)',
     'equipment-choice': 'Снаряжение (выбор)',

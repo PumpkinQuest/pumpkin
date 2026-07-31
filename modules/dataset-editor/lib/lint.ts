@@ -20,6 +20,7 @@ export type LintRule =
     | 'unknown-skill'
     | 'unknown-stat'
     | 'unknown-prof-key'
+    | 'unknown-size-value'
     | 'duplicate-id'
     | 'dangling-ref'
     | 'non-slug-ref'
@@ -194,6 +195,13 @@ function lintGrant(grant: Grant, path: string, issues: LintIssue[]): void {
                     `Черта «${grant.id}» несёт params и при этом имеет описание — `
                     + 'текстовый канал такие черты отфильтровывает, описание на лист не попадёт. '
                     + 'Разделите на два гранта: числовой (с params) и текстовый (без).');
+            }
+            break;
+        }
+        case 'size': {
+            const value: string = grant.value;
+            if (value !== 'small' && value !== 'medium' && value !== 'large') {
+                err('unknown-size-value', `Неизвестный размер «${value}» — категория не проставится.`);
             }
             break;
         }
