@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { Plus, GripVertical } from "lucide-react";
+import { Plus } from "lucide-react";
 import type { Grant } from "../../lib/types";
 import { grantTypeLabel } from "../../lib/registry/grantLabels";
 import {
@@ -19,10 +19,9 @@ type Props = {
     /** Every `trait` grant across the whole entity — offered as the "pairs with" target when adding/editing a `resource` grant. */
     siblingTraits: Array<{ id: string; name: string }>;
     onChange: (grants: Grant[]) => void;
-    compact?: boolean;
 };
 
-export default function GrantList({ grants, entityPath, siblingTraits, onChange, compact }: Props) {
+export default function GrantList({ grants, entityPath, siblingTraits, onChange }: Props) {
     const [editingIndex, setEditingIndex] = useState<number | null>(null);
     const [picking, setPicking] = useState(false);
 
@@ -91,31 +90,28 @@ export default function GrantList({ grants, entityPath, siblingTraits, onChange,
                         className="flex items-center gap-2 p-2.5 rounded-lg border border-pumpkin-border bg-pumpkin-surface hover:border-pumpkin-orange/20 transition-colors group cursor-pointer"
                         onClick={() => setEditingIndex(i)}
                     >
-                        <GripVertical size={14} className="text-pumpkin-muted opacity-0 group-hover:opacity-100 shrink-0" />
                         <span className="text-xs font-mono px-1.5 py-0.5 rounded bg-pumpkin-orange/10 text-pumpkin-orange shrink-0">
                             {typeLabel}
                         </span>
                         <span className="text-xs text-pumpkin-muted truncate flex-1">
                             {summary}
                         </span>
-                        {!compact && (
-                            <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 shrink-0">
-                                <button
-                                    onClick={(e) => { e.stopPropagation(); handleMove(i, -1); }}
-                                    disabled={i === 0}
-                                    className="p-0.5 text-pumpkin-muted hover:text-pumpkin-text disabled:opacity-30 text-xs"
-                                >
-                                    ↑
-                                </button>
-                                <button
-                                    onClick={(e) => { e.stopPropagation(); handleMove(i, 1); }}
-                                    disabled={i === grants.length - 1}
-                                    className="p-0.5 text-pumpkin-muted hover:text-pumpkin-text disabled:opacity-30 text-xs"
-                                >
-                                    ↓
-                                </button>
-                            </div>
-                        )}
+                        <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 shrink-0">
+                            <button
+                                onClick={(e) => { e.stopPropagation(); handleMove(i, -1); }}
+                                disabled={i === 0}
+                                className="p-0.5 text-pumpkin-muted hover:text-pumpkin-text disabled:opacity-30 text-xs"
+                            >
+                                ↑
+                            </button>
+                            <button
+                                onClick={(e) => { e.stopPropagation(); handleMove(i, 1); }}
+                                disabled={i === grants.length - 1}
+                                className="p-0.5 text-pumpkin-muted hover:text-pumpkin-text disabled:opacity-30 text-xs"
+                            >
+                                ↓
+                            </button>
+                        </div>
                     </div>
                 );
             })}

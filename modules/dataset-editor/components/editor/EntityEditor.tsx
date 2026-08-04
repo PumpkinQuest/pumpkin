@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useMemo, type KeyboardEvent } from "react";
-import { ArrowLeft, Trash2, AlertTriangle } from "lucide-react";
+import { ArrowLeft, Trash2, AlertTriangle, Lock, Unlock } from "lucide-react";
 import type { Dataset, Grant, LeveledGrants } from "../../lib/types";
 import { STANDARD_CLASSES, STANDARD_RACES } from "../../lib/standardClasses";
 import { STAT_KEYS } from "../../lib/registry/bonusTargets";
@@ -118,8 +118,9 @@ export default function EntityEditor({ kind, entity: data, dataset, ambient, err
                 <Field
                     label="Идентификатор"
                     value={(data.id as string) ?? ''}
+                    onChange={(v) => update('id', v)}
                     disabled
-                    hint="Генерируется автоматически при создании и не меняется — на него ссылаются другие сущности датасета (classId у подкласса, raceId у подрасы, featId у гранта feat)."
+                    hint="Генерируется автоматически при создании и обычно не меняется — на него ссылаются другие сущности датасета (classId у подкласса, raceId у подрасы, featId у гранта feat). Разблокируйте замочком, только если готовы поправить и эти ссылки."
                 />
                 <Field label="Название" value={(data.label as string) ?? ''} onChange={(v) => update('label', v)} />
 
@@ -238,7 +239,7 @@ export default function EntityEditor({ kind, entity: data, dataset, ambient, err
                     label="Теги"
                     tags={(infoRecord.tags as string[] | undefined) ?? []}
                     onChange={(tags) => updateInfo({ tags })}
-                    hint="Свободные метки для фильтрации и отображения в билдере (например: «мили», «магия», «скрытность»). Не влияют на механику."
+                    hint="Свободные метки для фильтрации и отображения в билдере (например: «ближний бой», «магия», «скрытность»). Не влияют на механику."
                 />
             )}
 
@@ -305,23 +306,40 @@ function Field({ label, value, onChange, disabled, placeholder, hint }: {
     placeholder?: string;
     hint?: string;
 }) {
+    const [unlocked, setUnlocked] = useState(false);
+    const locked = !!disabled && !unlocked;
+
     return (
         <div className="flex flex-col gap-1">
             <label className="text-xs text-pumpkin-muted flex items-center gap-1">
                 {label}
                 {hint && <InfoTooltip text={hint} />}
             </label>
-            <input
-                value={value}
-                onChange={(e) => onChange?.(e.target.value)}
-                disabled={disabled}
-                placeholder={placeholder}
-                className={`w-full rounded-lg border px-3 py-2 text-sm transition-colors ${
-                    disabled
-                        ? 'border-pumpkin-border/50 bg-pumpkin-border/20 text-pumpkin-muted cursor-not-allowed'
-                        : 'border-pumpkin-border bg-pumpkin-bg text-pumpkin-text placeholder:text-pumpkin-muted/50 focus:outline-none focus:border-pumpkin-orange/50'
-                }`}
-            />
+            <div className="relative">
+                <input
+                    value={value}
+                    onChange={(e) => onChange?.(e.target.value)}
+                    disabled={locked}
+                    placeholder={placeholder}
+                    className={`w-full rounded-lg border px-3 py-2 text-sm transition-colors ${
+                        locked
+                            ? 'border-pumpkin-border/50 bg-pumpkin-border/20 text-pumpkin-muted cursor-not-allowed pr-9'
+                            : disabled
+                                ? 'border-pumpkin-orange/40 bg-pumpkin-bg text-pumpkin-text pr-9 focus:outline-none focus:border-pumpkin-orange/50'
+                                : 'border-pumpkin-border bg-pumpkin-bg text-pumpkin-text placeholder:text-pumpkin-muted/50 focus:outline-none focus:border-pumpkin-orange/50'
+                    }`}
+                />
+                {disabled && (
+                    <button
+                        type="button"
+                        onClick={() => setUnlocked((v) => !v)}
+                        title={locked ? 'Разблокировать редактирование' : 'Снова заблокировать'}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 text-pumpkin-muted hover:text-pumpkin-orange transition-colors"
+                    >
+                        {locked ? <Lock size={14} /> : <Unlock size={14} />}
+                    </button>
+                )}
+            </div>
         </div>
     );
 }
@@ -711,7 +729,6 @@ function LeveledGrantsEditor({ leveledGrants, entityPath, siblingTraits, onChang
                             entityPath={`${entityPath}@${lg.level}`}
                             siblingTraits={siblingTraits}
                             onChange={(g) => updateLevel(lg.level, g)}
-                            compact
                         />
                     </div>
                 </div>

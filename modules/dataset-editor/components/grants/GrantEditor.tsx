@@ -24,9 +24,13 @@ type Props = {
 };
 
 export default function GrantEditor({ grant, siblingTraits, onChange, onDelete, onClose }: Props) {
-    const set = useCallback((key: string, value: unknown) => {
-        onChange({ ...(grant as unknown as Record<string, unknown>), [key]: value } as unknown as Grant);
+    const setMany = useCallback((patch: Record<string, unknown>) => {
+        onChange({ ...(grant as unknown as Record<string, unknown>), ...patch } as unknown as Grant);
     }, [grant, onChange]);
+
+    const set = useCallback((key: string, value: unknown) => {
+        setMany({ [key]: value });
+    }, [setMany]);
 
     return (
         <div className="rounded-lg border border-pumpkin-orange/40 bg-pumpkin-orange/5 overflow-hidden">
@@ -48,7 +52,7 @@ export default function GrantEditor({ grant, siblingTraits, onChange, onDelete, 
             </div>
 
             <div className="p-3 flex flex-col gap-2">
-                <GrantForm data={grant as unknown as Record<string, unknown>} set={set} siblingTraits={siblingTraits} />
+                <GrantForm data={grant as unknown as Record<string, unknown>} set={set} setMany={setMany} siblingTraits={siblingTraits} />
             </div>
         </div>
     );
@@ -56,9 +60,10 @@ export default function GrantEditor({ grant, siblingTraits, onChange, onDelete, 
 
 // ── Grant form dispatcher ─────────────────────────────────────────────────
 
-function GrantForm({ data, set, siblingTraits }: {
+function GrantForm({ data, set, setMany, siblingTraits }: {
     data: Record<string, unknown>;
     set: (k: string, v: unknown) => void;
+    setMany: (patch: Record<string, unknown>) => void;
     siblingTraits: Array<{ id: string; name: string }>;
 }) {
     const type = data.type as string;
@@ -83,7 +88,7 @@ function GrantForm({ data, set, siblingTraits }: {
         case 'spellcasting': return <SpellcastingForm data={data} set={set} />;
         case 'hp-die': return <HpDieForm data={data} set={set} />;
         case 'size': return <SizeForm data={data} set={set} />;
-        case 'resource': return <ResourceForm data={data} set={set} siblingTraits={siblingTraits} />;
+        case 'resource': return <ResourceForm data={data} set={set} setMany={setMany} siblingTraits={siblingTraits} />;
         case 'equipment-fixed': return <EquipmentFixedForm data={data} set={set} />;
         case 'equipment-choice': return <EquipmentChoiceForm data={data} set={set} />;
         case 'gold': return <GoldForm data={data} set={set} />;
@@ -573,9 +578,10 @@ function SizeForm({ data, set }: { data: Record<string, unknown>; set: (k: strin
     );
 }
 
-function ResourceForm({ data, set, siblingTraits }: {
+function ResourceForm({ data, set, setMany, siblingTraits }: {
     data: Record<string, unknown>;
     set: (k: string, v: unknown) => void;
+    setMany: (patch: Record<string, unknown>) => void;
     siblingTraits: Array<{ id: string; name: string }>;
 }) {
     return (
@@ -618,8 +624,9 @@ function ResourceForm({ data, set, siblingTraits }: {
                         checked={!!data.isShortRest}
                         onChange={(e) => {
                             const checked = e.target.checked;
-                            set('isShortRest', checked || undefined);
-                            if (!checked) set('shortRestRegain', undefined);
+                            setMany(checked
+                                ? { isShortRest: true }
+                                : { isShortRest: undefined, shortRestRegain: undefined });
                         }}
                         className="accent-pumpkin-orange size-3"
                     />
@@ -765,7 +772,6 @@ function PickOneForm({ data, set, siblingTraits }: {
                                 next[i] = { ...next[i], grants: g };
                                 set('options', next);
                             }}
-                            compact
                         />
                     </div>
                 </div>

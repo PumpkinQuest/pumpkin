@@ -27,7 +27,8 @@ export type LintRule =
     | 'numeric-trait-prose'
     | 'resource-max'
     | 'resource-pair'
-    | 'resource-no-slot';
+    | 'resource-no-slot'
+    | 'equipment-fork-named';
 
 export type LintIssue = {
     severity: LintSeverity;
@@ -223,6 +224,33 @@ function lintGrant(grant: Grant, path: string, issues: LintIssue[]): void {
                 warn('resource-no-slot',
                     'Ресурс внутрь pick-one не заглядывают — счётчик не появится, какой бы вариант игрок ни выбрал. '
                     + 'Выдайте его сущностью напрямую.');
+            }
+            break;
+        }
+        case 'pick-one': {
+            // The equipment-or-gold fork is discovered by the sheet ONLY as an
+            // UNNAMED pick-one (findEquipmentPick checks `!grant.id` before it
+            // even looks at the options) — a named one (id set, meant for
+            // sub-choices like Draconic Ancestry) is instead resolved by the
+            // generic pick-one UI, which renders option labels but has no idea
+            // what to do with equipment-choice/equipment-fixed/gold/gold-dice
+            // inside. Give this fork an id and starting equipment/gold silently
+            // never reaches the sheet, however it's picked.
+            if (grant.id) {
+                const looksLikeEquipmentFork = grant.options.some((opt) =>
+                    opt.grants.some((g) =>
+                        g.type === 'equipment-choice'
+                        || g.type === 'equipment-fixed'
+                        || g.type === 'gold'
+                        || g.type === 'gold-dice'));
+                if (looksLikeEquipmentFork) {
+                    warn('equipment-fork-named',
+                        'У развилки «снаряжение или золото» задан id верхнего уровня — сборщик ищет '
+                        + 'эту развилку только среди БЕЗЫМЯННЫХ pick-one (без id) и молча пропустит эту: '
+                        + 'ни снаряжение, ни золото не попадут к персонажу, каким бы вариантом игрок ни '
+                        + 'воспользовался. Уберите id (и label, если не нужен) у самого гранта — id у '
+                        + 'options[] можно оставить, они не мешают.');
+                }
             }
             break;
         }
