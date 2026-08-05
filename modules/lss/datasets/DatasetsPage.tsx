@@ -62,22 +62,22 @@ export default function DatasetsPage() {
                 <div className="flex items-center justify-between">
                   <FileJson size={20} className="text-pumpkin-orange opacity-80 group-hover:opacity-100 transition-opacity" />
                   <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => handleOpenInEditor(file)}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium border border-pumpkin-border text-pumpkin-muted hover:text-pumpkin-text hover:border-pumpkin-orange/50 transition-all duration-200"
+                      >
+                      <ExternalLink size={14} />
+                      Редактировать
+                    </button>
                     <a
                       href={file.path}
                       download
                       onClick={() => track("dataset_download", { book: file.slug, edition })}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium border border-pumpkin-border text-pumpkin-muted hover:text-pumpkin-text hover:border-pumpkin-orange/50 transition-all duration-200"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium bg-pumpkin-orange hover:bg-pumpkin-orange-dim text-pumpkin-bg transition-colors duration-200"
                     >
                       <Download size={14} />
                       Скачать
                     </a>
-                    <button
-                      onClick={() => handleOpenInEditor(file)}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium bg-pumpkin-orange hover:bg-pumpkin-orange-dim text-pumpkin-bg transition-colors duration-200"
-                    >
-                      <ExternalLink size={14} />
-                      Добавить в редактор
-                    </button>
                   </div>
                 </div>
                 <div className="flex flex-col gap-1">
