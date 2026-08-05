@@ -76,7 +76,7 @@ export default function DatasetsPage() {
                       className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium bg-pumpkin-orange hover:bg-pumpkin-orange-dim text-pumpkin-bg transition-colors duration-200"
                     >
                       <ExternalLink size={14} />
-                      Открыть в редакторе
+                      Добавить в редактор
                     </button>
                   </div>
                 </div>
