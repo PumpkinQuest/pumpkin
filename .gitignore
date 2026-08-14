@@ -30,6 +30,9 @@ yarn-error.log*
 # local env files
 .env*.local
 
+# local mirror of book-content JSON hosted on mana.pumpkin.quest (see scripts/sync-datasets.sh)
+/server-data/
+
 # vercel
 .vercel
 

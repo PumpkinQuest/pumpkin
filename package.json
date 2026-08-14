@@ -6,7 +6,8 @@
     "dev": "next dev --port 3030",
     "build": "next build && node scripts/generate-sitemap.mjs",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "sync:datasets": "bash scripts/sync-datasets.sh"
   },
   "dependencies": {
     "lucide-react": "^1.17.0",
