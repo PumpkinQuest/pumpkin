@@ -7,6 +7,7 @@ import Breadcrumbs from "@/shared/components/Breadcrumbs";
 import DatasetCredits from "./DatasetCredits";
 import { DATASET_FILES, type Edition } from "./constants";
 import { track } from "@/shared/utils/analytics";
+import { downloadFile } from "@/shared/utils/downloadFile";
 
 const EDITIONS: Edition[] = ["2014", "2024"];
 
@@ -20,6 +21,11 @@ export default function DatasetsPage() {
     const text = await res.text();
     sessionStorage.setItem("pendingDatasetImport", text);
     router.push("/lss/dataset-editor");
+  };
+
+  const handleDownload = (file: (typeof files)[number]) => {
+    track("dataset_download", { book: file.slug, edition });
+    void downloadFile(file.path);
   };
 
   return (
@@ -69,15 +75,13 @@ export default function DatasetsPage() {
                       <ExternalLink size={14} />
                       Редактировать
                     </button>
-                    <a
-                      href={file.path}
-                      download
-                      onClick={() => track("dataset_download", { book: file.slug, edition })}
+                    <button
+                      onClick={() => handleDownload(file)}
                       className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium bg-pumpkin-orange hover:bg-pumpkin-orange-dim text-pumpkin-bg transition-colors duration-200"
                     >
                       <Download size={14} />
                       Скачать
-                    </a>
+                    </button>
                   </div>
                 </div>
                 <div className="flex flex-col gap-1">

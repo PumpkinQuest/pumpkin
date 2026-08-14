@@ -6,12 +6,18 @@ import Breadcrumbs from "@/shared/components/Breadcrumbs";
 import SpellCredits from "./SpellCredits";
 import { SPELL_FILES, type Edition } from "./constants";
 import { track } from "@/shared/utils/analytics";
+import { downloadFile } from "@/shared/utils/downloadFile";
 
 const EDITIONS: Edition[] = ["2014", "2024"];
 
 export default function SpellsPage() {
   const [edition, setEdition] = useState<Edition>("2024");
   const files = SPELL_FILES[edition];
+
+  const handleDownload = (file: (typeof files)[number]) => {
+    track("spell_download", { book: file.slug, edition });
+    void downloadFile(file.path);
+  };
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-24 flex flex-col gap-10">
@@ -48,11 +54,9 @@ export default function SpellsPage() {
       <ul className="flex flex-col gap-3">
         {files.map((file) => (
           <li key={file.slug}>
-            <a
-              href={file.path}
-              download
-              onClick={() => track("spell_download", { book: file.slug, edition })}
-              className="group flex flex-col gap-3 p-6 rounded-xl border border-pumpkin-border bg-pumpkin-surface hover:border-pumpkin-orange/40 hover:bg-pumpkin-surface/80 transition-all duration-200"
+            <button
+              onClick={() => handleDownload(file)}
+              className="group w-full flex flex-col gap-3 p-6 rounded-xl border border-pumpkin-border bg-pumpkin-surface hover:border-pumpkin-orange/40 hover:bg-pumpkin-surface/80 transition-all duration-200 text-left"
             >
               <div className="flex items-center justify-between">
                 <FileJson size={20} className="text-pumpkin-orange opacity-80 group-hover:opacity-100 transition-opacity" />
@@ -62,7 +66,7 @@ export default function SpellsPage() {
                 <span className="font-semibold text-pumpkin-text">{file.name}</span>
                 <span className="text-sm text-pumpkin-muted">{file.description}</span>
               </div>
-            </a>
+            </button>
           </li>
         ))}
       </ul>
