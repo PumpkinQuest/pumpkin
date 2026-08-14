@@ -81,16 +81,18 @@ export function mergeDatasets(datasets: Dataset[]): MergedDatasets {
 }
 
 /** Convert a merged result back into a single Dataset manifest. */
-export function mergedToDataset(merged: MergedDatasets, id: string, name: string): Dataset {
+export function mergedToDataset(merged: MergedDatasets, id: string, meta: MergedMetadata): Dataset {
     const stripSource = <T>(items: WithSource<T>[]): T[] =>
         items.map(({ source: _s, qualifiedId: _q, ...rest }) => rest as unknown as T);
 
     return {
         id,
-        name,
+        name: meta.name,
         system: 'dnd_5',
         edition: '',
-        author: '',
+        author: meta.author,
+        license: meta.license,
+        version: meta.version,
         classes: stripSource(merged.classes),
         subclasses: stripSource(merged.subclasses),
         races: stripSource(merged.races),
@@ -98,4 +100,68 @@ export function mergedToDataset(merged: MergedDatasets, id: string, name: string
         backgrounds: stripSource(merged.backgrounds),
         feats: stripSource(merged.feats),
     };
+}
+
+// ── Metadata merge ───────────────────────────────────────────────────────
+// name/author/version/license aren't per-entity, so they can't be resolved by
+// the id-collision logic above — they're derived from the whole set of
+// source datasets, in the same order (last = bottom = most authoritative)
+// used elsewhere in this file for entity conflicts.
+
+export type MergedMetadata = {
+    name: string;
+    author: string;
+    version: string;
+    license: string;
+};
+
+/** Case-insensitive dedup that keeps first-seen casing, joined with ", ". */
+function dedupJoin(items: string[]): string {
+    const seen = new Set<string>();
+    const unique: string[] = [];
+    for (const raw of items) {
+        const trimmed = raw.trim();
+        if (!trimmed) continue;
+        const key = trimmed.toLowerCase();
+        if (seen.has(key)) continue;
+        seen.add(key);
+        unique.push(trimmed);
+    }
+    return unique.join(', ');
+}
+
+/** Last dataset (bottom of the list) whose field is non-empty, or undefined. */
+function lastDefined(datasets: Dataset[], pick: (d: Dataset) => string | undefined): string | undefined {
+    for (let i = datasets.length - 1; i >= 0; i--) {
+        const value = pick(datasets[i]);
+        if (value && value.trim()) return value.trim();
+    }
+    return undefined;
+}
+
+/** Bumps the minor (second) segment of a free-form "major.minor[...]" version string. */
+function bumpMinorVersion(version: string | undefined): string {
+    if (!version) return '1.0';
+    const parts = version.split('.');
+    if (parts.length < 2) parts.push('0');
+    const minor = parseInt(parts[1], 10);
+    parts[1] = String(Number.isNaN(minor) ? 1 : minor + 1);
+    return parts.join('.');
+}
+
+/**
+ * Merges the book-level fields entity merging leaves untouched. Name/author
+ * collapse to one value when every source agrees (case-insensitively) or
+ * accumulate as a comma list when they don't — so re-merging a book that's
+ * already the product of a merge keeps adding new authors instead of
+ * duplicating or dropping existing ones. Version bumps the minor segment off
+ * the last source that has one. License is taken from the last source that
+ * has one, defaulting to CC-BY-SA-4.0 when none do.
+ */
+export function mergeMetadata(datasets: Dataset[]): MergedMetadata {
+    const name = dedupJoin(datasets.map((d) => d.name)) || 'Merged dataset';
+    const author = dedupJoin(datasets.flatMap((d) => (d.author ?? '').split(',')));
+    const version = bumpMinorVersion(lastDefined(datasets, (d) => d.version));
+    const license = lastDefined(datasets, (d) => d.license) ?? 'CC-BY-SA-4.0';
+    return { name, author, version, license };
 }

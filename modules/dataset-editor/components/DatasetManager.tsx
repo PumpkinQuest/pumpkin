@@ -85,6 +85,13 @@ export default function DatasetManager() {
         updateLintFor(dataset);
     }, [updateLintFor]);
 
+    const handleMergeSave = useCallback((dataset: Dataset) => {
+        const next = saveDataset(dataset);
+        setDatasets(next);
+        updateLintFor(dataset);
+        setView({ mode: 'library' });
+    }, [updateLintFor]);
+
     const handleBackFromEditor = useCallback(() => {
         setView({ mode: 'library' });
     }, []);
@@ -127,7 +134,7 @@ export default function DatasetManager() {
         return (
             <MergePanel
                 datasets={datasets}
-                onSave={handleUpdateDataset}
+                onSave={handleMergeSave}
                 onCancel={() => setView({ mode: 'library' })}
             />
         );

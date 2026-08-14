@@ -76,14 +76,21 @@ export default function EntityList({ dataset, ambient, errorPaths, warnPaths, is
         onLint({ ...dataset, [kind]: entities } as Dataset);
     }, [dataset, onChange, onLint]);
 
-    /** Fires on every field edit inside EntityEditor — changes save as they happen, no explicit commit step. */
+    /**
+     * Fires on every field edit inside EntityEditor — changes save as they happen, no
+     * explicit commit step. Matched against `editingId` (the id the entity was opened
+     * under), not `entity.id`: the id field itself is editable, so once it changes,
+     * looking the row up by the new id would miss the original entry entirely and
+     * append a duplicate instead of updating it.
+     */
     const handleEntityChange = useCallback((entity: EntityRecord) => {
         const entities = [...list];
-        const idx = entities.findIndex((e) => e.id === entity.id);
+        const idx = editingId ? entities.findIndex((e) => e.id === editingId) : -1;
         if (idx >= 0) entities[idx] = entity;
         else entities.push(entity);
         updateEntities(activeTab, entities);
-    }, [list, activeTab, updateEntities]);
+        if (entity.id !== editingId) setEditingId(entity.id as string);
+    }, [list, activeTab, updateEntities, editingId]);
 
     const handleDeleteEntity = useCallback((entityId: string) => {
         const entities = list.filter((e) => e.id !== entityId);

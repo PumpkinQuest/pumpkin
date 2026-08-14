@@ -3,7 +3,7 @@
 import { useState, useCallback } from "react";
 import { ArrowRightLeft, AlertTriangle } from "lucide-react";
 import type { Dataset } from "../../lib/types";
-import { mergeDatasets, mergedToDataset } from "../../lib/merge";
+import { mergeDatasets, mergedToDataset, mergeMetadata } from "../../lib/merge";
 import { generateDatasetId } from "../../lib/ids";
 
 type Props = {
@@ -27,13 +27,13 @@ export default function MergePanel({ datasets, onSave, onCancel }: Props) {
 
     const selectedDatasets = datasets.filter((d) => selected.has(d.id));
     const merged = mergeDatasets(selectedDatasets);
+    const meta = mergeMetadata(selectedDatasets);
 
     const handleMerge = useCallback(() => {
-        const name = mergedName.trim() || "Merged dataset";
         const id = generateDatasetId();
-        const result = mergedToDataset(merged, id, name);
+        const result = mergedToDataset(merged, id, { ...meta, name: mergedName.trim() || meta.name });
         onSave(result);
-    }, [merged, mergedName, onSave]);
+    }, [merged, meta, mergedName, onSave]);
 
     return (
         <div className="flex flex-col gap-6">
@@ -99,16 +99,24 @@ export default function MergePanel({ datasets, onSave, onCancel }: Props) {
                 </div>
             )}
 
-            {/* Name input */}
+            {/* Name input — prefilled by the same collapse-or-join rule as author/version/license below, editable if you want something else */}
             <div className="flex flex-col gap-1">
                 <label className="text-xs text-pumpkin-muted">Название объединённого датасета</label>
                 <input
                     value={mergedName}
                     onChange={(e) => setMergedName(e.target.value)}
-                    placeholder="Merged dataset"
+                    placeholder={meta.name}
                     className="w-full rounded-lg border border-pumpkin-border bg-pumpkin-bg px-3 py-2 text-sm text-pumpkin-text placeholder:text-pumpkin-muted/50 focus:outline-none focus:border-pumpkin-orange/50"
                 />
             </div>
+
+            {selected.size >= 2 && (
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-pumpkin-muted">
+                    <span>Автор: <span className="text-pumpkin-text">{meta.author || '—'}</span></span>
+                    <span>Версия: <span className="text-pumpkin-text">{meta.version}</span></span>
+                    <span>Лицензия: <span className="text-pumpkin-text">{meta.license}</span></span>
+                </div>
+            )}
 
             <div className="flex items-center gap-2">
                 <button
