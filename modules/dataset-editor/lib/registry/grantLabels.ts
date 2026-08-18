@@ -25,6 +25,8 @@ export const GRANT_TYPE_LABELS: Record<Grant['type'], string> = {
     'armor-prof': 'Владение бронёй',
     'weapon-prof': 'Владение оружием',
     'spellcasting': 'Заклинания',
+    'spell-fixed': 'Заклинание (именное)',
+    'spell-choice': 'Заклинания (выбор)',
     'hp-die': 'Кость хитов',
     'size': 'Размер',
     'resource': 'Ресурс',

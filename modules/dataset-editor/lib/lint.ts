@@ -28,7 +28,12 @@ export type LintRule =
     | 'resource-max'
     | 'resource-pair'
     | 'resource-no-slot'
-    | 'equipment-fork-named';
+    | 'equipment-fork-named'
+    | 'spell-choice-empty'
+    | 'spell-choice-duplicate-circle'
+    | 'spell-uses-invalid'
+    | 'spellcasting-slots-invalid'
+    | 'spellcasting-slots-loose';
 
 export type LintIssue = {
     severity: LintSeverity;
@@ -227,6 +232,43 @@ function lintGrant(grant: Grant, path: string, issues: LintIssue[]): void {
             }
             break;
         }
+        case 'spellcasting': {
+            if (grant.slotsByLevel !== undefined) {
+                const rows = grant.slotsByLevel;
+                const malformed = !Array.isArray(rows)
+                    || rows.some((r) => !Array.isArray(r) || r.some((n) => typeof n !== 'number' || !Number.isInteger(n) || n < 0));
+                if (malformed) {
+                    err('spellcasting-slots-invalid',
+                        'slotsByLevel должен быть массивом строк по уровням, а в каждой строке — целые неотрицательные числа по кругам.');
+                } else if (rows.length < 21) {
+                    err('spellcasting-slots-invalid',
+                        `slotsByLevel короче 21 записи (индекс = уровень персонажа 0…20, нулевая — заглушка) — сейчас записей ${rows.length}.`);
+                }
+                if (Array.isArray(rows) && rows.length === 0) {
+                    warn('spellcasting-slots-loose', 'slotsByLevel пуст.');
+                } else if (Array.isArray(rows) && rows.some((r) => Array.isArray(r) && r.length > 9)) {
+                    warn('spellcasting-slots-loose',
+                        'В slotsByLevel есть строка длиннее девяти кругов — лишние числа лист не прочитает.');
+                }
+            }
+            break;
+        }
+        case 'spell-fixed':
+            lintSpellUses(grant.uses, err, warn);
+            break;
+        case 'spell-choice': {
+            if (!(grant.count > 0)) {
+                err('spell-choice-empty', 'spell-choice с count <= 0 не предложит ни одного заклинания — пустой слот выбора.');
+            }
+            if (grant.circle === undefined || grant.circle === null || !Number.isInteger(grant.circle) || grant.circle < 0 || grant.circle > 9) {
+                err('spell-choice-empty', 'У spell-choice не задан или некорректен circle (0…9, 0 — заговоры) — неясно, заклинания какого круга предлагать.');
+            }
+            if (!grant.spellList) {
+                err('spell-choice-empty', 'У spell-choice не задан spellList — игроку нечего будет выбрать: пустой список.');
+            }
+            lintSpellUses(grant.uses, err, warn);
+            break;
+        }
         case 'pick-one': {
             // The equipment-or-gold fork is discovered by the sheet ONLY as an
             // UNNAMED pick-one (findEquipmentPick checks `!grant.id` before it
@@ -257,6 +299,69 @@ function lintGrant(grant: Grant, path: string, issues: LintIssue[]): void {
         default:
             break;
     }
+}
+
+/** Exactly one of `count`/`countExpr`, shared by `spell-fixed`/`spell-choice` — same discipline as `resource.maxExpr`. */
+function lintSpellUses(
+    uses: { count?: number; countExpr?: string; per?: string; shortRestRegain?: string } | undefined,
+    err: (rule: LintRule, message: string) => void,
+    warn: (rule: LintRule, message: string) => void,
+): void {
+    if (!uses) return;
+    const hasCount = typeof uses.count === 'number';
+    const hasExpr = typeof uses.countExpr === 'string' && uses.countExpr !== '';
+    if (hasCount === hasExpr) {
+        err('spell-uses-invalid', hasCount
+            ? 'uses несёт и count, и countExpr одновременно — должно быть ровно одно.'
+            : 'uses без count и без countExpr — счётчик применений без числа.');
+    }
+    if (uses.shortRestRegain && uses.per !== 'short-rest') {
+        warn('resource-max', 'shortRestRegain без per: \'short-rest\' — счётчик восстанавливается на длинном отдыхе целиком, поле не сработает.');
+    }
+}
+
+/**
+ * Two `spell-choice` of the same circle on one entity collapse into a single
+ * pick slot on the sheet — the second grant's choice silently overwrites the
+ * first's. Scoped like `lintResourcePairs`: classes/subclasses/races/subraces
+ * plus backgrounds/feats, own grants + leveledGrants, not pick-one options
+ * (those are the player's own fork, not two sources landing on one entity).
+ */
+function lintSpellChoiceCircles(dataset: Dataset, issues: LintIssue[]): void {
+    type Entity = {
+        id: string;
+        grants?: Grant[];
+        leveledGrants?: Array<{ level: number; grants: Grant[] }>;
+    };
+    const check = (kind: string, list?: Entity[]): void => {
+        list?.forEach((entity) => {
+            const all = [
+                ...(entity.grants ?? []),
+                ...(entity.leveledGrants ?? []).flatMap((lg) => lg.grants),
+            ];
+            const byCircle = new Map<number, number>();
+            for (const grant of all) {
+                if (grant.type !== 'spell-choice' || grant.circle === undefined || grant.circle === null) continue;
+                byCircle.set(grant.circle, (byCircle.get(grant.circle) ?? 0) + 1);
+            }
+            for (const [circle, count] of Array.from(byCircle)) {
+                if (count <= 1) continue;
+                issues.push({
+                    severity: 'error',
+                    rule: 'spell-choice-duplicate-circle',
+                    path: `${kind}/${entity.id}`,
+                    message: `На сущности несколько spell-choice круга ${circle === 0 ? '0 (заговоры)' : circle} — `
+                        + 'пики склеятся в один слот выбора на листе.',
+                });
+            }
+        });
+    };
+    check('classes', dataset.classes as Entity[] | undefined);
+    check('subclasses', dataset.subclasses as Entity[] | undefined);
+    check('races', dataset.races as Entity[] | undefined);
+    check('subraces', dataset.subraces as Entity[] | undefined);
+    check('backgrounds', dataset.backgrounds as Entity[] | undefined);
+    check('feats', dataset.feats as Entity[] | undefined);
 }
 
 /**
@@ -406,6 +511,7 @@ export function lintDataset(dataset: Dataset, ambient: Dataset[] = []): LintIssu
         });
     }
     lintResourcePairs(dataset, issues);
+    lintSpellChoiceCircles(dataset, issues);
     lintRefs(dataset, allAmbient, issues);
     return issues;
 }

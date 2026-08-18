@@ -206,8 +206,13 @@ function grantSummary(grant: Grant): string {
                 labelOf(CASTER_TYPE_LABELS, grant.casterType),
             ];
             if (grant.progression) parts.push(labelOf(CASTER_PROGRESSION_LABELS, grant.progression));
+            if (grant.spellList) parts.push(`список: ${grant.spellList}`);
             return parts.join(' · ');
         }
+        case 'spell-fixed':
+            return grant.slug || '—';
+        case 'spell-choice':
+            return `выбрать ${grant.count} круга ${grant.circle === 0 ? '0 (заговоры)' : grant.circle} из «${grant.spellList || '—'}»`;
         case 'hp-die':
             return `d${grant.die}`;
         case 'size':

@@ -48,6 +48,8 @@ export const GRANT_TYPE_SPECS: Record<Grant['type'], GrantTypeSpec> = {
     'skill-choice':     { channel: 'choice', live: true },
     'expertise-choice': { channel: 'choice', live: true, note: 'Proficiency required for each selected skill.' },
     'spellcasting':     { channel: 'choice', live: true },
+    'spell-fixed':      { channel: 'choice', live: true, note: 'Named, always-prepared spell — resolved by slug.' },
+    'spell-choice':     { channel: 'choice', live: true, note: 'Player picks N spells of a circle from another list.' },
 
     // Gold ledger
     'gold':      { channel: 'gold', live: true },

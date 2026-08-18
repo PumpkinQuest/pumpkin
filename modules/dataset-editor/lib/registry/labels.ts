@@ -94,6 +94,16 @@ export const CASTER_PROGRESSION_LABELS: Record<CasterProgression, string> = {
 
 export const CASTER_PROGRESSIONS: CasterProgression[] = ['full', 'half', 'third', 'pact'];
 
+export const SPELL_USES_PER_LABELS: Record<string, string> = {
+    'long-rest': 'длинный отдых',
+    'short-rest': 'короткий отдых',
+};
+
+export const PREPARED_FORMULA_LABELS: Record<string, string> = {
+    'mod+level': 'модификатор характеристики + уровень',
+    'mod+half-level': 'модификатор характеристики + уровень/2',
+};
+
 export const SIZE_LABELS: Record<string, string> = {
     small: 'Маленький',
     medium: 'Средний',

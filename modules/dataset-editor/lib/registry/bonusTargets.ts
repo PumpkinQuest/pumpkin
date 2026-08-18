@@ -27,6 +27,9 @@ export const SPEED_KINDS = ['walk', 'fly', 'swim', 'climb', 'burrow'] as const;
 /** Attack kinds. */
 export const ATTACK_KINDS = ['melee', 'ranged', 'spell'] as const;
 
+/** Spell circles — 1..9, as strings since that's how the bonus target key encodes them (`spellSlot.1`, `pactSlot.9`). */
+export const SPELL_CIRCLE_KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '9'] as const;
+
 /** Armor proficiency checkbox keys. `armor-label` is the shield. */
 export const ARMOR_PROF_KEYS = ['armor-light', 'armor-medium', 'armor-heavy', 'armor-label'] as const;
 
@@ -116,6 +119,8 @@ export const BONUS_TARGET_SPECS: BonusTargetSpec[] = [
     // Spellcasting
     flat('spellDC',     'spell', true),
     flat('spellAttack', 'spell', true),
+    keyed('spellSlot', 'spell', 'spellSlot.', SPELL_CIRCLE_KEYS, true),
+    keyed('pactSlot',  'spell', 'pactSlot.',  SPELL_CIRCLE_KEYS, true),
 
     // Misc
     flat('proficiency', 'misc', false),

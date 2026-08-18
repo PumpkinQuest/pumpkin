@@ -8,8 +8,8 @@ import { SENSE_TRAIT_IDS, SENSE_LABELS, isSenseTraitId, type SenseTraitId } from
 import { grantTypeLabel } from "../../lib/registry/grantLabels";
 import {
     ARMOR_PROF_LABELS, CASTER_PROGRESSIONS, CASTER_PROGRESSION_LABELS, CASTER_TYPE_LABELS,
-    FEAT_CATEGORIES, FEAT_CATEGORY_LABELS, LANGUAGE_LABELS, SIZE_LABELS, SKILL_LABELS, STAT_LABELS,
-    WEAPON_PROF_LABELS, labelOf,
+    FEAT_CATEGORIES, FEAT_CATEGORY_LABELS, LANGUAGE_LABELS, PREPARED_FORMULA_LABELS, SIZE_LABELS,
+    SKILL_LABELS, STAT_LABELS, WEAPON_PROF_LABELS, labelOf,
 } from "../../lib/registry/labels";
 import GrantList from "./GrantList";
 
@@ -86,6 +86,8 @@ function GrantForm({ data, set, setMany, siblingTraits }: {
         case 'armor-prof': return <ArmorProfForm data={data} set={set} />;
         case 'weapon-prof': return <WeaponProfForm data={data} set={set} />;
         case 'spellcasting': return <SpellcastingForm data={data} set={set} />;
+        case 'spell-fixed': return <SpellFixedForm data={data} set={set} />;
+        case 'spell-choice': return <SpellChoiceForm data={data} set={set} />;
         case 'hp-die': return <HpDieForm data={data} set={set} />;
         case 'size': return <SizeForm data={data} set={set} />;
         case 'resource': return <ResourceForm data={data} set={set} setMany={setMany} siblingTraits={siblingTraits} />;
@@ -534,30 +536,332 @@ function WeaponProfForm({ data, set }: { data: Record<string, unknown>; set: (k:
 }
 
 function SpellcastingForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    const casterType = (data.casterType as string) ?? 'list';
     return (
-        <div className="grid grid-cols-2 gap-2">
-            <F label="Характеристика">
-                <select value={(data.ability as string) ?? 'int'} onChange={(e) => set('ability', e.target.value)} className={inputClass}>
-                    <option value="int">ИНТ</option>
-                    <option value="wis">МДР</option>
-                    <option value="cha">ХАР</option>
-                </select>
-            </F>
-            <F label="Тип заклинателя">
-                <select value={(data.casterType as string) ?? 'list'} onChange={(e) => set('casterType', e.target.value)} className={inputClass}>
-                    {Object.entries(CASTER_TYPE_LABELS).map(([value, label]) => (
+        <div className="flex flex-col gap-2">
+            <div className="grid grid-cols-2 gap-2">
+                <F label="Характеристика">
+                    <select value={(data.ability as string) ?? 'int'} onChange={(e) => set('ability', e.target.value)} className={inputClass}>
+                        <option value="int">ИНТ</option>
+                        <option value="wis">МДР</option>
+                        <option value="cha">ХАР</option>
+                    </select>
+                </F>
+                <F label="Тип заклинателя">
+                    <select value={casterType} onChange={(e) => set('casterType', e.target.value)} className={inputClass}>
+                        {Object.entries(CASTER_TYPE_LABELS).map(([value, label]) => (
+                            <option key={value} value={value}>{label}</option>
+                        ))}
+                    </select>
+                </F>
+                <F label="Прогрессия">
+                    <select value={(data.progression as string) ?? ''} onChange={(e) => set('progression', e.target.value || undefined)} className={inputClass}>
+                        <option value="">—</option>
+                        {CASTER_PROGRESSIONS.map((p) => (
+                            <option key={p} value={p}>{CASTER_PROGRESSION_LABELS[p]}</option>
+                        ))}
+                    </select>
+                </F>
+                <TF
+                    label="Список заклинаний (id класса, если не свой)"
+                    value={(data.spellList as string) ?? ''}
+                    onChange={(v) => set('spellList', v || undefined)}
+                    placeholder="wizard"
+                />
+            </div>
+
+            <SlotsByLevelField
+                value={data.slotsByLevel as number[][] | undefined}
+                onChange={(v) => set('slotsByLevel', v)}
+            />
+
+            <LevelArrayField
+                label="Заговоры по уровням (cantripsByLevel)"
+                value={data.cantripsByLevel as number[] | undefined}
+                onChange={(v) => set('cantripsByLevel', v)}
+            />
+            <LevelArrayField
+                label="Известные заклинания по уровням (knownByLevel)"
+                hint="Приоритетнее preparedFormula — если задано оба, таблица побеждает."
+                value={data.knownByLevel as number[] | undefined}
+                onChange={(v) => set('knownByLevel', v)}
+            />
+
+            <F label="Формула подготовленных (preparedFormula)">
+                <select value={(data.preparedFormula as string) ?? ''} onChange={(e) => set('preparedFormula', e.target.value || undefined)} className={inputClass}>
+                    <option value="">—</option>
+                    {Object.entries(PREPARED_FORMULA_LABELS).map(([value, label]) => (
                         <option key={value} value={value}>{label}</option>
                     ))}
                 </select>
             </F>
-            <F label="Прогрессия">
-                <select value={(data.progression as string) ?? ''} onChange={(e) => set('progression', e.target.value || undefined)} className={inputClass}>
-                    <option value="">—</option>
-                    {CASTER_PROGRESSIONS.map((p) => (
-                        <option key={p} value={p}>{CASTER_PROGRESSION_LABELS[p]}</option>
+
+            {casterType === 'book' && (
+                <div className="grid grid-cols-2 gap-2">
+                    <NF label="Книга: на 1-м уровне" value={data.bookAtFirst as number} onChange={(v) => set('bookAtFirst', v)} />
+                    <NF label="Книга: за уровень" value={data.bookPerLevel as number} onChange={(v) => set('bookPerLevel', v)} />
+                </div>
+            )}
+        </div>
+    );
+}
+
+/** 1..20 — character levels shown to the author; index 0 (the schema's stub) is kept in the stored array but hidden from the form. */
+const CASTER_LEVELS = Array.from({ length: 20 }, (_, i) => i + 1);
+const SPELL_CIRCLES = [1, 2, 3, 4, 5, 6, 7, 8, 9] as const;
+
+const smallNumInputClass = "w-full rounded border border-pumpkin-border bg-pumpkin-bg px-1 py-0.5 text-[10px] text-pumpkin-text text-center focus:outline-none focus:border-pumpkin-orange/50";
+
+/**
+ * A by-level number table, toggled on/off — undefined means "not authored"
+ * (e.g. the class uses one of the four built-in progressions and needs no
+ * cantrips/known table of its own), which is meaningfully different from an
+ * authored table of zeros.
+ */
+function LevelArrayField({ label, hint, value, onChange }: {
+    label: string;
+    hint?: string;
+    value: number[] | undefined;
+    onChange: (v: number[] | undefined) => void;
+}) {
+    const enabled = value !== undefined;
+    const row = value ?? Array(21).fill(0);
+    return (
+        <div className="flex flex-col gap-1">
+            <label className="flex items-center gap-1.5 text-[11px] text-pumpkin-muted">
+                <input
+                    type="checkbox"
+                    checked={enabled}
+                    onChange={(e) => onChange(e.target.checked ? Array(21).fill(0) : undefined)}
+                    className="accent-pumpkin-orange size-3"
+                />
+                {label}
+            </label>
+            {hint && <span className="text-[10px] text-pumpkin-muted/70">{hint}</span>}
+            {enabled && (
+                <div className="grid grid-cols-10 gap-1">
+                    {CASTER_LEVELS.map((lvl) => (
+                        <div key={lvl} className="flex flex-col items-center gap-0.5">
+                            <span className="text-[9px] text-pumpkin-muted/60">{lvl}</span>
+                            <input
+                                type="number"
+                                value={row[lvl] ?? 0}
+                                onChange={(e) => {
+                                    const next = [...row];
+                                    next[lvl] = Number(e.target.value) || 0;
+                                    onChange(next);
+                                }}
+                                className={smallNumInputClass}
+                            />
+                        </div>
                     ))}
-                </select>
-            </F>
+                </div>
+            )}
+        </div>
+    );
+}
+
+/** The 21×9 own-slot-table editor — same on/off convention as LevelArrayField. */
+function SlotsByLevelField({ value, onChange }: {
+    value: number[][] | undefined;
+    onChange: (v: number[][] | undefined) => void;
+}) {
+    const enabled = value !== undefined;
+    const rows = value ?? Array.from({ length: 21 }, () => Array(9).fill(0));
+
+    const setCell = (lvl: number, circle: number, v: number): void => {
+        const next = rows.map((r) => [...r]);
+        while (next.length <= lvl) next.push(Array(9).fill(0));
+        const row = [...(next[lvl] ?? Array(9).fill(0))];
+        while (row.length < 9) row.push(0);
+        row[circle - 1] = v;
+        next[lvl] = row;
+        onChange(next);
+    };
+
+    return (
+        <div className="flex flex-col gap-1">
+            <label className="flex items-center gap-1.5 text-[11px] text-pumpkin-muted">
+                <input
+                    type="checkbox"
+                    checked={enabled}
+                    onChange={(e) => onChange(e.target.checked ? Array.from({ length: 21 }, () => Array(9).fill(0)) : undefined)}
+                    className="accent-pumpkin-orange size-3"
+                />
+                Своя таблица ячеек (slotsByLevel)
+            </label>
+            <span className="text-[10px] text-pumpkin-muted/70">
+                Только когда ни одна из четырёх встроенных прогрессий не подходит. Приоритетнее прогрессии в числах, но не отменяет её.
+            </span>
+            {enabled && (
+                <div className="overflow-x-auto">
+                    <table className="text-[10px] border-collapse">
+                        <thead>
+                            <tr>
+                                <th className="px-1 font-normal text-pumpkin-muted/60">ур.</th>
+                                {SPELL_CIRCLES.map((c) => (
+                                    <th key={c} className="px-1 font-normal text-pumpkin-muted/60">{c}</th>
+                                ))}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {CASTER_LEVELS.map((lvl) => (
+                                <tr key={lvl}>
+                                    <td className="px-1 text-center text-pumpkin-muted/60">{lvl}</td>
+                                    {SPELL_CIRCLES.map((c) => (
+                                        <td key={c} className="p-0.5">
+                                            <input
+                                                type="number"
+                                                value={rows[lvl]?.[c - 1] ?? 0}
+                                                onChange={(e) => setCell(lvl, c, Number(e.target.value) || 0)}
+                                                className={smallNumInputClass + ' w-8'}
+                                            />
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
+        </div>
+    );
+}
+
+/** Shared by `spell-fixed`/`spell-choice` — "own counter, no slot spent" per §7 of the format. Under the hood the same channel as `resource`, so `per: 'short-rest'` gets the same partial-regain control as `ResourceGrant.shortRestRegain` — long rest has no such control yet. */
+function SpellUsesField({ uses, onChange }: {
+    uses: { count?: number; countExpr?: string; per?: string; shortRestRegain?: string } | undefined;
+    onChange: (v: { count?: number; countExpr?: string; per: 'long-rest' | 'short-rest'; shortRestRegain?: string } | undefined) => void;
+}) {
+    const enabled = uses !== undefined;
+    const per = (uses?.per as 'long-rest' | 'short-rest') ?? 'long-rest';
+    return (
+        <div className="flex flex-col gap-2 border border-pumpkin-border rounded-md p-2">
+            <label className="flex items-center gap-1.5 text-[11px] text-pumpkin-muted">
+                <input
+                    type="checkbox"
+                    checked={enabled}
+                    onChange={(e) => onChange(e.target.checked ? { per: 'long-rest' } : undefined)}
+                    className="accent-pumpkin-orange size-3"
+                />
+                Свой счётчик применений (иначе платить можно только ячейками)
+            </label>
+            {enabled && (
+                <>
+                    <div className="grid grid-cols-2 gap-2">
+                        <NF
+                            label="Количество"
+                            value={uses?.count}
+                            onChange={(v) => onChange({ ...uses, per, count: v, countExpr: v !== undefined ? undefined : uses?.countExpr })}
+                        />
+                        <TF
+                            label="или формула"
+                            value={uses?.countExpr ?? ''}
+                            onChange={(v) => onChange({ ...uses, per, countExpr: v || undefined, count: v ? undefined : uses?.count })}
+                            placeholder="[PROF]"
+                        />
+                    </div>
+                    <F label="Восстанавливается">
+                        <select
+                            value={per}
+                            onChange={(e) => {
+                                const nextPer = e.target.value as 'long-rest' | 'short-rest';
+                                onChange({ ...uses, per: nextPer, shortRestRegain: nextPer === 'short-rest' ? uses?.shortRestRegain : undefined });
+                            }}
+                            className={inputClass}
+                        >
+                            <option value="long-rest">длинный отдых</option>
+                            <option value="short-rest">короткий отдых</option>
+                        </select>
+                    </F>
+                    {per === 'short-rest' && (
+                        <TF
+                            label="Сколько восстанавливает короткий отдых (пусто = весь запас)"
+                            value={uses?.shortRestRegain ?? ''}
+                            onChange={(v) => onChange({ ...uses, per, shortRestRegain: v || undefined })}
+                            placeholder="1, [PROF], ceil([LVL]/2)"
+                        />
+                    )}
+                </>
+            )}
+        </div>
+    );
+}
+
+/** `withSlots`/`alwaysPrepared` checkboxes shared by `spell-fixed`/`spell-choice`. */
+function SpellDeliveryFields({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    return (
+        <>
+            <label className="flex items-center gap-1.5 text-xs text-pumpkin-muted">
+                <input
+                    type="checkbox"
+                    checked={data.withSlots !== false}
+                    onChange={(e) => set('withSlots', e.target.checked ? undefined : false)}
+                    className="accent-pumpkin-orange size-3"
+                />
+                Можно доплатить ячейкой сверх счётчика
+            </label>
+            <label className="flex items-center gap-1.5 text-xs text-pumpkin-muted">
+                <input
+                    type="checkbox"
+                    checked={!!data.alwaysPrepared}
+                    onChange={(e) => set('alwaysPrepared', e.target.checked ? true : undefined)}
+                    className="accent-pumpkin-orange size-3"
+                />
+                Всегда подготовлено, вне лимита
+            </label>
+        </>
+    );
+}
+
+function SpellAbilityField({ value, onChange }: { value: string; onChange: (v: string | undefined) => void }) {
+    return (
+        <F label="Характеристика (пусто — наследует листовую)">
+            <select value={value} onChange={(e) => onChange(e.target.value || undefined)} className={inputClass}>
+                <option value="">—</option>
+                {STAT_KEYS.map((s) => (
+                    <option key={s} value={s}>{labelOf(STAT_LABELS, s)}</option>
+                ))}
+            </select>
+        </F>
+    );
+}
+
+function SpellFixedForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    return (
+        <div className="flex flex-col gap-2">
+            <TF label="Слаг заклинания" value={(data.slug as string) ?? ''} onChange={(v) => set('slug', v)} placeholder="hellish-rebuke" />
+            <SpellAbilityField value={(data.ability as string) ?? ''} onChange={(v) => set('ability', v)} />
+            <SpellUsesField uses={data.uses as { count?: number; countExpr?: string; per?: string } | undefined} onChange={(v) => set('uses', v)} />
+            <SpellDeliveryFields data={data} set={set} />
+        </div>
+    );
+}
+
+function SpellChoiceForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+    const circle = data.circle as number | undefined;
+    return (
+        <div className="flex flex-col gap-2">
+            <div className="grid grid-cols-2 gap-2">
+                <NF label="Количество" value={data.count as number} onChange={(v) => set('count', v)} />
+                <F label="Круг (0 — заговоры)">
+                    <select
+                        value={circle === undefined ? '' : String(circle)}
+                        onChange={(e) => set('circle', e.target.value === '' ? undefined : Number(e.target.value))}
+                        className={inputClass}
+                    >
+                        <option value="">—</option>
+                        <option value="0">заговор</option>
+                        {SPELL_CIRCLES.map((c) => (
+                            <option key={c} value={c}>{c}</option>
+                        ))}
+                    </select>
+                </F>
+            </div>
+            <TF label="Из чьего списка (id класса)" value={(data.spellList as string) ?? ''} onChange={(v) => set('spellList', v)} placeholder="wizard" />
+            <SpellAbilityField value={(data.ability as string) ?? ''} onChange={(v) => set('ability', v)} />
+            <SpellUsesField uses={data.uses as { count?: number; countExpr?: string; per?: string } | undefined} onChange={(v) => set('uses', v)} />
+            <SpellDeliveryFields data={data} set={set} />
         </div>
     );
 }

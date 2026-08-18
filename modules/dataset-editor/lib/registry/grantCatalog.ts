@@ -88,6 +88,8 @@ export function makeDefaultGrant(type: string, siblingTraits: Array<{ id: string
         case 'armor-prof': return { type: 'armor-prof', armors: [] };
         case 'weapon-prof': return { type: 'weapon-prof', weapons: [] };
         case 'spellcasting': return { type: 'spellcasting', ability: 'int', casterType: 'list' };
+        case 'spell-fixed': return { type: 'spell-fixed', slug: '' };
+        case 'spell-choice': return { type: 'spell-choice', count: 1, circle: 1, spellList: '' };
         case 'hp-die': return { type: 'hp-die', die: 8 };
         case 'size': return { type: 'size', value: 'medium' };
         case 'equipment-fixed': return { type: 'equipment-fixed', items: [] };
@@ -190,6 +192,12 @@ const PLAIN_ENTRIES = [
     plain('spellcasting', 'class', 'Заклинания',
         'Включит колдовство: базовая характеристика, тип заклинателя и прогрессия ячеек.',
         ['магия', 'каст', 'спелл', 'ячейки', 'spellcasting', 'колдовство', 'заклинатель']),
+    plain('spell-fixed', 'class', 'Заклинание (именное)',
+        'Выдаст одно конкретное заклинание по слагу — всегда подготовленное, вне лимита. Доменные, клятвенные, видовые заклинания.',
+        ['заклинание', 'домен', 'клятва', 'происхождение', 'spell', 'именное', 'фикс']),
+    plain('spell-choice', 'class', 'Заклинания на выбор',
+        'Игрок выберет N заклинаний заданного круга из чужого списка — «Магическое подмастерье» и всё, что устроено так же.',
+        ['заклинание', 'подмастерье', 'выбор заклинания', 'круг', 'spell', 'choice']),
 
     // Старт персонажа
     plain('equipment-fixed', 'start', 'Снаряжение',

@@ -123,6 +123,72 @@ export type SpellcastingGrant = {
     ability: 'int' | 'wis' | 'cha';
     casterType: 'memory' | 'list' | 'book';
     progression?: CasterProgression;
+    /**
+     * Own slot table when none of the four `progression` families fit. 21 rows
+     * (index = character level 0–20, row 0 a stub), each row nine numbers by
+     * circle 1…9. A row shorter than nine is padded with zeros; a level past
+     * the last row means "no slots", not "same as the last row". Takes priority
+     * over `progression` in the NUMBERS, but doesn't replace it — the type still
+     * says which pool the slots ride and how the class weighs in multiclassing.
+     */
+    slotsByLevel?: number[][];
+    /** Which class's spell list this caster draws from, when different from its own class id. Defaults to the caster's own class id. */
+    spellList?: string;
+    /** Cantrips known per character level (index = level, 0 a stub). */
+    cantripsByLevel?: number[];
+    /** Known spells per character level (index = level, 0 a stub) — bard/sorcerer/warlock/2014 ranger, and all of 2024. Takes priority over `preparedFormula`. */
+    knownByLevel?: number[];
+    /** Where 2014 counts prepared spells as a formula (cleric, druid, paladin, wizard). */
+    preparedFormula?: 'mod+level' | 'mod+half-level';
+    /** Wizard's spellbook: how many spells it holds at level 1 and gained per level after — a separate count from prepared. */
+    bookAtFirst?: number;
+    bookPerLevel?: number;
+};
+
+/** Own-use counter shared by `spell-fixed`/`spell-choice` — "once per rest, no slot spent". Exactly one of `count`/`countExpr`. Under the hood the counter IS a `resource`, just raised through a different channel. */
+export type SpellUses = {
+    count?: number;
+    countExpr?: string;
+    per: 'long-rest' | 'short-rest';
+    /**
+     * How much a SHORT rest gives back, as a formula (`1`, `[PROF]`). Absent ⇒
+     * a short rest refills the pool completely. Only meaningful together with
+     * `per: 'short-rest'` — long rest has no partial-regain equivalent yet.
+     * Same field and semantics as `ResourceGrant.shortRestRegain`.
+     */
+    shortRestRegain?: string;
+};
+
+export type SpellFixedGrant = {
+    type: 'spell-fixed';
+    /** Slugified English spell name, resolved against the spell corpus outside the dataset. */
+    slug: string;
+    /** Casting ability. Absent ⇒ inherits the sheet's spellcasting ability. */
+    ability?: StatKey;
+    /** Absent ⇒ payable only with slots. */
+    uses?: SpellUses;
+    /** Can this spell be cast with a slot on top of the counter. Absent ⇒ true. */
+    withSlots?: boolean;
+    /** Outside the prepared-spells limit. Only `true` is valid — see `grant.json`. */
+    alwaysPrepared?: true;
+};
+
+export type SpellChoiceGrant = {
+    type: 'spell-choice';
+    /** How many spells to take. */
+    count: number;
+    /** Which circle; 0 = cantrips. */
+    circle: number;
+    /** Whose list — same class-id vocabulary as `SpellcastingGrant.spellList`. */
+    spellList: string;
+    /** Casting ability. Absent ⇒ inherits the sheet's spellcasting ability. */
+    ability?: StatKey;
+    /** Absent ⇒ payable only with slots. */
+    uses?: SpellUses;
+    /** Can this spell be cast with a slot on top of the counter. Absent ⇒ true. */
+    withSlots?: boolean;
+    /** Outside the prepared-spells limit. Only `true` is valid. */
+    alwaysPrepared?: true;
 };
 
 export type HpDieGrant = {
@@ -221,6 +287,8 @@ export type Grant =
     | ArmorProfGrant
     | WeaponProfGrant
     | SpellcastingGrant
+    | SpellFixedGrant
+    | SpellChoiceGrant
     | HpDieGrant
     | SizeGrant
     | ResourceGrant
