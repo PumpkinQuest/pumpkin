@@ -7,7 +7,7 @@ export interface DatasetFile {
   path: string;
 }
 
-export const CONTRIBUTORS = ["DesPro111", "Ilia Antonov"];
+export const CONTRIBUTORS = ["DesPro111", "Ilia Antonov", "Andromeda"];
 
 // Dataset JSON files are hosted on mana.pumpkin.quest rather than committed into this
 // (public GitHub Pages) repo.
