@@ -1,7 +1,7 @@
 import type { Grant } from "../types";
 import { generateGrantId } from "../ids";
 import { GRANT_TYPE_LABELS } from "./grantLabels";
-import { SENSE_LABELS } from "./senses";
+import { SENSE_TRAIT_IDS, SENSE_LABELS, SENSE_DEFAULT_RANGE, type SenseTraitId } from "./senses";
 
 // ---------------------------------------------------------------------------
 // Grant picker catalog — the "add grant" list seen from the author's intent
@@ -232,25 +232,34 @@ const _everyGrantTypeIsInTheCatalog: Record<Grant['type'], true> = Object.fromEn
 ) as Record<typeof PLAIN_ENTRIES[number]['type'], true>;
 void _everyGrantTypeIsInTheCatalog;
 
+/**
+ * Synonyms per sense. They used to sit in one darkvision entry, so «слепое
+ * зрение» found the picker's only sense preset and handed back тёмное — the
+ * author then had to know that the trait form's «Тип черты» select exists at
+ * all. One entry per sense instead: what you searched for is what you get.
+ */
+const SENSE_KEYWORDS: Record<SenseTraitId, string[]> = {
+    darkvision:  ['темновидение', 'дарквижн', 'darkvision', 'ночное зрение', 'видит в темноте'],
+    blindsight:  ['слепое зрение', 'слепозрение', 'блайндсайт', 'blindsight', 'видит без глаз', 'эхолокация'],
+    tremorsense: ['чувство вибрации', 'вибрация', 'тремор', 'tremorsense', 'чувствует колебания', 'через землю'],
+    truesight:   ['истинное зрение', 'труосайт', 'truesight', 'видит невидимое', 'сквозь иллюзии'],
+};
+
 /** Preconfigured single grants — a type whose blank form hides what it's for. */
-const PRESET_ENTRIES: GrantPickerEntry[] = [
-    {
-        id: 'preset-darkvision',
-        group: 'abilities',
-        label: 'Чувство: тёмное зрение',
-        hint: 'Отдельный блок «Чувства» на листе; при нескольких источниках побеждает большая дистанция.',
-        keywords: [
-            'темновидение', 'дарквижн', 'darkvision', 'ночное зрение', 'чувство',
-            'слепое зрение', 'истинное зрение', 'чувство вибрации', 'видит в темноте',
-        ],
-        create: () => [{
-            type: 'trait',
-            id: 'darkvision',
-            name: SENSE_LABELS.darkvision,
-            params: { range: 60 },
-        }],
-    },
-];
+const PRESET_ENTRIES: GrantPickerEntry[] = SENSE_TRAIT_IDS.map((sense) => ({
+    id: `preset-${sense}`,
+    group: 'abilities' as const,
+    label: `Чувство: ${SENSE_LABELS[sense].toLowerCase()}`,
+    hint: 'Отдельный блок «Чувства» на листе; при нескольких источниках побеждает большая дистанция.'
+        + (SENSE_DEFAULT_RANGE[sense] === 0 ? ' Дистанцию нужно вписать — по умолчанию её нет.' : ''),
+    keywords: [...SENSE_KEYWORDS[sense], 'чувство', 'зрение'],
+    create: () => [{
+        type: 'trait',
+        id: sense,
+        name: SENSE_LABELS[sense],
+        params: { range: SENSE_DEFAULT_RANGE[sense] },
+    }],
+}));
 
 export const GRANT_PICKER_ENTRIES: GrantPickerEntry[] = [...PLAIN_ENTRIES, ...PRESET_ENTRIES];
 

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Trash2 } from "lucide-react";
 import type { Grant } from "../../lib/types";
 import { listBonusTargetsByGroup, STAT_KEYS, SKILL_KEYS, ARMOR_PROF_KEYS, WEAPON_PROF_KEYS, COMMON_LANGUAGES } from "../../lib/registry/bonusTargets";
-import { SENSE_TRAIT_IDS, SENSE_LABELS, isSenseTraitId, type SenseTraitId } from "../../lib/registry/senses";
+import { SENSE_TRAIT_IDS, SENSE_LABELS, SENSE_DEFAULT_RANGE, isSenseTraitId, isDefaultSenseName, type SenseTraitId } from "../../lib/registry/senses";
 import { grantTypeLabel } from "../../lib/registry/grantLabels";
 import {
     ARMOR_PROF_LABELS, CASTER_PROGRESSIONS, CASTER_PROGRESSION_LABELS, CASTER_TYPE_LABELS,
@@ -82,7 +82,7 @@ function GrantForm({ data, set, setMany, siblingTraits }: {
         case 'language-choice': return <LanguageChoiceForm data={data} set={set} />;
         case 'speed': return <SpeedForm data={data} set={set} />;
         case 'saving-throw': return <SavingThrowForm data={data} set={set} />;
-        case 'trait': return <TraitForm data={data} set={set} />;
+        case 'trait': return <TraitForm data={data} set={set} setMany={setMany} />;
         case 'armor-prof': return <ArmorProfForm data={data} set={set} />;
         case 'weapon-prof': return <WeaponProfForm data={data} set={set} />;
         case 'spellcasting': return <SpellcastingForm data={data} set={set} />;
@@ -444,20 +444,42 @@ function SavingThrowForm({ data, set }: { data: Record<string, unknown>; set: (k
     return <MultiSelect label="Спасброски" options={[...STAT_KEYS]} selected={stats} onChange={(v) => set('stats', v)} labels={STAT_LABELS} />;
 }
 
-function TraitForm({ data, set }: { data: Record<string, unknown>; set: (k: string, v: unknown) => void }) {
+function TraitForm({ data, set, setMany }: {
+    data: Record<string, unknown>;
+    set: (k: string, v: unknown) => void;
+    setMany: (patch: Record<string, unknown>) => void;
+}) {
     const id = (data.id as string) ?? '';
-    const sense = isSenseTraitId(id) ? id : null;
     const params = (data.params as Record<string, number> | undefined) ?? {};
+    // A sense is the id AND a range together — that's exactly what the sheet
+    // reads (`isSenseGrant` in the LSS wizard). Deciding on the id alone would
+    // make «обычная черта» unselectable for a grant whose id happens to be a
+    // sense: dropping `params` leaves the id behind, and the select would snap
+    // straight back to the sense on the next render.
+    const sense = isSenseTraitId(id) && typeof params.range === 'number' ? id : null;
 
+    // ONE `setMany`, never a `set` per key: each `set` rebuilds the patch from
+    // this render's grant, so a run of them collapses to the last one — which is
+    // how switching «тёмное зрение» → «слепое зрение» used to write the range and
+    // silently drop the new id and name, snapping the select back.
     const handleSenseChange = (next: string): void => {
-        if (next === '__none__') {
-            set('id', '');
-            set('params', undefined);
+        if (next === '__custom__') {
+            // Only the range goes: the id and name stay as editable text so the
+            // author can turn a sense into a normal trait without retyping it.
+            setMany({ params: undefined });
             return;
         }
-        set('id', next);
-        set('name', SENSE_LABELS[next as SenseTraitId]);
-        set('params', { range: params.range ?? 60 });
+        const name = (data.name as string) ?? '';
+        setMany({
+            id: next,
+            // The author's own caption wins; our default one gets retranslated.
+            name: name && !isDefaultSenseName(name) ? name : SENSE_LABELS[next as SenseTraitId],
+            // A range already typed carries across the switch; a trait that had
+            // none starts at the sense's own default (0 for everything but
+            // darkvision — see SENSE_DEFAULT_RANGE). Nothing else survives:
+            // `range` is the only params key any sheet reads.
+            params: { range: params.range ?? SENSE_DEFAULT_RANGE[next as SenseTraitId] },
+        });
     };
 
     return (
@@ -465,7 +487,7 @@ function TraitForm({ data, set }: { data: Record<string, unknown>; set: (k: stri
             <F label="Тип черты">
                 <select
                     value={sense ?? '__custom__'}
-                    onChange={(e) => e.target.value === '__custom__' ? set('params', undefined) : handleSenseChange(e.target.value)}
+                    onChange={(e) => handleSenseChange(e.target.value)}
                     className={inputClass}
                 >
                     <option value="__custom__">обычная черта</option>
@@ -475,14 +497,26 @@ function TraitForm({ data, set }: { data: Record<string, unknown>; set: (k: stri
                 </select>
             </F>
             {sense ? (
-                <F label={`Дистанция «${SENSE_LABELS[sense]}» (фт)`}>
-                    <input
-                        type="number"
-                        value={params.range ?? 60}
-                        onChange={(e) => set('params', { ...params, range: Number(e.target.value) })}
-                        className={inputClass}
+                <div className="grid grid-cols-2 gap-2">
+                    {/* The name is the block's title on the sheet, so it can't be
+                        write-only: the drow's «Превосходное тёмное зрение» has to
+                        be typeable here, and a custom one kept across a type
+                        switch has to be visible enough to fix. */}
+                    <TF
+                        label="Название"
+                        value={(data.name as string) ?? ''}
+                        onChange={(v) => set('name', v)}
+                        placeholder={SENSE_LABELS[sense]}
                     />
-                </F>
+                    <F label={`Дистанция «${SENSE_LABELS[sense]}» (фт)`}>
+                        <input
+                            type="number"
+                            value={params.range ?? SENSE_DEFAULT_RANGE[sense]}
+                            onChange={(e) => set('params', { ...params, range: Number(e.target.value) })}
+                            className={inputClass}
+                        />
+                    </F>
+                </div>
             ) : (
                 <div className="grid grid-cols-2 gap-2">
                     <TF label="Идентификатор" value={id} onChange={(v) => set('id', v)} placeholder="second-wind" />

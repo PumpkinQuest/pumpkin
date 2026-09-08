@@ -25,6 +25,7 @@ export type LintRule =
     | 'dangling-ref'
     | 'non-slug-ref'
     | 'numeric-trait-prose'
+    | 'sense-range'
     | 'resource-max'
     | 'resource-pair'
     | 'resource-no-slot'
@@ -199,6 +200,24 @@ function lintGrant(grant: Grant, path: string, issues: LintIssue[]): void {
                     `Черта «${grant.id}» несёт params и при этом имеет описание — `
                     + 'текстовый канал такие черты отфильтровывает, описание на лист не попадёт. '
                     + 'Разделите на два гранта: числовой (с params) и текстовый (без).');
+            }
+            // A sense reaches the «Чувства» block only through `params.range`,
+            // and only as a number: the sheet's own guard is `typeof range ===
+            // 'number'`. Anything else quietly demotes the grant back to an
+            // ordinary text trait. A sense id with NO params at all is not the
+            // mistake this catches — that's a legitimate prose trait that just
+            // happens to be named after a sense, and it renders fine.
+            if (isSenseTraitId(grant.id) && grant.params) {
+                const range = (grant.params as Record<string, unknown>).range;
+                if (typeof range !== 'number' || !Number.isFinite(range)) {
+                    err('sense-range',
+                        `У чувства «${grant.id}» нет числовой дистанции в params.range — `
+                        + 'лист не покажет его в блоке «Чувства».');
+                } else if (range <= 0) {
+                    err('sense-range',
+                        `У чувства «${grant.id}» дистанция ${range} — на листе это «0 футов». `
+                        + 'Впишите дальность в футах.');
+                }
             }
             break;
         }
