@@ -11,14 +11,17 @@ import type { BonusGrant, Dataset, Grant, LeveledGrants, ResourceGrant } from ".
 function migrateBonus(grant: BonusGrant): BonusGrant {
     const legacyValue = (grant as unknown as { value?: number }).value;
     if (legacyValue === undefined) return grant;
-    const { expr, ...rest } = grant as BonusGrant & { value?: number };
+    // Drop `value` along with the migration — leaving it next to `expr` makes
+    // the exported file fail LSS's "exactly one of value | expr" lint.
+    const { value: _legacyValue, expr, ...rest } = grant as BonusGrant & { value?: number };
     return { ...rest, expr: expr ?? String(legacyValue) };
 }
 
 function migrateResource(grant: ResourceGrant): ResourceGrant {
     const legacyMax = (grant as unknown as { max?: number }).max;
     if (legacyMax === undefined) return grant;
-    const { maxExpr, ...rest } = grant as ResourceGrant & { max?: number };
+    // Same for `max` — LSS rejects a resource carrying both `max` and `maxExpr`.
+    const { max: _legacyMax, maxExpr, ...rest } = grant as ResourceGrant & { max?: number };
     return { ...rest, maxExpr: maxExpr ?? String(legacyMax) };
 }
 
