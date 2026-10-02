@@ -6,7 +6,7 @@ type AnalyticsEvents = {
   spell_download: { book: string; edition: string };
   dataset_download: { book: string; edition: string };
   dimension_door_download: { version: string };
-  dimension_door_store_click: undefined;
+  dimension_door_store_click: { store: string };
 };
 
 export function track<E extends keyof AnalyticsEvents>(

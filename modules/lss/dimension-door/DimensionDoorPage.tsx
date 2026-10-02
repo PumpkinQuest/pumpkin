@@ -9,6 +9,8 @@ import screen3 from "./img/screen3.jpg";
 
 const CHROME_STORE_URL =
   "https://chromewebstore.google.com/detail/dimension-door/akabajjhfjmooihjpppjgialacocghkp";
+const FIREFOX_ADDONS_URL =
+  "https://addons.mozilla.org/firefox/addon/dimension-door/";
 
 function Screenshot({
   src,
@@ -92,15 +94,26 @@ export default function DimensionDoorPage() {
           <h1 className="text-3xl font-bold tracking-tight">Dimension Door</h1>
         </div>
         <p className="text-pumpkin-muted leading-relaxed">
-          Браузерное расширение для Chrome, которое сохраняет описания заклинаний
+          Браузерное расширение для Chrome и Firefox, которое сохраняет описания заклинаний
           из компендиумов в вашу библиотеку Long Story Short.
         </p>
         <p className="text-pumpkin-muted leading-relaxed">
-          Поддерживаемые компендиумы: <a className="text-pumpkin-orange" href="https://dnd.su/spells/" target="__blank" rel="nofollow noreferrer noopener">dnd.su</a>
+          Поддерживаемые компендиумы: <a className="text-pumpkin-orange" href="https://dnd.su/spells/" target="__blank" rel="nofollow noreferrer noopener">DnD.su</a>, <a className="text-pumpkin-orange" href="https://dndvault.ru/spells/" target="__blank" rel="nofollow noreferrer noopener">D&D Vault</a>.
         </p>
       </div>
 
-      <StoreButton href={CHROME_STORE_URL} />
+      <div className="flex flex-col sm:flex-row gap-3">
+        <StoreButton
+          href={CHROME_STORE_URL}
+          store="chrome"
+          label="Установить из Chrome Web Store"
+        />
+        <StoreButton
+          href={FIREFOX_ADDONS_URL}
+          store="firefox"
+          label="Установить из Firefox Add-ons"
+        />
+      </div>
 
       <div className="flex flex-col gap-6">
         <h2 className="text-xl font-semibold tracking-tight">Как пользоваться</h2>
